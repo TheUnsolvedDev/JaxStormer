@@ -30,7 +30,7 @@ class Dataset:
 
 
 class LinearRegression:
-    def __init__(self, alpha=0.01, batch_size=1024, n_epochs=1000):
+    def __init__(self, alpha=0.1, batch_size=1024, n_epochs=1000):
         self.alpha = alpha
         self.n_epochs = n_epochs
         self.batch_size = batch_size
@@ -44,6 +44,7 @@ class LinearRegression:
         X, y = train
         X_test, y_test = test
         self._init_values(X, y)
+        params = self.params
 
         @jax.jit
         def mse(params, batch_X, batch_y):
@@ -54,28 +55,33 @@ class LinearRegression:
             return jnp.mean(jax.vmap(squared_error)(batch_X, batch_y), axis=0)
 
         @jax.jit
-        def update_params(params, learning_rate, grads):
+        def update_step(X_batch, y_batch, params, learning_rate):
+            loss, grads = jax.value_and_grad(
+                mse)(params, X_batch, y_batch)
             params = jax.tree_util.tree_map(
                 lambda p, g: p - learning_rate * g, params, grads)
-            return params
-
-        loss_grad_fn = jax.value_and_grad(mse)
-        self.num_batches = len(X)//self.batch_size + 1
+            return params, loss
 
         for _ in tqdm.tqdm(range(self.n_epochs)):
-            for i in range(self.num_batches):
-                X_data = X[i*(self.batch_size):(i+1)*self.batch_size]
-                y_data = y[i*(self.batch_size):(i+1)*self.batch_size]
-                loss_val, grads = loss_grad_fn(self.params, X_data, y_data)
-                self.params = update_params(self.params, self.alpha, grads)
+            if self.batch_size is None:
+                params, loss = update_step(
+                    X, y, params, self.alpha)
+            else:
+                self.num_batches = len(X) // self.batch_size + 1
+                for i in range(self.num_batches):
+                    X_data = X[i*(self.batch_size):(i+1)*self.batch_size]
+                    y_data = y[i*(self.batch_size):(i+1)*self.batch_size]
+                    params, loss = update_step(
+                        X_data, y_data, params, self.alpha)
 
             if _ % 100 == 0:
                 self.alpha = self.alpha*0.5
-                test_loss, _ = loss_grad_fn(self.params, X_test, y_test)
-                print('Train Loss', loss_val, 'Test Loss', test_loss)
+                train_loss = mse(params, X, y)
+                test_loss = mse(params, X_test, y_test)
+                print('Train Loss', train_loss, 'Test Loss', test_loss)
 
-            if loss_val <= 0.5*1e-4:
-                print(self.params)
+            if train_loss <= 0.5*1e-4:
+                print(params)
                 break
 
 
@@ -83,5 +89,5 @@ if __name__ == "__main__":
     dataset = Dataset()
     train, test = dataset.get_data()
 
-    lr_model = LinearRegression()
+    lr_model = LinearRegression(batch_size=None)
     lr_model.train(train, test)

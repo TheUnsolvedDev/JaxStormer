@@ -50,6 +50,7 @@ class LogisticRegression:
         X, y = train
         X_test, y_test = test
         self._init_values(X, y)
+        params = self.params
 
         @jax.jit
         def binary_cross_entropy(params, batch_X, batch_y):
@@ -65,10 +66,12 @@ class LogisticRegression:
             return jnp.mean(jax.vmap(nll)(batch_X, batch_y), axis=0)
 
         @jax.jit
-        def update_params(params, learning_rate, grads):
+        def update_step(X_batch, y_batch, params, learning_rate):
+            loss, grads = jax.value_and_grad(
+                binary_cross_entropy)(params, X_batch, y_batch)
             params = jax.tree_util.tree_map(
                 lambda p, g: p - learning_rate * g, params, grads)
-            return params
+            return params, loss
 
         @jax.jit
         def accuracy(y_true, x, params):
@@ -79,27 +82,30 @@ class LogisticRegression:
             accuracy = correct_predictions / total_predictions
             return accuracy
 
-        loss_grad_fn = jax.value_and_grad(binary_cross_entropy)
-        self.num_batches = len(X)//self.batch_size + 1
-
         for _ in tqdm.tqdm(range(self.n_epochs)):
-            for i in range(self.num_batches):
-                X_data = X[i*(self.batch_size):(i+1)*self.batch_size]
-                y_data = y[i*(self.batch_size):(i+1)*self.batch_size]
-                loss_val, grads = loss_grad_fn(self.params, X_data, y_data)
-                self.params = update_params(self.params, self.alpha, grads)
+            if self.batch_size is None:
+                params, loss = update_step(
+                    X, y, params, self.alpha)
+            else:
+                self.num_batches = len(X) // self.batch_size + 1
+                for i in range(self.num_batches):
+                    X_data = X[i*(self.batch_size):(i+1)*self.batch_size]
+                    y_data = y[i*(self.batch_size):(i+1)*self.batch_size]
+                    params, loss = update_step(
+                        X_data, y_data, params, self.alpha)
 
             if _ % 50 == 0:
                 self.alpha *= 0.5
-                test_loss, _ = loss_grad_fn(self.params, X_test, y_test)
-                binary_test = accuracy(
-                    y_test, X_test, (self.init_weights, self.init_bias)).block_until_ready()
-                print('Train Loss', loss_val, 'Test Loss',
-                      test_loss, 'Binary accuracy', round(binary_test*100, 3), '%')
-                print(self.params)
+                train_loss = binary_cross_entropy(params, X, y)
+                test_loss = binary_cross_entropy(params, X_test, y_test)
+                train_accuracy = accuracy(y, X, params)
+                test_accuracy = accuracy(y_test, X_test, params)
+                print('Train Loss', train_loss, 'Test Loss', test_loss)
+                print('Train Accuracy', round(train_accuracy*100, 3), '%',
+                      'Test Accuracy', round(test_accuracy*100, 3), '%')
 
-            if jnp.abs(loss_val) <= 0.5*1e-2:
-                print(self.params)
+            if jnp.abs(loss) <= 0.5*1e-2:
+                print(params)
                 break
 
 
@@ -107,5 +113,5 @@ if __name__ == '__main__':
     dataset = Dataset()
     train, test = dataset.get_data()
 
-    lr_model = LogisticRegression()
+    lr_model = LogisticRegression(batch_size=None)
     lr_model.train(train, test)

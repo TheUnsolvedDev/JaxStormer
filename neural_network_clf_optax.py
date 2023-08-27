@@ -35,7 +35,7 @@ class Dataset:
 
 
 class NeuralNetwork:
-    def __init__(self, hidden_layers=[64, 64], alpha=0.01, batch_size=512, n_epochs=10000):
+    def __init__(self, hidden_layers=[64, 64], alpha=0.01, batch_size=512, n_epochs=1000):
         self.hidden_layers = hidden_layers
         self.alpha = alpha
         self.n_epochs = n_epochs
@@ -60,9 +60,9 @@ class NeuralNetwork:
     def train(self, train, test):
         X, y = train
         X_test, y_test = test
-        self.num_batches = len(X)//self.batch_size + 1
         self._init_values(X, y)
-        self.optimizer_state = self.optimizer.init(self.params)
+        params = self.params
+        optimizer_state = self.optimizer.init(params)
 
         @jax.jit
         def neural_network(params, x):
@@ -86,6 +86,14 @@ class NeuralNetwork:
                 return loss
             return jnp.mean(jax.vmap(nll)(batch_x, batch_y), axis=0)
 
+        @jax.jit
+        def update_step(x_batch, y_batch, opt_state, params):
+            loss, grads = jax.value_and_grad(
+                cross_entropy_loss)(params, x_batch, y_batch)
+            updates, opt_state = self.optimizer.update(grads, opt_state)
+            params = optax.apply_updates(params, updates)
+            return opt_state, params, loss
+
         @ jax.jit
         def accuracy(y_true, x, params):
             y_pred = neural_network(params, x)
@@ -97,34 +105,30 @@ class NeuralNetwork:
             acc = correct_predictions / total_samples
             return acc
 
-        @jax.jit
-        def train_step(params, optimizer_state, batch_X, batch_y):
-            gradient_fn = jax.grad(cross_entropy_loss)
-            grads = gradient_fn(params, batch_X, batch_y)
-            updates, optimizer_state = self.optimizer.update(
-                grads, optimizer_state)
-            new_params = optax.apply_updates(params, updates)
-            return new_params, optimizer_state
-
         for _ in tqdm.tqdm(range(self.n_epochs)):
-            for i in range(self.num_batches):
-                X_data = X[i*(self.batch_size):(i+1)*self.batch_size]
-                y_data = y[i*(self.batch_size):(i+1)*self.batch_size]
-
-                self.params, self.optimizer_state = train_step(
-                    self.params, self.optimizer_state, X_data, y_data)
+            if self.batch_size is None:
+                optimizer_state, params, loss = update_step(
+                    X, y, optimizer_state, params)
+            else:
+                self.num_batches = len(X) // self.batch_size + 1
+                for i in range(self.num_batches):
+                    X_data = X[i*(self.batch_size):(i+1)*self.batch_size]
+                    y_data = y[i*(self.batch_size):(i+1)*self.batch_size]
+                    optimizer_state, params, loss = update_step(
+                        X_data, y_data, optimizer_state, params)
 
             if _ % 50 == 0:
-                train_loss = cross_entropy_loss(
-                    self.params, X_data, y_data)
-                test_loss = cross_entropy_loss(
-                    self.params, X_test, y_test).block_until_ready()
-                multi_test = accuracy(
-                    y_test, X_test, self.params).block_until_ready()
-                print('Train Loss', train_loss, 'Test Loss',
-                      test_loss, 'Multi Class accuracy', round(multi_test*100, 3), '%')
+                self.alpha = self.alpha
+                train_loss = cross_entropy_loss(params, X, y)
+                test_loss = cross_entropy_loss(params, X_test, y_test)
+                train_accuracy = accuracy(y, X, params)
+                test_accuracy = accuracy(y_test, X_test, params)
+                print('Train Loss', train_loss, 'Test Loss', test_loss)
+                print('Train Accuracy', round(train_accuracy*100, 3), '%',
+                      'Test Accuracy', round(test_accuracy*100, 3), '%')
 
-            if train_loss <= 0.5*1e-4:
+            if jnp.abs(loss) <= 0.5*1e-2:
+                print(params)
                 break
 
 
@@ -132,5 +136,5 @@ if __name__ == '__main__':
     dataset = Dataset()
     train_data, test_data = dataset.get_data()
 
-    nn = NeuralNetwork()
+    nn = NeuralNetwork(batch_size=None)
     nn.train(train_data, test_data)

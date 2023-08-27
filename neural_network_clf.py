@@ -25,7 +25,7 @@ class Dataset:
 
 
 class NeuralNetwork:
-    def __init__(self, hidden_layers=[64, 64], alpha=0.01, batch_size=512, n_epochs=1000):
+    def __init__(self, hidden_layers=[64, 64], alpha=0.1, batch_size=512, n_epochs=10000):
         self.hidden_layers = hidden_layers
         self.alpha = alpha
         self.n_epochs = n_epochs
@@ -49,8 +49,8 @@ class NeuralNetwork:
     def train(self, train, test):
         X, y = train
         X_test, y_test = test
-        self.num_batches = len(X)//self.batch_size + 1
         self._init_values(X, y)
+        params = self.params
 
         @jax.jit
         def neural_network(params, x):
@@ -75,10 +75,12 @@ class NeuralNetwork:
             return jnp.mean(jax.vmap(nll)(batch_x, batch_y), axis=0)
 
         @jax.jit
-        def update_params(params, learning_rate, grads):
+        def update_step(X_batch, y_batch, params, learning_rate):
+            loss, grads = jax.value_and_grad(
+                cross_entropy_loss)(params, X_batch, y_batch)
             params = jax.tree_util.tree_map(
                 lambda p, g: p - learning_rate * g, params, grads)
-            return params
+            return params, loss
 
         @ jax.jit
         def accuracy(y_true, x, params):
@@ -91,27 +93,30 @@ class NeuralNetwork:
             acc = correct_predictions / total_samples
             return acc
 
-        loss_grad_fn = jax.value_and_grad(cross_entropy_loss)
-
         for _ in tqdm.tqdm(range(self.n_epochs)):
-            for i in range(self.num_batches):
-                X_data = X[i*(self.batch_size):(i+1)*self.batch_size]
-                y_data = y[i*(self.batch_size):(i+1)*self.batch_size]
-                loss_val, grads = loss_grad_fn(self.params, X_data, y_data)
-                self.params = update_params(self.params, self.alpha, grads)
+            if self.batch_size is None:
+                params, loss = update_step(
+                    X, y, params, self.alpha)
+            else:
+                self.num_batches = len(X) // self.batch_size + 1
+                for i in range(self.num_batches):
+                    X_data = X[i*(self.batch_size):(i+1)*self.batch_size]
+                    y_data = y[i*(self.batch_size):(i+1)*self.batch_size]
+                    params, loss = update_step(
+                        X_data, y_data, params, self.alpha)
 
             if _ % 50 == 0:
-                self.alpha = self.alpha*0.75
-                test_loss, _ = loss_grad_fn(
-                    self.params, X_test, y_test)
-                multi_test = accuracy(
-                    y_test, X_test, self.params).block_until_ready()
-                print('Train Loss', loss_val, 'Test Loss',
-                      test_loss, 'Multi Class accuracy', round(multi_test*100, 3), '%')
+                self.alpha = self.alpha
+                train_loss = cross_entropy_loss(params, X, y)
+                test_loss = cross_entropy_loss(params, X_test, y_test)
+                train_accuracy = accuracy(y, X, params)
+                test_accuracy = accuracy(y_test, X_test, params)
+                print('Train Loss', train_loss, 'Test Loss', test_loss)
+                print('Train Accuracy', round(train_accuracy*100, 3), '%',
+                      'Test Accuracy', round(test_accuracy*100, 3), '%')
 
-
-            if jnp.abs(loss_val) <= 0.5*1e-4:
-                print(self.params)
+            if jnp.abs(loss) <= 0.5*1e-2:
+                print(params)
                 break
 
 
@@ -119,5 +124,5 @@ if __name__ == '__main__':
     dataset = Dataset()
     train_data, test_data = dataset.get_data()
 
-    nn = NeuralNetwork()
+    nn = NeuralNetwork(batch_size=None)
     nn.train(train_data, test_data)

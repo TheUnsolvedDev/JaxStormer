@@ -79,8 +79,8 @@ class NeuralNetwork:
         optimizer_state = self.optimizer.init(params)
 
         @jax.jit
-        def batch_loss(params, batch_X, batch_Y, state):
-            def loss_fn(x, y):
+        def cross_entropy_loss(params, batch_X, batch_Y, state):
+            def nll(x, y):
                 pred, updated_state = self.model.apply(
                     {'params': params, **state},
                     x, mutable=list(state.keys())
@@ -89,7 +89,7 @@ class NeuralNetwork:
                 return loss, updated_state
 
             loss, updated_state = jax.vmap(
-                loss_fn, out_axes=(0, None),
+                nll, out_axes=(0, None),
                 axis_name='batch'
             )(batch_X, batch_Y)
             return jnp.mean(loss), updated_state
@@ -97,7 +97,7 @@ class NeuralNetwork:
         @jax.jit
         def update_step(x_batch, y_batch, opt_state, params, state):
             (loss, updated_state), grads = jax.value_and_grad(
-                batch_loss, has_aux=True
+                cross_entropy_loss, has_aux=True
             )(params, x_batch, y_batch, state)
             updates, opt_state = self.optimizer.update(grads, opt_state)
             params = optax.apply_updates(params, updates)
