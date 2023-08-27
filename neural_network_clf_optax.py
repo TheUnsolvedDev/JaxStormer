@@ -35,7 +35,7 @@ class Dataset:
 
 
 class NeuralNetwork:
-    def __init__(self, hidden_layers=[64, 64], alpha=0.01, batch_size=512, n_epochs=1000):
+    def __init__(self, hidden_layers=[64, 64], alpha=0.01, batch_size=512, n_epochs=10000):
         self.hidden_layers = hidden_layers
         self.alpha = alpha
         self.n_epochs = n_epochs
