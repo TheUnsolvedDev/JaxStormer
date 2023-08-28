@@ -21,15 +21,15 @@ Welcome to the JAX Practice repository! This repository contains practice code f
 1. Install the necessary dependencies:
 
    ```bash
-   pip install jax jaxlib numpy tensorflow tqdm optax flax
+   pip3 install jax numpy tensorflow tqdm optax flax
    ```
 
 Clone this repository:
 
- ```bash
- git clone <repository-url>
- cd jax-machine-learning-practice
- ```
+   ```bash
+   git clone <repository-url>
+   cd jax-machine-learning-practice
+   ```
 
 ## Sections
 
