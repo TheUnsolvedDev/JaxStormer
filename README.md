@@ -20,45 +20,45 @@ Welcome to the JAX Practice repository! This repository contains practice code f
 
 1. Install the necessary dependencies:
 
-   ```bash
-   pip3 install jax numpy tensorflow tqdm optax flax
-   ```
+```bash
+pip3 install jax numpy tensorflow tqdm optax flax
+```
 
 Clone this repository:
 
-   ```bash
-   git clone <repository-url>
-   cd jax-machine-learning-practice
-   ```
+```bash
+git clone <repository-url>
+cd jax-machine-learning-practice
+```
 
 ## Sections
 
- - Introduction to JAX
-Learn the basics of JAX, how to work with JAX arrays, and leverage automatic differentiation for gradient-based optimization.
+- Introduction to JAX
+  Learn the basics of JAX, how to work with JAX arrays, and leverage automatic differentiation for gradient-based optimization.
 
- - Linear Regression with JAX
-Implement linear regression using JAX, apply gradient descent for optimization, and incorporate normalization and scaling techniques.
+- [x] Linear Regression with JAX
+      Implement linear regression using JAX, apply gradient descent for optimization, and incorporate normalization and scaling techniques.
 
- - Logistic Regression with JAX
-Build a logistic regression model with JAX, including regularization to prevent overfitting, and evaluate classification accuracy and ROC-AUC.
+- [x] Logistic Regression with JAX
+      Build a logistic regression model with JAX, including regularization to prevent overfitting, and evaluate classification accuracy and ROC-AUC.
 
- - Support Vector Machines (SVM) with JAX
-Implement linear SVM using JAX, explore non-linear SVM with the kernel trick, and fine-tune hyperparameters for improved performance.
+- Support Vector Machines (SVM) with JAX
+  Implement linear SVM using JAX, explore non-linear SVM with the kernel trick, and fine-tune hyperparameters for improved performance.
 
- - Naive Bayes Classifier with JAX
-Implement Gaussian Naive Bayes using JAX, handle categorical and continuous features, and evaluate classification performance.
+- [x] Naive Bayes Classifier with JAX
+      Implement Gaussian Naive Bayes using JAX, handle categorical and continuous features, and evaluate classification performance.
 
- - Neural Networks with JAX
-Build feedforward neural networks using JAX, implement forward and backward passes, and train using gradient descent.
+- [x] Neural Networks with JAX
+      Build feedforward neural networks using JAX, implement forward and backward passes, and train using gradient descent.
 
- - Convolutional Neural Networks (CNN) with JAX
-Implement CNN architecture using JAX, including convolutional and pooling layers, and apply it to image classification tasks.
+- [x] Convolutional Neural Networks (CNN) with JAX
+      Implement CNN architecture using JAX, including convolutional and pooling layers, and apply it to image classification tasks.
 
- - Recurrent Neural Networks (RNN) with JAX
-Implement RNNs for sequential data using JAX, explore LSTM and GRU cells, and generate sequences and perform language modelling.
+- Recurrent Neural Networks (RNN) with JAX
+  Implement RNNs for sequential data using JAX, explore LSTM and GRU cells, and generate sequences and perform language modelling.
 
- - Applying JAX to Real-world Datasets
-Work with real-world datasets like MNIST, CIFAR-10, etc., preprocess data, augment using JAX, and build end-to-end machine learning pipelines.
+- Applying JAX to Real-world Datasets
+  Work with real-world datasets like MNIST, CIFAR-10, etc., preprocess data, augment using JAX, and build end-to-end machine learning pipelines.
 
 Contributions
 Contributions and improvements to the practice code are welcome! Feel free to open issues or pull requests if you have suggestions, bug fixes, or additional algorithms you'd like to include.
