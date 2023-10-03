@@ -9,8 +9,6 @@ import tqdm
 import csv
 import os
 import time
-import collections
-import random
 from flax.training.train_state import TrainState
 
 os.environ['XLA_PYTHON_CLIENT_PREALLOCATE'] = 'false'
@@ -20,35 +18,38 @@ ENV = 'CartPole-v1'
 ALPHA = 2.5e-4
 GAMMA = 0.99
 TOTAL_TIME_STEPS = int(5e+5)
-LEARNING_START = int(1e+3)
+LEARNING_START = int(1e+4)
 BUFFER_SIZE = int(1e+4)
 EPSILON = 1
 TRAIN_FREQUENCY = 10
 UPDATE_TARGET_FREQUENCY = 500
-BATCH_SIZE = 256
+BATCH_SIZE = 32
 NUM_ENVS = 1
 TAU = 0.9
 
 
-class ReplayBuffer(object):
+class ReplayBuffer:
     def __init__(self, capacity):
-        self.buffer = collections.deque(maxlen=capacity)
+        self.capacity = capacity
+        self.buffer = []
+        self.position = 0
 
-    def push(self, state, action, reward, next_state, done):
-        state = jnp.expand_dims(state, 0)
-        next_state = jnp.expand_dims(next_state, 0)
-
-        self.buffer.append((state, action, reward, next_state, done))
+    def push(self, transition):
+        if len(self.buffer) < self.capacity:
+            self.buffer.append(transition)
+        else:
+            self.buffer[self.position] = transition
+        self.position = (self.position + 1) % self.capacity
 
     def sample(self, batch_size):
-        state, action, reward, next_state, done = zip(
-            *random.sample(self.buffer, batch_size))
-        return {'state': jnp.concatenate(state), 'action': jnp.asarray(action),
-                'reward': jnp.asarray(reward),
-                'next_state': jnp.concatenate(next_state), 'done': jnp.asarray(done)}
+        return jax.random.choice(jax.random.PRNGKey(np.random.randint(low=0, high=100)), len(self.buffer), shape=(batch_size,), replace=False)
 
-    def __len__(self):
-        return len(self.buffer)
+    def get_batch(self, indices):
+        states, actions, rewards, next_states, dones = zip(
+            *[self.buffer[i] for i in indices])
+        print(np.sum(actions),len(actions))
+        return jnp.array(states).squeeze(), jnp.array(actions).squeeze(), jnp.array(rewards).squeeze(),\
+            jnp.array(next_states).squeeze(), jnp.array(dones).squeeze()
 
 
 class Q(flax.linen.Module):
@@ -72,8 +73,6 @@ def create_env(indx=0, name=ENV, video_stats=False):
             env, f"RL_updates/{name}_{int(time.time())}", step_trigger=lambda x: x % int(1e+4) == 0)
     else:
         env = gym.make(name, max_episode_steps=BUFFER_SIZE//10)
-    env.action_space.seed(0)
-    env.observation_space.seed(0)
     return env
 
 
@@ -105,7 +104,8 @@ def test(policy, q_state, num_games=10):
 
 
 def main():
-    env = create_env(video_stats=True)
+    key = jax.random.PRNGKey(0)
+    env = create_env()
     replay_buffer = ReplayBuffer(BUFFER_SIZE)
     q_network = Q(env.action_space.n)
     q_state = TrainState.create(
@@ -122,26 +122,24 @@ def main():
         env.observation_space.shape)))
 
     @jax.jit
-    def policy(q_state, state, epsilon=0.1):
+    def policy(q_state, state, epsilon=0.1, key=jax.random.PRNGKey(0)):
         prob = jax.random.uniform(key)
         q_values = q_network.apply(q_state.params, state)
         action = q_values.argmax(axis=-1)
-        random_action = jax.random.randint(
-            key, minval=0, maxval=1, shape=(1,))[0]
-        a = jax.lax.cond(prob < epsilon, lambda x: random_action,
-                         lambda x: action, 1)
+        a = jax.lax.cond(prob < epsilon, lambda x: np.random.randint(2),
+                         lambda x: action, None)
         return a
 
-    @jax.jit
+    # @jax.jit
     def update(q_state, states, actions, rewards, next_states,  dones):
         q_next_target = q_network.apply(q_state.target_params, next_states)
         q_next_target = jnp.max(q_next_target, axis=-1)
-        next_q_value = jax.lax.stop_gradient(
-            rewards + (1 - dones) * GAMMA * q_next_target)
+        next_q_value = (rewards + (1 - dones) * GAMMA * q_next_target)
 
         def mse_loss(params):
             q_pred = q_network.apply(params, states)
             q_pred = q_pred[jnp.arange(q_pred.shape[0]), actions.squeeze()]
+            print(actions.squeeze())
             return ((jax.lax.stop_gradient(next_q_value) - q_pred) ** 2).mean(), q_pred
 
         (loss_value, q_pred), grads = jax.value_and_grad(
@@ -151,12 +149,13 @@ def main():
 
     state, _ = env.reset()
     start = time.time()
-
+    epsilon = EPSILON
     for step in tqdm.tqdm(range(TOTAL_TIME_STEPS+1)):
-        epsilon = linear_schedule(
-            start_e=EPSILON, end_e=0.05, duration=TOTAL_TIME_STEPS*0.1, t=step)
-        action = policy(q_state, state, epsilon)
+
+        new_key, key = jax.random.split(key)
+        action = policy(q_state, state, epsilon, key=new_key)
         action = jax.device_get(action)
+        
         next_state, reward, done, truncated, infos = env.step(action)
         replay_buffer.push([state, action, reward, next_state, done])
 
@@ -165,6 +164,8 @@ def main():
             state, _ = env.reset()
 
         if step > LEARNING_START:
+            epsilon = linear_schedule(
+                start_e=EPSILON, end_e=0.05, duration=TOTAL_TIME_STEPS*0.25, t=step)
             if not step % TRAIN_FREQUENCY:
                 indices = replay_buffer.sample(BATCH_SIZE)
                 states, actions, rewards, next_states, dones = replay_buffer.get_batch(
@@ -174,9 +175,9 @@ def main():
 
             if not step % UPDATE_TARGET_FREQUENCY:
                 q_state = q_state.replace(target_params=optax.incremental_update(
-                    q_state.params, q_state.target_params, TAU))
+                    q_state.params, q_state.target_params, 1))
                 test_results = test(policy, q_state)
-                if not step % (UPDATE_TARGET_FREQUENCY*10):
+                if not step % (UPDATE_TARGET_FREQUENCY):
                     print("td_loss:", jax.device_get(loss_values),
                           "Q_value:", q_pred, 'Position:', test_results, 'Epsilon:', epsilon)
                 with open(f'RL_updates/logs_{start}.txt', 'a', newline='') as csv_file:
