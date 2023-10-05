@@ -12,9 +12,10 @@ import time
 from flax.training.train_state import TrainState
 
 os.environ['XLA_PYTHON_CLIENT_PREALLOCATE'] = 'false'
+algorithm = __file__.split('/')[-1][:-3]
 key = jax.random.PRNGKey(0)
 
-ENV = 'CartPole-v1'
+ENV = 'MountainCar-v0'
 ALPHA = 2.5e-4
 GAMMA = 0.99
 TOTAL_TIME_STEPS = int(5e+5)
@@ -47,7 +48,6 @@ class ReplayBuffer:
     def get_batch(self, indices):
         states, actions, rewards, next_states, dones = zip(
             *[self.buffer[i] for i in indices])
-        print(np.sum(actions),len(actions))
         return jnp.array(states).squeeze(), jnp.array(actions).squeeze(), jnp.array(rewards).squeeze(),\
             jnp.array(next_states).squeeze(), jnp.array(dones).squeeze()
 
@@ -67,12 +67,13 @@ class Q(flax.linen.Module):
 
 def create_env(indx=0, name=ENV, video_stats=False):
     if video_stats and indx == 0:
-        env = gym.make(name, max_episode_steps=BUFFER_SIZE//10,
-                       render_mode='rgb_array')
+        env = gym.make(name, max_episode_steps=BUFFER_SIZE //
+                       10, render_mode='rgb_array')
         env = gym.wrappers.RecordVideo(
-            env, f"RL_updates/{name}_{int(time.time())}", step_trigger=lambda x: x % int(1e+4) == 0)
+            env, f"RL_updates/{algorithm}/{name}/time_{int(time.time())}", episode_trigger=lambda x: x % int(5) == 0)
     else:
         env = gym.make(name, max_episode_steps=BUFFER_SIZE//10)
+        env._max_episode_steps = BUFFER_SIZE//10
     return env
 
 
@@ -85,21 +86,22 @@ def linear_schedule(start_e: float, end_e: float, duration: int, t: int):
     return max(slope * t + start_e, end_e)
 
 
-def test(policy, q_state, num_games=10):
-    env = create_env()
+def test(policy, q_state, num_games=10, video=False):
+    env = create_env(video_stats=video)
     rewards = []
 
     for game in (range(num_games)):
         sum_reward = 0
         state, _ = env.reset()
-        done = False
-        while not done:
+        for i in range(BUFFER_SIZE//10):
             action = policy(q_state, state, epsilon=0.01)
-            action = jax.device_get(action)
-            next_state, reward, done, truncated, infos = env.step(action)
+            next_state, reward, done, trauncated, infos = env.step(action)
             sum_reward += reward
             state = next_state
+            if done:
+                break
         rewards.append(sum_reward)
+    env.close()
     return np.mean(rewards)
 
 
@@ -122,15 +124,17 @@ def main():
         env.observation_space.shape)))
 
     @jax.jit
-    def policy(q_state, state, epsilon=0.1, key=jax.random.PRNGKey(0)):
-        prob = jax.random.uniform(key)
+    def policy_greedy(q_state, state):
         q_values = q_network.apply(q_state.params, state)
         action = q_values.argmax(axis=-1)
-        a = jax.lax.cond(prob < epsilon, lambda x: np.random.randint(2),
-                         lambda x: action, None)
-        return a
+        return action
 
-    # @jax.jit
+    def policy(q_state, state, epsilon=0.1):
+        if np.random.uniform() < epsilon:
+            return np.random.randint(0, env.action_space.n)
+        return jax.device_get(policy_greedy(q_state, state))
+
+    @jax.jit
     def update(q_state, states, actions, rewards, next_states,  dones):
         q_next_target = q_network.apply(q_state.target_params, next_states)
         q_next_target = jnp.max(q_next_target, axis=-1)
@@ -139,7 +143,6 @@ def main():
         def mse_loss(params):
             q_pred = q_network.apply(params, states)
             q_pred = q_pred[jnp.arange(q_pred.shape[0]), actions.squeeze()]
-            print(actions.squeeze())
             return ((jax.lax.stop_gradient(next_q_value) - q_pred) ** 2).mean(), q_pred
 
         (loss_value, q_pred), grads = jax.value_and_grad(
@@ -150,12 +153,9 @@ def main():
     state, _ = env.reset()
     start = time.time()
     epsilon = EPSILON
-    for step in tqdm.tqdm(range(TOTAL_TIME_STEPS+1)):
 
-        new_key, key = jax.random.split(key)
-        action = policy(q_state, state, epsilon, key=new_key)
-        action = jax.device_get(action)
-        
+    for step in tqdm.tqdm(range(TOTAL_TIME_STEPS+1)):
+        action = policy(q_state, state, epsilon)
         next_state, reward, done, truncated, infos = env.step(action)
         replay_buffer.push([state, action, reward, next_state, done])
 
@@ -176,21 +176,23 @@ def main():
             if not step % UPDATE_TARGET_FREQUENCY:
                 q_state = q_state.replace(target_params=optax.incremental_update(
                     q_state.params, q_state.target_params, 1))
-                test_results = test(policy, q_state)
-                if not step % (UPDATE_TARGET_FREQUENCY):
+
+                if not step % (UPDATE_TARGET_FREQUENCY)*10:
+                    test_results = test(policy, q_state, video=True)
                     print("td_loss:", jax.device_get(loss_values),
                           "Q_value:", q_pred, 'Position:', test_results, 'Epsilon:', epsilon)
-                with open(f'RL_updates/logs_{start}.txt', 'a', newline='') as csv_file:
-                    csv_writer = csv.writer(csv_file)
-                    csv_writer.writerow(
-                        [loss_values, q_pred, test_results, epsilon])
+                    with open(f'RL_updates/{algorithm}/{ENV}/logs_{start}.txt', 'a', newline='') as csv_file:
+                        csv_writer = csv.writer(csv_file)
+                        csv_writer.writerow(
+                            [loss_values, q_pred, test_results, epsilon])
 
                 from flax.training import orbax_utils
                 orbax_checkpointer = orbax.checkpoint.PyTreeCheckpointer()
                 ckpt = {'q_state': q_state}
                 save_args = orbax_utils.save_args_from_target(ckpt)
                 orbax_checkpointer.save(
-                    f'RL_updates/single_save/{step}/{int(time.time())}', ckpt, save_args=save_args)
+                    f'RL_updates/{algorithm}/{ENV}/{step}_{int(time.time())}', ckpt, save_args=save_args)
+
     env.close()
 
 
