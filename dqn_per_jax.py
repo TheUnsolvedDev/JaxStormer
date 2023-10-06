@@ -4,25 +4,25 @@ algorithm = __file__.split('/')[-1][:-3]
 key = jax.random.PRNGKey(0)
 rng, key_reset, key_policy, key_step = jax.random.split(key, 4)
 
-# wandb.init(
-#     project=algorithm+'_'+ENV,
+wandb.init(
+    project=algorithm+'_'+ENV,
 
-#     config={
-#         'ENV': ENV,
-#         'ALPHA': ALPHA,
-#         'GAMMA': GAMMA,
-#         'TOTAL_TIME_STEPS': TOTAL_TIME_STEPS,
-#         'LEARNING_START': LEARNING_START,
-#         'BUFFER_SIZE': BUFFER_SIZE,
-#         'EPSILON': EPSILON,
-#         'TRAIN_FREQUENCY': TRAIN_FREQUENCY,
-#         'UPDATE_TARGET_FREQUENCY': UPDATE_TARGET_FREQUENCY,
-#         'BATCH_SIZE': BATCH_SIZE,
-#         'NUM_ENVS': NUM_ENVS,
-#         'TAU': TAU,
-#         'MAX_EPISODE_STEPS': MAX_EPISODE_STEPS
-#     }
-# )
+    config={
+        'ENV': ENV,
+        'ALPHA': ALPHA,
+        'GAMMA': GAMMA,
+        'TOTAL_TIME_STEPS': TOTAL_TIME_STEPS,
+        'LEARNING_START': LEARNING_START,
+        'BUFFER_SIZE': BUFFER_SIZE,
+        'EPSILON': EPSILON,
+        'TRAIN_FREQUENCY': TRAIN_FREQUENCY,
+        'UPDATE_TARGET_FREQUENCY': UPDATE_TARGET_FREQUENCY,
+        'BATCH_SIZE': BATCH_SIZE,
+        'NUM_ENVS': NUM_ENVS,
+        'TAU': TAU,
+        'MAX_EPISODE_STEPS': MAX_EPISODE_STEPS
+    }
+)
 
 
 class Env:
@@ -292,23 +292,23 @@ class DQN_PER_main:
                             self.policy, self.q_state, step, video_stats=not True)
                         print("td_loss:", jax.device_get(loss_values),
                               "Q_value:", q_pred, 'Position:', test_results, 'Epsilon:', epsilon, 'TD Error', td.mean())
-                        # with open(f'RL_updates/{algorithm}/{ENV}/logs_{start}.txt', 'a', newline='') as csv_file:
-                        #     csv_writer = csv.writer(csv_file)
-                        #     csv_writer.writerow(
-                        #         [loss_values, q_pred, test_results, epsilon])
-                        # wandb.log({
-                        #     "TD Loss": loss_values,
-                        #     "Q Values": q_pred,
-                        #     "Rewards Gathered": test_results,
-                        #     "Epsilon": epsilon
-                        # })
+                        with open(f'RL_updates/{algorithm}/{ENV}/logs_{start}.txt', 'a', newline='') as csv_file:
+                            csv_writer = csv.writer(csv_file)
+                            csv_writer.writerow(
+                                [loss_values, q_pred, test_results, epsilon])
+                        wandb.log({
+                            "TD Loss": loss_values,
+                            "Q Values": q_pred,
+                            "Rewards Gathered": test_results,
+                            "Epsilon": epsilon
+                        })
 
-                    # from flax.training import orbax_utils
-                    # orbax_checkpointer = orbax.checkpoint.PyTreeCheckpointer()
-                    # ckpt = {'q_state': q_state}
-                    # save_args = orbax_utils.save_args_from_target(ckpt)
-                    # orbax_checkpointer.save(
-                    #     f'RL_updates/{algorithm}/{ENV}/{step}/{int(time.time())}', ckpt, save_args=save_args)
+                    from flax.training import orbax_utils
+                    orbax_checkpointer = orbax.checkpoint.PyTreeCheckpointer()
+                    ckpt = {'q_state': self.q_state}
+                    save_args = orbax_utils.save_args_from_target(ckpt)
+                    orbax_checkpointer.save(
+                        f'RL_updates/{algorithm}/{ENV}/{step}/{int(time.time())}', ckpt, save_args=save_args)
 
 
 if __name__ == '__main__':
