@@ -1,9 +1,4 @@
-import jax
-import jax.numpy as jnp
-import numpy as np
-import tensorflow as tf
-import tqdm
-import optax
+from import_packages import *
 
 key = jax.random.PRNGKey(0)
 

@@ -1,6 +1,4 @@
-import jax
-import jax.numpy as jnp
-import tqdm
+from import_packages import *
 
 key = jax.random.PRNGKey(0)
 

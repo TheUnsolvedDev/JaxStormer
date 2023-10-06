@@ -1,0 +1,71 @@
+wandb_version: 1
+
+ENV:
+  desc: null
+  value: Acrobot-v1
+ALPHA:
+  desc: null
+  value: 0.00025
+GAMMA:
+  desc: null
+  value: 0.99
+TOTAL_TIME_STEPS:
+  desc: null
+  value: 500000
+LEARNING_START:
+  desc: null
+  value: 10000
+BUFFER_SIZE:
+  desc: null
+  value: 10000
+EPSILON:
+  desc: null
+  value: 1
+TRAIN_FREQUENCY:
+  desc: null
+  value: 10
+UPDATE_TARGET_FREQUENCY:
+  desc: null
+  value: 500
+BATCH_SIZE:
+  desc: null
+  value: 32
+NUM_ENVS:
+  desc: null
+  value: 8
+TAU:
+  desc: null
+  value: 0.9
+MAX_EPISODE_STEPS:
+  desc: null
+  value: 1000
+_wandb:
+  desc: null
+  value:
+    python_version: 3.11.5
+    cli_version: 0.15.12
+    framework: keras
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1696542731.07681
+    t:
+      1:
+      - 2
+      - 3
+      - 12
+      - 45
+      - 55
+      2:
+      - 2
+      - 3
+      - 12
+      - 45
+      - 55
+      3:
+      - 16
+      - 23
+      4: 3.11.5
+      5: 0.15.12
+      8:
+      - 5
+      13: linux-x86_64
