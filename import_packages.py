@@ -27,7 +27,7 @@ def parse_arguments():
                         help='Discount factor (GAMMA)')
     parser.add_argument('--total_time_steps', type=int,
                         default=int(5e+5), help='Total time steps (TOTAL_TIME_STEPS)')
-    parser.add_argument('--learning_start', type=int, default=int(200),
+    parser.add_argument('--learning_start', type=int, default=int(10000),
                         help='Learning start time steps (LEARNING_START)')
     parser.add_argument('--buffer_size', type=int, default=int(1e+4),
                         help='Replay buffer size (BUFFER_SIZE)')

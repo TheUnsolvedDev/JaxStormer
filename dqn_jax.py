@@ -203,9 +203,9 @@ class DQN:
 
                     if not step % (UPDATE_TARGET_FREQUENCY)*10:
                         test_results = test(
-                            self.policy, self.q_state, step, video_stats=not True)
-                        print("td_loss:", jax.device_get(loss_values),
-                              "Q_value:", q_pred, 'Position:', test_results, 'Epsilon:', epsilon)
+                            self.policy, self.q_state, step, video_stats=True)
+                        # print("td_loss:", jax.device_get(loss_values),
+                        #       "Q_value:", q_pred, 'Position:', test_results, 'Epsilon:', epsilon)
                         with open(f'RL_updates/{algorithm}/{ENV}/logs_{start}.txt', 'a', newline='') as csv_file:
                             csv_writer = csv.writer(csv_file)
                             csv_writer.writerow(
