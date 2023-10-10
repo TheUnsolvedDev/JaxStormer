@@ -11,10 +11,14 @@ import csv
 import os
 import time
 from flax.training.train_state import TrainState
+from flax.training import checkpoints
 import functools
-import tensorflow as tf
 import wandb
 import argparse
+import torch
+import torchvision
+import collections
+import tensorflow as tf
 
 
 def parse_arguments():
@@ -46,14 +50,17 @@ def parse_arguments():
     parser.add_argument('--max_episode_steps', type=int,
                         default=1000, help='Total Number of steps in an episode')
     parser.add_argument('--gpu', type=int, default=0, help='Number of GPU')
+    parser.add_argument('--n_workers', type=int, default=4,
+                        help='Number of Workers')
     args = parser.parse_args()
     return args
 
 
 args = parse_arguments()
 
-os.environ['XLA_PYTHON_CLIENT_PREALLOCATE'] = 'false'
-jax.default_device = jax.devices('gpu')[args.gpu]
+# os.environ['XLA_PYTHON_CLIENT_PREALLOCATE'] = 'false'
+# jax.default_device = jax.devices('gpu')[args.gpu]
+NUM_WORKERS = args.n_workers
 ENV = args.env
 ALPHA = args.alpha
 GAMMA = args.gamma
