@@ -3,6 +3,11 @@ from import_packages import *
 from torch.utils.tensorboard import SummaryWriter
 
 
+class TrainState(TrainState):
+    # A simple extension of TrainState to also include batch statistics
+    batch_stats: object
+
+
 class TrainerModule:
 
     def __init__(self,
@@ -28,38 +33,42 @@ class TrainerModule:
         self.init_model(exmp_imgs)
 
     def create_functions(self):
-        def calculate_loss(params, batch, train):
+        def calculate_loss(params, batch_stats, batch, train):
             imgs, labels = batch
-            outs = self.model.apply({'params': params},
+            outs = self.model.apply({'params': params, 'batch_stats': batch_stats},
                                     imgs,
                                     train=train,
-                                    mutable=['params'])
+                                    mutable=['batch_stats'] if train else False)
             logits, new_model_state = outs if train else (outs, None)
             loss = optax.softmax_cross_entropy_with_integer_labels(
                 logits, labels).mean()
             acc = (logits.argmax(axis=-1) == labels).mean()
-            return loss, acc
+            return loss, (acc, new_model_state)
+        # Training function
 
         def train_step(state, batch):
             def loss_fn(params): return calculate_loss(
-                params, batch, train=True)
+                params, state.batch_stats, batch, train=True)
             ret, grads = jax.value_and_grad(
                 loss_fn, has_aux=True)(state.params)
-            loss, acc = ret[0], ret[1]
+            loss, acc, new_model_state = ret[0], *ret[1]
             state = state.apply_gradients(
-                grads=grads)
+                grads=grads, batch_stats=new_model_state['batch_stats'])
             return state, loss, acc
+        # Eval function
 
         def eval_step(state, batch):
-            _, acc = calculate_loss(state.params, batch, train=not False)
+            _, (acc, _) = calculate_loss(state.params,
+                                         state.batch_stats, batch, train=False)
             return acc
         self.train_step = jax.jit(train_step)
         self.eval_step = jax.jit(eval_step)
 
     def init_model(self, exmp_imgs):
+        # Initialize model
         init_rng = jax.random.PRNGKey(self.seed)
         variables = self.model.init(init_rng, exmp_imgs, train=True)
-        self.init_params = variables['params']
+        self.init_params, self.init_batch_stats = variables['params'], variables['batch_stats']
         self.state = None
 
     def init_optimizer(self, num_epochs, num_steps_per_epoch):
@@ -71,13 +80,15 @@ class TrainerModule:
             opt_class = optax.sgd
         else:
             assert False, f'Unknown optimizer "{opt_class}"'
+
         lr_schedule = optax.piecewise_constant_schedule(
             init_value=self.optimizer_hparams.pop('lr'),
             boundaries_and_scales={int(num_steps_per_epoch*num_epochs*0.6): 0.1,
                                    int(num_steps_per_epoch*num_epochs*0.85): 0.1}
         )
+
         transf = [optax.clip(1.0)]
-        if opt_class == optax.sgd and 'weight_decay' in self.optimizer_hparams:
+        if opt_class == optax.sgd and 'weight_decay' in self.optimizer_hparams:  # wd is integrated in adamw
             transf.append(optax.add_decayed_weights(
                 self.optimizer_hparams.pop('weight_decay')))
         optimizer = optax.chain(
@@ -87,6 +98,7 @@ class TrainerModule:
 
         self.state = TrainState.create(apply_fn=self.model.apply,
                                        params=self.init_params if self.state is None else self.state.params,
+                                       batch_stats=self.init_batch_stats if self.state is None else self.state.batch_stats,
                                        tx=optimizer)
 
     def train_model(self, train_loader, val_loader, num_epochs=200):
@@ -114,7 +126,6 @@ class TrainerModule:
             self.logger.add_scalar('train/'+key, avg_val, global_step=epoch)
 
     def eval_model(self, data_loader):
-        # Test model on all images of a data loader and return avg loss
         correct_class, count = 0, 0
         for batch in data_loader:
             acc = self.eval_step(self.state, batch)
@@ -124,14 +135,12 @@ class TrainerModule:
         return eval_acc
 
     def save_model(self, step=0):
-        # Save current model at certain training iteration
         checkpoints.save_checkpoint(ckpt_dir=self.log_dir,
                                     target={'params': self.state.params},
                                     step=step,
                                     overwrite=True)
 
     def load_model(self, pretrained=False):
-        # Load model. We use different checkpoint for pretrained models
         if not pretrained:
             state_dict = checkpoints.restore_checkpoint(
                 ckpt_dir=self.log_dir, target=None)
@@ -145,7 +154,6 @@ class TrainerModule:
                                        )
 
     def checkpoint_exists(self):
-        # Check whether a pretrained model exist for this autoencoder
         return os.path.isfile(os.path.join('RL_updates', f'{self.model_name}.ckpt'))
 
 
@@ -271,7 +279,6 @@ class GoogleNet(flax.linen.Module):
         return x
 
 
-
 if __name__ == '__main__':
 
     test_transform = image_to_numpy
@@ -316,8 +323,8 @@ if __name__ == '__main__':
 
     googlenet_trainer, googlenet_results = train_classifier(model_class=GoogleNet,
                                                             model_name="GoogleNet",
-                                                            model_hparams={
-                                                                "num_classes": 10},
+                                                            model_hparams={"num_classes": 10,
+                                                                           "act_fn": flax.linen.relu},
                                                             optimizer_name="adamw",
                                                             optimizer_hparams={"lr": 1e-3,
                                                                                "weight_decay": 1e-4},

@@ -58,7 +58,7 @@ def parse_arguments():
 
 args = parse_arguments()
 
-# os.environ['XLA_PYTHON_CLIENT_PREALLOCATE'] = 'false'
+os.environ['XLA_PYTHON_CLIENT_PREALLOCATE'] = 'false'
 # jax.default_device = jax.devices('gpu')[args.gpu]
 NUM_WORKERS = args.n_workers
 ENV = args.env
