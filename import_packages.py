@@ -41,7 +41,7 @@ def parse_arguments():
                         default=10, help='Training frequency (TRAIN_FREQUENCY)')
     parser.add_argument('--update_target_frequency', type=int, default=500,
                         help='Target network update frequency (UPDATE_TARGET_FREQUENCY)')
-    parser.add_argument('--batch_size', type=int, default=32,
+    parser.add_argument('--batch_size', type=int, default=256,
                         help='Batch size (BATCH_SIZE)')
     parser.add_argument('--num_envs', type=int, default=8,
                         help='Number of parallel environments (NUM_ENVS)')
@@ -57,9 +57,10 @@ def parse_arguments():
 
 
 args = parse_arguments()
-
+print('Num Devices:',jax.device_count())
+print('Num local devices:',jax.local_device_count() )
+# os.environ['CUDA_VISIBLE_DEVICES'] = str([args.gpu])
 os.environ['XLA_PYTHON_CLIENT_PREALLOCATE'] = 'false'
-# jax.default_device = jax.devices('gpu')[args.gpu]
 NUM_WORKERS = args.n_workers
 ENV = args.env
 ALPHA = args.alpha
