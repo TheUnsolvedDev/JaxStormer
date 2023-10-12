@@ -301,21 +301,21 @@ if __name__ == '__main__':
         root='Dataset', train=False, transform=test_transform, download=True)
 
     train_loader = torch.utils.data.DataLoader(train_set,
-                                               batch_size=128,
+                                               batch_size=BATCH_SIZE,
                                                shuffle=True,
                                                drop_last=True,
                                                collate_fn=numpy_collate,
                                                num_workers=NUM_WORKERS,
                                                persistent_workers=True)
     val_loader = torch.utils.data.DataLoader(val_set,
-                                             batch_size=128,
+                                             batch_size=BATCH_SIZE,
                                              shuffle=False,
                                              drop_last=False,
                                              collate_fn=numpy_collate,
                                              num_workers=NUM_WORKERS//2,
                                              persistent_workers=True)
     test_loader = torch.utils.data.DataLoader(test_set,
-                                              batch_size=128,
+                                              batch_size=BATCH_SIZE,
                                               shuffle=False,
                                               drop_last=False,
                                               collate_fn=numpy_collate,

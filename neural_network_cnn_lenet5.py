@@ -112,6 +112,7 @@ class TrainerModule:
         for key in metrics.keys():
             avg_val = np.stack(jax.device_get(metrics[key])).mean()
             self.logger.add_scalar('train/'+key, avg_val, global_step=epoch)
+            print(key, avg_val)
 
     def eval_model(self, data_loader):
         # Test model on all images of a data loader and return avg loss
@@ -226,21 +227,21 @@ if __name__ == '__main__':
         root='Dataset', train=False, transform=test_transform, download=True)
 
     train_loader = torch.utils.data.DataLoader(train_set,
-                                               batch_size=128,
+                                               batch_size=BATCH_SIZE,
                                                shuffle=True,
                                                drop_last=True,
                                                collate_fn=numpy_collate,
                                                num_workers=NUM_WORKERS,
                                                persistent_workers=True)
     val_loader = torch.utils.data.DataLoader(val_set,
-                                             batch_size=128,
+                                             batch_size=BATCH_SIZE,
                                              shuffle=False,
                                              drop_last=False,
                                              collate_fn=numpy_collate,
                                              num_workers=NUM_WORKERS//2,
                                              persistent_workers=True)
     test_loader = torch.utils.data.DataLoader(test_set,
-                                              batch_size=128,
+                                              batch_size=BATCH_SIZE,
                                               shuffle=False,
                                               drop_last=False,
                                               collate_fn=numpy_collate,
@@ -252,7 +253,7 @@ if __name__ == '__main__':
                                                       model_hparams={
                                                           "num_classes": 10},
                                                       optimizer_name="adamw",
-                                                      optimizer_hparams={"lr": 1e-3,
+                                                      optimizer_hparams={"lr": 1e-2,
                                                                          "weight_decay": 1e-4},
                                                       exmp_imgs=jax.device_put(
                                                           next(iter(train_loader))[0]),
