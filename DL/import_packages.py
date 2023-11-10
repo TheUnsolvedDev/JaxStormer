@@ -7,7 +7,7 @@ import tqdm
 import os
 from flax.training.train_state import TrainState
 from flax.training import checkpoints
-
+from functools import partial
 from urllib import request
 import gzip
 import pickle
