@@ -74,6 +74,10 @@ if ! python3 -c "import gymnasium" &> /dev/null; then
 else
     echo "gymnasium is installed"
 fi
+
+pip3 install gymnax
+pip3 install moviepy
+pip3 install gymnasium[classic-control]
 echo "Env Checked good to go!!"
 conda deactivate
 sleep 5
