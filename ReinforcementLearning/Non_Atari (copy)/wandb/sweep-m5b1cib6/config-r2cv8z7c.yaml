@@ -1,0 +1,38 @@
+wandb_version: 1
+
+algorithm:
+  value: DQN
+alpha:
+  value: 0.0005996882138134248
+batch_size:
+  value: 512
+buffer_size:
+  value: 5000
+env:
+  value: CartPole-v1
+epsilon:
+  value: 0.9274542851301124
+gamma:
+  value: 0.9501139023156828
+learning_start:
+  value: 2000
+max_episode_steps:
+  value: 1000
+model_type:
+  value: small
+num_envs:
+  value: 8
+save_test:
+  value: 1000
+tau:
+  value: 1
+total_time_steps:
+  value: 300000
+train_frequency:
+  value: 50
+update_target_frequency:
+  value: 250
+use_per:
+  value: false
+wandb_log:
+  value: true

@@ -23,7 +23,7 @@ class Dataset:
         return (X_train, y_train), (X_test, y_test)
 
 
-class LeNet5(flax.linen.Module):
+class CNN(flax.linen.Module):
 
     @flax.linen.compact
     def __call__(self, x):
@@ -42,9 +42,6 @@ class LeNet5(flax.linen.Module):
         x = flax.linen.Dense(features=120)(x)
         x = flax.linen.relu(x)
 
-        x = flax.linen.Dense(features=84)(x)
-        x = flax.linen.relu(x)
-
         x = flax.linen.Dense(features=10)(x)
         return x
 
@@ -60,7 +57,7 @@ class NeuralNetwork:
         self.optimizer = optax.adam(learning_rate=linear_decay_scheduler)
 
     def _init_values(self):
-        self.model = LeNet5()
+        self.model = CNN()
         self.model_params = self.model.init(key, jnp.ones(
             (1, 28, 28, 1)))
         print(self.model.tabulate(key, jnp.ones(

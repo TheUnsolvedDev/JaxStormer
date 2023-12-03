@@ -1,0 +1,158 @@
+wandb_version: 1
+
+algorithm:
+  desc: null
+  value: DQN
+alpha:
+  desc: null
+  value: 0.0004004015902947803
+batch_size:
+  desc: null
+  value: 512
+buffer_size:
+  desc: null
+  value: 5000
+env:
+  desc: null
+  value: CartPole-v1
+epsilon:
+  desc: null
+  value: 0.9094254003403074
+gamma:
+  desc: null
+  value: 0.9488333506560728
+learning_start:
+  desc: null
+  value: 3000
+max_episode_steps:
+  desc: null
+  value: 1000
+model_type:
+  desc: null
+  value: medium
+num_envs:
+  desc: null
+  value: 8
+save_test:
+  desc: null
+  value: 1000
+tau:
+  desc: null
+  value: 1
+total_time_steps:
+  desc: null
+  value: 200000
+train_frequency:
+  desc: null
+  value: 20
+update_target_frequency:
+  desc: null
+  value: 100
+use_per:
+  desc: null
+  value: false
+wandb_log:
+  desc: null
+  value: true
+program:
+  desc: null
+  value: main.py
+method:
+  desc: null
+  value: bayes
+project:
+  desc: null
+  value: DeepRL_JAXStormer
+metric:
+  desc: null
+  value:
+    name: results
+    goal: maximize
+parameters:
+  desc: null
+  value:
+    env:
+      value: CartPole-v1
+    alpha:
+      min: 1.0e-05
+      max: 0.001
+    gamma:
+      min: 0.9
+      max: 0.99
+    epsilon:
+      min: 0.9
+      max: 1.0
+    tau:
+      value: 1
+    total_time_steps:
+      values:
+      - 100000
+      - 200000
+      - 300000
+    learning_start:
+      values:
+      - 1000
+      - 2000
+      - 3000
+    buffer_size:
+      values:
+      - 5000
+      - 10000
+    train_frequency:
+      values:
+      - 10
+      - 20
+      - 50
+    update_target_frequency:
+      values:
+      - 100
+      - 250
+      - 500
+    batch_size:
+      values:
+      - 128
+      - 256
+      - 512
+    num_envs:
+      value: 8
+    max_episode_steps:
+      value: 1000
+    save_test:
+      value: 1000
+    algorithm:
+      value: DQN
+    use_per:
+      value: false
+    model_type:
+      values:
+      - small
+      - medium
+      - large
+    wandb_log:
+      value: true
+_wandb:
+  desc: null
+  value:
+    python_version: 3.11.5
+    cli_version: 0.15.12
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1700559565.514744
+    t:
+      1:
+      - 12
+      - 45
+      - 55
+      2:
+      - 12
+      - 45
+      - 55
+      3:
+      - 16
+      - 23
+      - 37
+      4: 3.11.5
+      5: 0.15.12
+      8:
+      - 5
+      13: linux-x86_64

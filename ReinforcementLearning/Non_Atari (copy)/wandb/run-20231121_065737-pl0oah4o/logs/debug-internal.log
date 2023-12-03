@@ -1,0 +1,179 @@
+2023-11-21 06:57:37,229 INFO    StreamThr :1340462 [internal.py:wandb_internal():86] W&B internal server running at pid: 1340462, started at: 2023-11-21 06:57:37.229181
+2023-11-21 06:57:37,231 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: status
+2023-11-21 06:57:37,233 INFO    WriterThread:1340462 [datastore.py:open_for_write():85] open: /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_065737-pl0oah4o/run-pl0oah4o.wandb
+2023-11-21 06:57:37,233 DEBUG   SenderThread:1340462 [sender.py:send():380] send: header
+2023-11-21 06:57:37,238 DEBUG   SenderThread:1340462 [sender.py:send():380] send: run
+2023-11-21 06:57:37,921 INFO    SenderThread:1340462 [dir_watcher.py:__init__():211] watching files in: /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_065737-pl0oah4o/files
+2023-11-21 06:57:37,921 INFO    SenderThread:1340462 [sender.py:_start_run_threads():1122] run started: pl0oah4o with start time 1700530057.22909
+2023-11-21 06:57:37,929 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: check_version
+2023-11-21 06:57:37,930 DEBUG   SenderThread:1340462 [sender.py:send_request():407] send_request: check_version
+2023-11-21 06:57:38,024 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: run_start
+2023-11-21 06:57:38,032 DEBUG   HandlerThread:1340462 [system_info.py:__init__():32] System info init
+2023-11-21 06:57:38,032 DEBUG   HandlerThread:1340462 [system_info.py:__init__():47] System info init done
+2023-11-21 06:57:38,032 INFO    HandlerThread:1340462 [system_monitor.py:start():194] Starting system monitor
+2023-11-21 06:57:38,033 INFO    SystemMonitor:1340462 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-21 06:57:38,033 INFO    HandlerThread:1340462 [system_monitor.py:probe():214] Collecting system info
+2023-11-21 06:57:38,034 INFO    SystemMonitor:1340462 [interfaces.py:start():190] Started cpu monitoring
+2023-11-21 06:57:38,034 INFO    SystemMonitor:1340462 [interfaces.py:start():190] Started disk monitoring
+2023-11-21 06:57:38,035 INFO    SystemMonitor:1340462 [interfaces.py:start():190] Started gpu monitoring
+2023-11-21 06:57:38,035 INFO    SystemMonitor:1340462 [interfaces.py:start():190] Started memory monitoring
+2023-11-21 06:57:38,036 INFO    SystemMonitor:1340462 [interfaces.py:start():190] Started network monitoring
+2023-11-21 06:57:38,045 DEBUG   HandlerThread:1340462 [system_info.py:probe():196] Probing system
+2023-11-21 06:57:38,049 DEBUG   HandlerThread:1340462 [system_info.py:_probe_git():181] Probing git
+2023-11-21 06:57:38,057 DEBUG   HandlerThread:1340462 [system_info.py:_probe_git():189] Probing git done
+2023-11-21 06:57:38,057 DEBUG   HandlerThread:1340462 [system_info.py:probe():244] Probing system done
+2023-11-21 06:57:38,057 DEBUG   HandlerThread:1340462 [system_monitor.py:probe():223] {'os': 'Linux-6.2.0-36-generic-x86_64-with-glibc2.35', 'python': '3.11.5', 'heartbeatAt': '2023-11-21T01:27:38.045265', 'startedAt': '2023-11-21T01:27:37.224925', 'docker': None, 'cuda': None, 'args': ('--algorithm=DQN', '--alpha=0.00018233459491189704', '--batch_size=128', '--buffer_size=10000', '--env=CartPole-v1', '--epsilon=0.9625838245516916', '--gamma=0.9572049570084552', '--learning_start=1000', '--max_episode_steps=1000', '--model_type=medium', '--num_envs=8', '--save_test=1000', '--tau=1', '--total_time_steps=100000', '--train_frequency=10', '--update_target_frequency=100', '--use_per=False', '--wandb_log=True'), 'state': 'running', 'program': '/home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/main.py', 'codePathLocal': 'main.py', 'codePath': 'ReinforcementLearning/Non_Atari (copy)/main.py', 'git': {'remote': 'https://github.com/TheUnsolvedDev/JaxStormer.git', 'commit': 'a0770a67bc81190ec60645392d7543f990d38a37'}, 'email': 'shuvrajeet17@gmail.com', 'root': '/home/shuvrajeet/Documents/GitHub/JaxStormer', 'host': 'desktop', 'username': 'shuvrajeet', 'executable': '/home/shuvrajeet/miniconda3/envs/JAX_GPU/bin/python', 'cpu_count': 6, 'cpu_count_logical': 6, 'cpu_freq': {'current': 2495.4275, 'min': 2200.0, 'max': 3600.0}, 'cpu_freq_per_core': [{'current': 2399.813, 'min': 2200.0, 'max': 3600.0}, {'current': 2138.036, 'min': 2200.0, 'max': 3600.0}, {'current': 2174.862, 'min': 2200.0, 'max': 3600.0}, {'current': 4050.317, 'min': 2200.0, 'max': 3600.0}, {'current': 2188.872, 'min': 2200.0, 'max': 3600.0}, {'current': 2020.665, 'min': 2200.0, 'max': 3600.0}], 'disk': {'/': {'total': 438.5479202270508, 'used': 177.3705825805664}}, 'gpu': 'NVIDIA GeForce RTX 2060 SUPER', 'gpu_count': 1, 'gpu_devices': [{'name': 'NVIDIA GeForce RTX 2060 SUPER', 'memory_total': 8589934592}], 'memory': {'total': 31.257389068603516}}
+2023-11-21 06:57:38,057 INFO    HandlerThread:1340462 [system_monitor.py:probe():224] Finished collecting system info
+2023-11-21 06:57:38,057 INFO    HandlerThread:1340462 [system_monitor.py:probe():227] Publishing system info
+2023-11-21 06:57:38,057 DEBUG   HandlerThread:1340462 [system_info.py:_save_pip():52] Saving list of pip packages installed into the current environment
+2023-11-21 06:57:38,057 DEBUG   HandlerThread:1340462 [system_info.py:_save_pip():68] Saving pip packages done
+2023-11-21 06:57:38,057 DEBUG   HandlerThread:1340462 [system_info.py:_save_conda():75] Saving list of conda packages installed into the current environment
+2023-11-21 06:57:38,923 INFO    Thread-13 :1340462 [dir_watcher.py:_on_file_created():271] file/dir created: /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_065737-pl0oah4o/files/requirements.txt
+2023-11-21 06:57:38,923 INFO    Thread-13 :1340462 [dir_watcher.py:_on_file_created():271] file/dir created: /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_065737-pl0oah4o/files/conda-environment.yaml
+2023-11-21 06:57:39,168 DEBUG   HandlerThread:1340462 [system_info.py:_save_conda():87] Saving conda packages done
+2023-11-21 06:57:39,168 INFO    HandlerThread:1340462 [system_monitor.py:probe():229] Finished publishing system info
+2023-11-21 06:57:39,170 DEBUG   SenderThread:1340462 [sender.py:send():380] send: files
+2023-11-21 06:57:39,170 INFO    SenderThread:1340462 [sender.py:_save_file():1378] saving file wandb-metadata.json with policy now
+2023-11-21 06:57:39,176 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-21 06:57:39,177 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: stop_status
+2023-11-21 06:57:39,177 DEBUG   SenderThread:1340462 [sender.py:send_request():407] send_request: stop_status
+2023-11-21 06:57:39,527 DEBUG   SenderThread:1340462 [sender.py:send():380] send: telemetry
+2023-11-21 06:57:39,922 INFO    Thread-13 :1340462 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_065737-pl0oah4o/files/conda-environment.yaml
+2023-11-21 06:57:39,922 INFO    Thread-13 :1340462 [dir_watcher.py:_on_file_created():271] file/dir created: /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_065737-pl0oah4o/files/output.log
+2023-11-21 06:57:39,922 INFO    Thread-13 :1340462 [dir_watcher.py:_on_file_created():271] file/dir created: /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_065737-pl0oah4o/files/wandb-metadata.json
+2023-11-21 06:57:40,139 INFO    wandb-upload_0:1340462 [upload_job.py:push():131] Uploaded file /tmp/tmph0i4r75kwandb/opdrq2s0-wandb-metadata.json
+2023-11-21 06:57:40,286 DEBUG   SenderThread:1340462 [sender.py:send():380] send: exit
+2023-11-21 06:57:40,286 INFO    SenderThread:1340462 [sender.py:send_exit():585] handling exit code: 1
+2023-11-21 06:57:40,287 INFO    SenderThread:1340462 [sender.py:send_exit():587] handling runtime: 2
+2023-11-21 06:57:40,288 INFO    SenderThread:1340462 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-21 06:57:40,288 INFO    SenderThread:1340462 [sender.py:send_exit():593] send defer
+2023-11-21 06:57:40,289 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: defer
+2023-11-21 06:57:40,289 INFO    HandlerThread:1340462 [handler.py:handle_request_defer():172] handle defer: 0
+2023-11-21 06:57:40,289 DEBUG   SenderThread:1340462 [sender.py:send_request():407] send_request: defer
+2023-11-21 06:57:40,289 INFO    SenderThread:1340462 [sender.py:send_request_defer():609] handle sender defer: 0
+2023-11-21 06:57:40,289 INFO    SenderThread:1340462 [sender.py:transition_state():613] send defer: 1
+2023-11-21 06:57:40,289 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: defer
+2023-11-21 06:57:40,289 INFO    HandlerThread:1340462 [handler.py:handle_request_defer():172] handle defer: 1
+2023-11-21 06:57:40,289 DEBUG   SenderThread:1340462 [sender.py:send_request():407] send_request: defer
+2023-11-21 06:57:40,289 INFO    SenderThread:1340462 [sender.py:send_request_defer():609] handle sender defer: 1
+2023-11-21 06:57:40,289 INFO    SenderThread:1340462 [sender.py:transition_state():613] send defer: 2
+2023-11-21 06:57:40,290 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: defer
+2023-11-21 06:57:40,290 INFO    HandlerThread:1340462 [handler.py:handle_request_defer():172] handle defer: 2
+2023-11-21 06:57:40,290 INFO    HandlerThread:1340462 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-21 06:57:40,290 DEBUG   SystemMonitor:1340462 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-21 06:57:40,290 DEBUG   SystemMonitor:1340462 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-21 06:57:40,290 DEBUG   SystemMonitor:1340462 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-21 06:57:40,290 INFO    HandlerThread:1340462 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-21 06:57:40,291 INFO    HandlerThread:1340462 [interfaces.py:finish():202] Joined disk monitor
+2023-11-21 06:57:40,291 INFO    HandlerThread:1340462 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-21 06:57:40,292 INFO    HandlerThread:1340462 [interfaces.py:finish():202] Joined memory monitor
+2023-11-21 06:57:40,292 INFO    HandlerThread:1340462 [interfaces.py:finish():202] Joined network monitor
+2023-11-21 06:57:40,292 DEBUG   SenderThread:1340462 [sender.py:send_request():407] send_request: defer
+2023-11-21 06:57:40,292 INFO    SenderThread:1340462 [sender.py:send_request_defer():609] handle sender defer: 2
+2023-11-21 06:57:40,292 INFO    SenderThread:1340462 [sender.py:transition_state():613] send defer: 3
+2023-11-21 06:57:40,292 DEBUG   SenderThread:1340462 [sender.py:send():380] send: stats
+2023-11-21 06:57:40,292 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: defer
+2023-11-21 06:57:40,292 INFO    HandlerThread:1340462 [handler.py:handle_request_defer():172] handle defer: 3
+2023-11-21 06:57:40,293 DEBUG   SenderThread:1340462 [sender.py:send_request():407] send_request: defer
+2023-11-21 06:57:40,293 INFO    SenderThread:1340462 [sender.py:send_request_defer():609] handle sender defer: 3
+2023-11-21 06:57:40,293 INFO    SenderThread:1340462 [sender.py:transition_state():613] send defer: 4
+2023-11-21 06:57:40,293 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: defer
+2023-11-21 06:57:40,293 INFO    HandlerThread:1340462 [handler.py:handle_request_defer():172] handle defer: 4
+2023-11-21 06:57:40,293 DEBUG   SenderThread:1340462 [sender.py:send_request():407] send_request: defer
+2023-11-21 06:57:40,293 INFO    SenderThread:1340462 [sender.py:send_request_defer():609] handle sender defer: 4
+2023-11-21 06:57:40,293 INFO    SenderThread:1340462 [sender.py:transition_state():613] send defer: 5
+2023-11-21 06:57:40,293 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: defer
+2023-11-21 06:57:40,293 INFO    HandlerThread:1340462 [handler.py:handle_request_defer():172] handle defer: 5
+2023-11-21 06:57:40,293 DEBUG   SenderThread:1340462 [sender.py:send():380] send: summary
+2023-11-21 06:57:40,294 INFO    SenderThread:1340462 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-21 06:57:40,294 DEBUG   SenderThread:1340462 [sender.py:send_request():407] send_request: defer
+2023-11-21 06:57:40,294 INFO    SenderThread:1340462 [sender.py:send_request_defer():609] handle sender defer: 5
+2023-11-21 06:57:40,294 INFO    SenderThread:1340462 [sender.py:transition_state():613] send defer: 6
+2023-11-21 06:57:40,294 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: defer
+2023-11-21 06:57:40,294 INFO    HandlerThread:1340462 [handler.py:handle_request_defer():172] handle defer: 6
+2023-11-21 06:57:40,294 DEBUG   SenderThread:1340462 [sender.py:send_request():407] send_request: defer
+2023-11-21 06:57:40,294 INFO    SenderThread:1340462 [sender.py:send_request_defer():609] handle sender defer: 6
+2023-11-21 06:57:40,298 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: status_report
+2023-11-21 06:57:40,592 INFO    SenderThread:1340462 [sender.py:transition_state():613] send defer: 7
+2023-11-21 06:57:40,593 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: defer
+2023-11-21 06:57:40,593 INFO    HandlerThread:1340462 [handler.py:handle_request_defer():172] handle defer: 7
+2023-11-21 06:57:40,593 DEBUG   SenderThread:1340462 [sender.py:send_request():407] send_request: defer
+2023-11-21 06:57:40,593 INFO    SenderThread:1340462 [sender.py:send_request_defer():609] handle sender defer: 7
+2023-11-21 06:57:40,922 INFO    Thread-13 :1340462 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_065737-pl0oah4o/files/config.yaml
+2023-11-21 06:57:40,922 INFO    Thread-13 :1340462 [dir_watcher.py:_on_file_created():271] file/dir created: /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_065737-pl0oah4o/files/wandb-summary.json
+2023-11-21 06:57:41,287 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: poll_exit
+2023-11-21 06:57:41,922 INFO    Thread-13 :1340462 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_065737-pl0oah4o/files/output.log
+2023-11-21 06:57:43,533 INFO    SenderThread:1340462 [sender.py:transition_state():613] send defer: 8
+2023-11-21 06:57:43,533 DEBUG   SenderThread:1340462 [sender.py:send_request():407] send_request: poll_exit
+2023-11-21 06:57:43,533 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: defer
+2023-11-21 06:57:43,534 INFO    HandlerThread:1340462 [handler.py:handle_request_defer():172] handle defer: 8
+2023-11-21 06:57:43,534 DEBUG   SenderThread:1340462 [sender.py:send_request():407] send_request: defer
+2023-11-21 06:57:43,534 INFO    SenderThread:1340462 [sender.py:send_request_defer():609] handle sender defer: 8
+2023-11-21 06:57:43,534 INFO    SenderThread:1340462 [sender.py:transition_state():613] send defer: 9
+2023-11-21 06:57:43,534 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: defer
+2023-11-21 06:57:43,534 INFO    HandlerThread:1340462 [handler.py:handle_request_defer():172] handle defer: 9
+2023-11-21 06:57:43,534 DEBUG   SenderThread:1340462 [sender.py:send_request():407] send_request: defer
+2023-11-21 06:57:43,534 INFO    SenderThread:1340462 [sender.py:send_request_defer():609] handle sender defer: 9
+2023-11-21 06:57:43,534 INFO    SenderThread:1340462 [dir_watcher.py:finish():358] shutting down directory watcher
+2023-11-21 06:57:43,923 INFO    SenderThread:1340462 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_065737-pl0oah4o/files/output.log
+2023-11-21 06:57:43,923 INFO    SenderThread:1340462 [dir_watcher.py:finish():388] scan: /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_065737-pl0oah4o/files
+2023-11-21 06:57:43,923 INFO    SenderThread:1340462 [dir_watcher.py:finish():402] scan save: /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_065737-pl0oah4o/files/config.yaml config.yaml
+2023-11-21 06:57:43,924 INFO    SenderThread:1340462 [dir_watcher.py:finish():402] scan save: /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_065737-pl0oah4o/files/conda-environment.yaml conda-environment.yaml
+2023-11-21 06:57:43,925 INFO    SenderThread:1340462 [dir_watcher.py:finish():402] scan save: /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_065737-pl0oah4o/files/requirements.txt requirements.txt
+2023-11-21 06:57:43,927 INFO    SenderThread:1340462 [dir_watcher.py:finish():402] scan save: /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_065737-pl0oah4o/files/output.log output.log
+2023-11-21 06:57:43,928 INFO    SenderThread:1340462 [dir_watcher.py:finish():402] scan save: /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_065737-pl0oah4o/files/wandb-metadata.json wandb-metadata.json
+2023-11-21 06:57:43,928 INFO    SenderThread:1340462 [dir_watcher.py:finish():402] scan save: /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_065737-pl0oah4o/files/wandb-summary.json wandb-summary.json
+2023-11-21 06:57:43,930 INFO    SenderThread:1340462 [sender.py:transition_state():613] send defer: 10
+2023-11-21 06:57:43,931 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: defer
+2023-11-21 06:57:43,931 INFO    HandlerThread:1340462 [handler.py:handle_request_defer():172] handle defer: 10
+2023-11-21 06:57:43,931 DEBUG   SenderThread:1340462 [sender.py:send_request():407] send_request: defer
+2023-11-21 06:57:43,931 INFO    SenderThread:1340462 [sender.py:send_request_defer():609] handle sender defer: 10
+2023-11-21 06:57:43,931 INFO    SenderThread:1340462 [file_pusher.py:finish():175] shutting down file pusher
+2023-11-21 06:57:44,516 INFO    wandb-upload_1:1340462 [upload_job.py:push():131] Uploaded file /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_065737-pl0oah4o/files/conda-environment.yaml
+2023-11-21 06:57:44,613 INFO    wandb-upload_0:1340462 [upload_job.py:push():131] Uploaded file /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_065737-pl0oah4o/files/config.yaml
+2023-11-21 06:57:44,743 INFO    wandb-upload_2:1340462 [upload_job.py:push():131] Uploaded file /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_065737-pl0oah4o/files/requirements.txt
+2023-11-21 06:57:44,777 INFO    wandb-upload_3:1340462 [upload_job.py:push():131] Uploaded file /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_065737-pl0oah4o/files/output.log
+2023-11-21 06:57:44,919 INFO    wandb-upload_4:1340462 [upload_job.py:push():131] Uploaded file /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_065737-pl0oah4o/files/wandb-summary.json
+2023-11-21 06:57:45,119 INFO    Thread-12 (_thread_body):1340462 [sender.py:transition_state():613] send defer: 11
+2023-11-21 06:57:45,120 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: defer
+2023-11-21 06:57:45,120 INFO    HandlerThread:1340462 [handler.py:handle_request_defer():172] handle defer: 11
+2023-11-21 06:57:45,120 DEBUG   SenderThread:1340462 [sender.py:send_request():407] send_request: defer
+2023-11-21 06:57:45,120 INFO    SenderThread:1340462 [sender.py:send_request_defer():609] handle sender defer: 11
+2023-11-21 06:57:45,120 INFO    SenderThread:1340462 [file_pusher.py:join():181] waiting for file pusher
+2023-11-21 06:57:45,120 INFO    SenderThread:1340462 [sender.py:transition_state():613] send defer: 12
+2023-11-21 06:57:45,120 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: defer
+2023-11-21 06:57:45,120 INFO    HandlerThread:1340462 [handler.py:handle_request_defer():172] handle defer: 12
+2023-11-21 06:57:45,121 DEBUG   SenderThread:1340462 [sender.py:send_request():407] send_request: defer
+2023-11-21 06:57:45,121 INFO    SenderThread:1340462 [sender.py:send_request_defer():609] handle sender defer: 12
+2023-11-21 06:57:45,121 INFO    SenderThread:1340462 [file_stream.py:finish():595] file stream finish called
+2023-11-21 06:57:45,405 INFO    SenderThread:1340462 [file_stream.py:finish():599] file stream finish is done
+2023-11-21 06:57:45,405 INFO    SenderThread:1340462 [sender.py:transition_state():613] send defer: 13
+2023-11-21 06:57:45,405 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: defer
+2023-11-21 06:57:45,405 INFO    HandlerThread:1340462 [handler.py:handle_request_defer():172] handle defer: 13
+2023-11-21 06:57:45,406 DEBUG   SenderThread:1340462 [sender.py:send_request():407] send_request: defer
+2023-11-21 06:57:45,406 INFO    SenderThread:1340462 [sender.py:send_request_defer():609] handle sender defer: 13
+2023-11-21 06:57:45,406 INFO    SenderThread:1340462 [sender.py:transition_state():613] send defer: 14
+2023-11-21 06:57:45,406 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: defer
+2023-11-21 06:57:45,406 INFO    HandlerThread:1340462 [handler.py:handle_request_defer():172] handle defer: 14
+2023-11-21 06:57:45,406 DEBUG   SenderThread:1340462 [sender.py:send():380] send: final
+2023-11-21 06:57:45,406 DEBUG   SenderThread:1340462 [sender.py:send():380] send: footer
+2023-11-21 06:57:45,406 DEBUG   SenderThread:1340462 [sender.py:send_request():407] send_request: defer
+2023-11-21 06:57:45,406 INFO    SenderThread:1340462 [sender.py:send_request_defer():609] handle sender defer: 14
+2023-11-21 06:57:45,407 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: poll_exit
+2023-11-21 06:57:45,407 DEBUG   SenderThread:1340462 [sender.py:send_request():407] send_request: poll_exit
+2023-11-21 06:57:45,407 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: server_info
+2023-11-21 06:57:45,407 DEBUG   SenderThread:1340462 [sender.py:send_request():407] send_request: server_info
+2023-11-21 06:57:45,409 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: get_summary
+2023-11-21 06:57:45,409 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: sampled_history
+2023-11-21 06:57:45,410 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-21 06:57:45,410 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: job_info
+2023-11-21 06:57:45,666 DEBUG   SenderThread:1340462 [sender.py:send_request():407] send_request: job_info
+2023-11-21 06:57:45,666 INFO    MainThread:1340462 [wandb_run.py:_footer_history_summary_info():3599] rendering history
+2023-11-21 06:57:45,666 INFO    MainThread:1340462 [wandb_run.py:_footer_history_summary_info():3631] rendering summary
+2023-11-21 06:57:45,666 INFO    MainThread:1340462 [wandb_run.py:_footer_sync_info():3558] logging synced files
+2023-11-21 06:57:45,667 DEBUG   HandlerThread:1340462 [handler.py:handle_request():146] handle_request: shutdown
+2023-11-21 06:57:45,667 INFO    HandlerThread:1340462 [handler.py:finish():866] shutting down handler
+2023-11-21 06:57:46,410 INFO    WriterThread:1340462 [datastore.py:close():294] close: /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_065737-pl0oah4o/run-pl0oah4o.wandb
+2023-11-21 06:57:46,666 INFO    SenderThread:1340462 [sender.py:finish():1534] shutting down sender
+2023-11-21 06:57:46,666 INFO    SenderThread:1340462 [file_pusher.py:finish():175] shutting down file pusher
+2023-11-21 06:57:46,667 INFO    SenderThread:1340462 [file_pusher.py:join():181] waiting for file pusher

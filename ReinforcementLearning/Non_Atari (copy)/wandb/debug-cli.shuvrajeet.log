@@ -1,0 +1,1282 @@
+2023-11-21 06:22:41 INFO Running runs: []
+2023-11-21 06:22:42 INFO Agent received command: run
+2023-11-21 06:22:42 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0007118798524776726
+	batch_size: 512
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.977700277948881
+	gamma: 0.9404070044156708
+	learning_start: 20000
+	max_episode_steps: 1000
+	model_type: medium
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 1000000
+	train_frequency: 20
+	update_target_frequency: 500
+	use_per: False
+	wandb_log: True
+2023-11-21 06:22:42 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0007118798524776726 --batch_size=512 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.977700277948881 --gamma=0.9404070044156708 --learning_start=20000 --max_episode_steps=1000 --model_type=medium --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=1000000 --train_frequency=20 --update_target_frequency=500 --use_per=False --wandb_log=True
+2023-11-21 06:22:47 INFO Running runs: ['6wqtmr4n']
+2023-11-21 06:23:44 INFO Running runs: []
+2023-11-21 06:23:45 INFO Agent received command: run
+2023-11-21 06:23:45 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0006446217581938834
+	batch_size: 256
+	buffer_size: 20000
+	env: CartPole-v1
+	epsilon: 0.9091194732540422
+	gamma: 0.9681438779241196
+	learning_start: 20000
+	max_episode_steps: 1000
+	model_type: small
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 2000000
+	train_frequency: 20
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 06:23:45 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0006446217581938834 --batch_size=256 --buffer_size=20000 --env=CartPole-v1 --epsilon=0.9091194732540422 --gamma=0.9681438779241196 --learning_start=20000 --max_episode_steps=1000 --model_type=small --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=2000000 --train_frequency=20 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 06:23:50 INFO Running runs: ['z5qhemnn']
+2023-11-21 06:29:26 INFO Running runs: []
+2023-11-21 06:29:27 INFO Agent received command: run
+2023-11-21 06:29:27 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0009241520738257772
+	batch_size: 128
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9798927341052678
+	gamma: 0.965131292375221
+	learning_start: 2000
+	max_episode_steps: 1000
+	model_type: small
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 100000
+	train_frequency: 50
+	update_target_frequency: 500
+	use_per: False
+	wandb_log: True
+2023-11-21 06:29:27 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0009241520738257772 --batch_size=128 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9798927341052678 --gamma=0.965131292375221 --learning_start=2000 --max_episode_steps=1000 --model_type=small --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=100000 --train_frequency=50 --update_target_frequency=500 --use_per=False --wandb_log=True
+2023-11-21 06:29:32 INFO Running runs: ['bexrc4dk']
+2023-11-21 06:31:02 INFO Cleaning up finished run: bexrc4dk
+2023-11-21 06:33:04 INFO Running runs: []
+2023-11-21 06:33:05 INFO Agent received command: run
+2023-11-21 06:33:05 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0004555316343190109
+	batch_size: 512
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9677807812359368
+	gamma: 0.9164894808024804
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: large
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 300000
+	train_frequency: 50
+	update_target_frequency: 500
+	use_per: False
+	wandb_log: True
+2023-11-21 06:33:05 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0004555316343190109 --batch_size=512 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9677807812359368 --gamma=0.9164894808024804 --learning_start=3000 --max_episode_steps=1000 --model_type=large --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=300000 --train_frequency=50 --update_target_frequency=500 --use_per=False --wandb_log=True
+2023-11-21 06:33:10 INFO Running runs: ['djhqd7hc']
+2023-11-21 06:35:27 INFO Cleaning up finished run: djhqd7hc
+2023-11-21 06:37:22 INFO Running runs: []
+2023-11-21 06:37:22 INFO Agent received command: run
+2023-11-21 06:37:22 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 2.261048834382047e-05
+	batch_size: 512
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9316200294738304
+	gamma: 0.9434371982944976
+	learning_start: 2000
+	max_episode_steps: 1000
+	model_type: small
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 300000
+	train_frequency: 10
+	update_target_frequency: 500
+	use_per: False
+	wandb_log: True
+2023-11-21 06:37:22 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=2.261048834382047e-05 --batch_size=512 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9316200294738304 --gamma=0.9434371982944976 --learning_start=2000 --max_episode_steps=1000 --model_type=small --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=300000 --train_frequency=10 --update_target_frequency=500 --use_per=False --wandb_log=True
+2023-11-21 06:37:27 INFO Running runs: ['rixq3mz7']
+2023-11-21 06:41:03 INFO Cleaning up finished run: rixq3mz7
+2023-11-21 06:43:52 INFO Running runs: []
+2023-11-21 06:43:53 INFO Agent received command: run
+2023-11-21 06:43:53 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0007315103278295697
+	batch_size: 512
+	buffer_size: 5000
+	env: CartPole-v1
+	epsilon: 0.9331200218887002
+	gamma: 0.9394321838163234
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: small
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 300000
+	train_frequency: 20
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 06:43:53 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0007315103278295697 --batch_size=512 --buffer_size=5000 --env=CartPole-v1 --epsilon=0.9331200218887002 --gamma=0.9394321838163234 --learning_start=3000 --max_episode_steps=1000 --model_type=small --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=300000 --train_frequency=20 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 06:43:58 INFO Running runs: ['3t22j0t6']
+2023-11-21 06:46:46 INFO Cleaning up finished run: 3t22j0t6
+2023-11-21 06:54:41 INFO Running runs: []
+2023-11-21 06:54:42 INFO Agent received command: run
+2023-11-21 06:54:42 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0004511110646361965
+	batch_size: 256
+	buffer_size: 5000
+	env: CartPole-v1
+	epsilon: 0.9859991252924406
+	gamma: 0.9229778789863912
+	learning_start: 2000
+	max_episode_steps: 1000
+	model_type: medium
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 300000
+	train_frequency: 50
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 06:54:42 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0004511110646361965 --batch_size=256 --buffer_size=5000 --env=CartPole-v1 --epsilon=0.9859991252924406 --gamma=0.9229778789863912 --learning_start=2000 --max_episode_steps=1000 --model_type=medium --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=300000 --train_frequency=50 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 06:54:47 INFO Running runs: ['vn82ynbs']
+2023-11-21 06:54:47 INFO Cleaning up finished run: vn82ynbs
+2023-11-21 06:55:37 INFO Running runs: []
+2023-11-21 06:55:37 INFO Agent received command: run
+2023-11-21 06:55:37 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0001503970090805795
+	batch_size: 256
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.996435262201168
+	gamma: 0.9764546244822604
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: large
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 100000
+	train_frequency: 10
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 06:55:37 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0001503970090805795 --batch_size=256 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.996435262201168 --gamma=0.9764546244822604 --learning_start=3000 --max_episode_steps=1000 --model_type=large --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=100000 --train_frequency=10 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 06:55:42 INFO Running runs: ['v629j1om']
+2023-11-21 06:55:42 INFO Cleaning up finished run: v629j1om
+2023-11-21 06:56:39 INFO Running runs: []
+2023-11-21 06:56:40 INFO Agent received command: run
+2023-11-21 06:56:40 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 5.173159684674383e-05
+	batch_size: 512
+	buffer_size: 5000
+	env: CartPole-v1
+	epsilon: 0.98650495221638
+	gamma: 0.9508483313765012
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: small
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 300000
+	train_frequency: 50
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 06:56:40 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=5.173159684674383e-05 --batch_size=512 --buffer_size=5000 --env=CartPole-v1 --epsilon=0.98650495221638 --gamma=0.9508483313765012 --learning_start=3000 --max_episode_steps=1000 --model_type=small --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=300000 --train_frequency=50 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 06:56:45 INFO Running runs: ['uhgw62zd']
+2023-11-21 06:56:45 INFO Cleaning up finished run: uhgw62zd
+2023-11-21 06:57:34 INFO Running runs: []
+2023-11-21 06:57:35 INFO Agent received command: run
+2023-11-21 06:57:35 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.00018233459491189704
+	batch_size: 128
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9625838245516916
+	gamma: 0.9572049570084552
+	learning_start: 1000
+	max_episode_steps: 1000
+	model_type: medium
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 100000
+	train_frequency: 10
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 06:57:35 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.00018233459491189704 --batch_size=128 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9625838245516916 --gamma=0.9572049570084552 --learning_start=1000 --max_episode_steps=1000 --model_type=medium --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=100000 --train_frequency=10 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 06:57:40 INFO Running runs: ['pl0oah4o']
+2023-11-21 06:57:40 INFO Cleaning up finished run: pl0oah4o
+2023-11-21 06:59:30 INFO Running runs: []
+2023-11-21 06:59:31 INFO Agent received command: run
+2023-11-21 06:59:31 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0009850478673818924
+	batch_size: 256
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9881835662185648
+	gamma: 0.9410277863550294
+	learning_start: 2000
+	max_episode_steps: 1000
+	model_type: small
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 100000
+	train_frequency: 10
+	update_target_frequency: 500
+	use_per: False
+	wandb_log: True
+2023-11-21 06:59:31 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0009850478673818924 --batch_size=256 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9881835662185648 --gamma=0.9410277863550294 --learning_start=2000 --max_episode_steps=1000 --model_type=small --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=100000 --train_frequency=10 --update_target_frequency=500 --use_per=False --wandb_log=True
+2023-11-21 06:59:36 INFO Running runs: ['d8jq4050']
+2023-11-21 06:59:41 INFO Cleaning up finished run: d8jq4050
+2023-11-21 07:01:08 INFO Running runs: []
+2023-11-21 07:01:09 INFO Agent received command: run
+2023-11-21 07:01:09 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0004682551738722395
+	batch_size: 512
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9318243047402164
+	gamma: 0.975054301270392
+	learning_start: 1000
+	max_episode_steps: 1000
+	model_type: large
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 100000
+	train_frequency: 10
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 07:01:09 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0004682551738722395 --batch_size=512 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9318243047402164 --gamma=0.975054301270392 --learning_start=1000 --max_episode_steps=1000 --model_type=large --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=100000 --train_frequency=10 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 07:01:14 INFO Running runs: ['36zjk180']
+2023-11-21 07:01:14 INFO Cleaning up finished run: 36zjk180
+2023-11-21 07:01:37 INFO Running runs: []
+2023-11-21 07:01:38 INFO Agent received command: run
+2023-11-21 07:01:38 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0003797857101841398
+	batch_size: 128
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9211749100523328
+	gamma: 0.9635618602118248
+	learning_start: 2000
+	max_episode_steps: 1000
+	model_type: small
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 100000
+	train_frequency: 50
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 07:01:38 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0003797857101841398 --batch_size=128 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9211749100523328 --gamma=0.9635618602118248 --learning_start=2000 --max_episode_steps=1000 --model_type=small --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=100000 --train_frequency=50 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 07:01:43 INFO Running runs: ['lyrjbqjs']
+2023-11-21 07:02:09 INFO Cleaning up finished run: lyrjbqjs
+2023-11-21 07:03:25 INFO Running runs: []
+2023-11-21 07:03:26 INFO Agent received command: run
+2023-11-21 07:03:26 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0007691803914581243
+	batch_size: 128
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.962741628506723
+	gamma: 0.9778546651871698
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: large
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 100000
+	train_frequency: 50
+	update_target_frequency: 500
+	use_per: False
+	wandb_log: True
+2023-11-21 07:03:26 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0007691803914581243 --batch_size=128 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.962741628506723 --gamma=0.9778546651871698 --learning_start=3000 --max_episode_steps=1000 --model_type=large --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=100000 --train_frequency=50 --update_target_frequency=500 --use_per=False --wandb_log=True
+2023-11-21 07:03:31 INFO Running runs: ['cx55mf0v']
+2023-11-21 07:03:57 INFO Cleaning up finished run: cx55mf0v
+2023-11-21 07:04:58 INFO Running runs: []
+2023-11-21 07:04:58 INFO Agent received command: run
+2023-11-21 07:04:58 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0002733741480157992
+	batch_size: 256
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9292579419069392
+	gamma: 0.9311493086961644
+	learning_start: 2000
+	max_episode_steps: 1000
+	model_type: large
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 100000
+	train_frequency: 20
+	update_target_frequency: 250
+	use_per: False
+	wandb_log: True
+2023-11-21 07:04:58 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0002733741480157992 --batch_size=256 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9292579419069392 --gamma=0.9311493086961644 --learning_start=2000 --max_episode_steps=1000 --model_type=large --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=100000 --train_frequency=20 --update_target_frequency=250 --use_per=False --wandb_log=True
+2023-11-21 07:05:03 INFO Running runs: ['oe7el3fv']
+2023-11-21 07:09:38 INFO Running runs: []
+2023-11-21 07:09:39 INFO Agent received command: run
+2023-11-21 07:09:39 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0009907904955865684
+	batch_size: 512
+	buffer_size: 5000
+	env: CartPole-v1
+	epsilon: 0.961357829083179
+	gamma: 0.9622995570337048
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: large
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 100000
+	train_frequency: 10
+	update_target_frequency: 500
+	use_per: False
+	wandb_log: True
+2023-11-21 07:09:39 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0009907904955865684 --batch_size=512 --buffer_size=5000 --env=CartPole-v1 --epsilon=0.961357829083179 --gamma=0.9622995570337048 --learning_start=3000 --max_episode_steps=1000 --model_type=large --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=100000 --train_frequency=10 --update_target_frequency=500 --use_per=False --wandb_log=True
+2023-11-21 07:09:44 INFO Running runs: ['nb0ek3bb']
+2023-11-21 07:10:46 INFO Running runs: []
+2023-11-21 07:10:46 INFO Agent received command: run
+2023-11-21 07:10:46 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0006779950477527382
+	batch_size: 512
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9099978200023928
+	gamma: 0.9014192943956096
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: large
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 100000
+	train_frequency: 50
+	update_target_frequency: 250
+	use_per: False
+	wandb_log: True
+2023-11-21 07:10:46 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0006779950477527382 --batch_size=512 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9099978200023928 --gamma=0.9014192943956096 --learning_start=3000 --max_episode_steps=1000 --model_type=large --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=100000 --train_frequency=50 --update_target_frequency=250 --use_per=False --wandb_log=True
+2023-11-21 07:10:51 INFO Running runs: ['zbimq4oh']
+2023-11-21 07:30:16 INFO Cleaning up finished run: zbimq4oh
+2023-11-21 07:30:44 INFO Agent received command: run
+2023-11-21 07:30:44 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0007132514116310214
+	batch_size: 512
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9229195939621012
+	gamma: 0.985925538636564
+	learning_start: 1000
+	max_episode_steps: 1000
+	model_type: large
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 300000
+	train_frequency: 50
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 07:30:44 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0007132514116310214 --batch_size=512 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9229195939621012 --gamma=0.985925538636564 --learning_start=1000 --max_episode_steps=1000 --model_type=large --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=300000 --train_frequency=50 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 07:30:49 INFO Running runs: ['tde8yh3u']
+2023-11-21 07:31:34 INFO Running runs: []
+2023-11-21 07:31:35 INFO Agent received command: run
+2023-11-21 07:31:35 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0004476731730495051
+	batch_size: 256
+	buffer_size: 5000
+	env: CartPole-v1
+	epsilon: 0.9208105066018228
+	gamma: 0.9185515666208164
+	learning_start: 1000
+	max_episode_steps: 1000
+	model_type: medium
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 300000
+	train_frequency: 20
+	update_target_frequency: 250
+	use_per: False
+	wandb_log: True
+2023-11-21 07:31:35 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0004476731730495051 --batch_size=256 --buffer_size=5000 --env=CartPole-v1 --epsilon=0.9208105066018228 --gamma=0.9185515666208164 --learning_start=1000 --max_episode_steps=1000 --model_type=medium --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=300000 --train_frequency=20 --update_target_frequency=250 --use_per=False --wandb_log=True
+2023-11-21 07:31:40 INFO Running runs: ['dujbt76g']
+2023-11-21 07:31:41 INFO Running runs: []
+2023-11-21 07:31:42 INFO Agent received command: run
+2023-11-21 07:31:42 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.00038502548045504136
+	batch_size: 256
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9216168028826288
+	gamma: 0.9072716521239276
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: large
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 300000
+	train_frequency: 10
+	update_target_frequency: 250
+	use_per: False
+	wandb_log: True
+2023-11-21 07:31:42 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.00038502548045504136 --batch_size=256 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9216168028826288 --gamma=0.9072716521239276 --learning_start=3000 --max_episode_steps=1000 --model_type=large --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=300000 --train_frequency=10 --update_target_frequency=250 --use_per=False --wandb_log=True
+2023-11-21 07:31:47 INFO Running runs: ['omtxzy78']
+2023-11-21 07:34:03 INFO Cleaning up finished run: oe7el3fv
+2023-11-21 08:32:39 INFO Cleaning up finished run: tde8yh3u
+2023-11-21 08:32:39 INFO Agent received command: run
+2023-11-21 08:32:39 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0004003723139419222
+	batch_size: 128
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.913248426585508
+	gamma: 0.9018957773297194
+	learning_start: 1000
+	max_episode_steps: 1000
+	model_type: large
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 300000
+	train_frequency: 20
+	update_target_frequency: 500
+	use_per: False
+	wandb_log: True
+2023-11-21 08:32:39 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0004003723139419222 --batch_size=128 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.913248426585508 --gamma=0.9018957773297194 --learning_start=1000 --max_episode_steps=1000 --model_type=large --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=300000 --train_frequency=20 --update_target_frequency=500 --use_per=False --wandb_log=True
+2023-11-21 08:32:44 INFO Running runs: ['tm4ofcfo']
+2023-11-21 08:40:23 INFO Cleaning up finished run: nb0ek3bb
+2023-11-21 08:40:51 INFO Agent received command: run
+2023-11-21 08:40:51 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0006494973450560419
+	batch_size: 512
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9099564201637992
+	gamma: 0.919487704104924
+	learning_start: 1000
+	max_episode_steps: 1000
+	model_type: large
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 100000
+	train_frequency: 20
+	update_target_frequency: 250
+	use_per: False
+	wandb_log: True
+2023-11-21 08:40:51 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0006494973450560419 --batch_size=512 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9099564201637992 --gamma=0.919487704104924 --learning_start=1000 --max_episode_steps=1000 --model_type=large --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=100000 --train_frequency=20 --update_target_frequency=250 --use_per=False --wandb_log=True
+2023-11-21 08:40:56 INFO Running runs: ['8tzt9g73']
+2023-11-21 08:47:56 INFO Cleaning up finished run: dujbt76g
+2023-11-21 08:48:23 INFO Agent received command: run
+2023-11-21 08:48:23 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.00031624381081580465
+	batch_size: 256
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9846339130301414
+	gamma: 0.9736372269138472
+	learning_start: 2000
+	max_episode_steps: 1000
+	model_type: small
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 300000
+	train_frequency: 50
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 08:48:23 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.00031624381081580465 --batch_size=256 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9846339130301414 --gamma=0.9736372269138472 --learning_start=2000 --max_episode_steps=1000 --model_type=small --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=300000 --train_frequency=50 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 08:48:28 INFO Running runs: ['pjs2s6x7']
+2023-11-21 09:21:05 INFO Cleaning up finished run: tm4ofcfo
+2023-11-21 09:21:06 INFO Agent received command: run
+2023-11-21 09:21:06 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0009203996782365008
+	batch_size: 256
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9456372367974066
+	gamma: 0.9104212398102336
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: small
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 300000
+	train_frequency: 20
+	update_target_frequency: 250
+	use_per: False
+	wandb_log: True
+2023-11-21 09:21:06 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0009203996782365008 --batch_size=256 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9456372367974066 --gamma=0.9104212398102336 --learning_start=3000 --max_episode_steps=1000 --model_type=small --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=300000 --train_frequency=20 --update_target_frequency=250 --use_per=False --wandb_log=True
+2023-11-21 09:21:11 INFO Running runs: ['47ok0jk2']
+2023-11-21 09:23:22 INFO Cleaning up finished run: pjs2s6x7
+2023-11-21 09:23:23 INFO Agent received command: run
+2023-11-21 09:23:23 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 9.78760917089924e-05
+	batch_size: 128
+	buffer_size: 5000
+	env: CartPole-v1
+	epsilon: 0.9047240066292476
+	gamma: 0.9074480757518378
+	learning_start: 2000
+	max_episode_steps: 1000
+	model_type: large
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 100000
+	train_frequency: 10
+	update_target_frequency: 250
+	use_per: False
+	wandb_log: True
+2023-11-21 09:23:23 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=9.78760917089924e-05 --batch_size=128 --buffer_size=5000 --env=CartPole-v1 --epsilon=0.9047240066292476 --gamma=0.9074480757518378 --learning_start=2000 --max_episode_steps=1000 --model_type=large --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=100000 --train_frequency=10 --update_target_frequency=250 --use_per=False --wandb_log=True
+2023-11-21 09:23:28 INFO Running runs: ['to63icsh']
+2023-11-21 09:36:13 INFO Cleaning up finished run: 8tzt9g73
+2023-11-21 09:36:13 INFO Agent received command: run
+2023-11-21 09:36:13 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 2.3182177572416534e-05
+	batch_size: 128
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9629734940247466
+	gamma: 0.9552846602346644
+	learning_start: 1000
+	max_episode_steps: 1000
+	model_type: medium
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 200000
+	train_frequency: 10
+	update_target_frequency: 500
+	use_per: False
+	wandb_log: True
+2023-11-21 09:36:13 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=2.3182177572416534e-05 --batch_size=128 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9629734940247466 --gamma=0.9552846602346644 --learning_start=1000 --max_episode_steps=1000 --model_type=medium --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=200000 --train_frequency=10 --update_target_frequency=500 --use_per=False --wandb_log=True
+2023-11-21 09:36:18 INFO Running runs: ['k6z5ljre']
+2023-11-21 09:53:32 INFO Cleaning up finished run: to63icsh
+2023-11-21 09:53:33 INFO Agent received command: run
+2023-11-21 09:53:33 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0005309278256354723
+	batch_size: 512
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9998726681588894
+	gamma: 0.9569070271421108
+	learning_start: 2000
+	max_episode_steps: 1000
+	model_type: small
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 300000
+	train_frequency: 20
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 09:53:33 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0005309278256354723 --batch_size=512 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9998726681588894 --gamma=0.9569070271421108 --learning_start=2000 --max_episode_steps=1000 --model_type=small --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=300000 --train_frequency=20 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 09:53:38 INFO Running runs: ['v3hjn49i']
+2023-11-21 10:08:58 INFO Cleaning up finished run: omtxzy78
+2023-11-21 10:09:27 INFO Agent received command: run
+2023-11-21 10:09:27 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0006017276926500824
+	batch_size: 128
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9836958365540924
+	gamma: 0.9857585773767978
+	learning_start: 2000
+	max_episode_steps: 1000
+	model_type: medium
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 100000
+	train_frequency: 50
+	update_target_frequency: 500
+	use_per: False
+	wandb_log: True
+2023-11-21 10:09:27 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0006017276926500824 --batch_size=128 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9836958365540924 --gamma=0.9857585773767978 --learning_start=2000 --max_episode_steps=1000 --model_type=medium --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=100000 --train_frequency=50 --update_target_frequency=500 --use_per=False --wandb_log=True
+2023-11-21 10:09:32 INFO Running runs: ['56zbphef']
+2023-11-21 10:18:52 INFO Cleaning up finished run: 56zbphef
+2023-11-21 10:18:52 INFO Agent received command: run
+2023-11-21 10:18:52 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.000603025355489875
+	batch_size: 128
+	buffer_size: 5000
+	env: CartPole-v1
+	epsilon: 0.9252963202702056
+	gamma: 0.9036289587036532
+	learning_start: 1000
+	max_episode_steps: 1000
+	model_type: small
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 100000
+	train_frequency: 20
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 10:18:52 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.000603025355489875 --batch_size=128 --buffer_size=5000 --env=CartPole-v1 --epsilon=0.9252963202702056 --gamma=0.9036289587036532 --learning_start=1000 --max_episode_steps=1000 --model_type=small --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=100000 --train_frequency=20 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 10:18:57 INFO Running runs: ['jcfntjwy']
+2023-11-21 10:35:39 INFO Cleaning up finished run: jcfntjwy
+2023-11-21 10:35:40 INFO Agent received command: run
+2023-11-21 10:35:40 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.00031825035514723574
+	batch_size: 512
+	buffer_size: 5000
+	env: CartPole-v1
+	epsilon: 0.9663616028359427
+	gamma: 0.936183858838428
+	learning_start: 1000
+	max_episode_steps: 1000
+	model_type: medium
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 300000
+	train_frequency: 50
+	update_target_frequency: 500
+	use_per: False
+	wandb_log: True
+2023-11-21 10:35:40 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.00031825035514723574 --batch_size=512 --buffer_size=5000 --env=CartPole-v1 --epsilon=0.9663616028359427 --gamma=0.936183858838428 --learning_start=1000 --max_episode_steps=1000 --model_type=medium --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=300000 --train_frequency=50 --update_target_frequency=500 --use_per=False --wandb_log=True
+2023-11-21 10:35:45 INFO Running runs: ['zsu2895n']
+2023-11-21 10:42:02 INFO Cleaning up finished run: 47ok0jk2
+2023-11-21 10:42:03 INFO Agent received command: run
+2023-11-21 10:42:03 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.00017810003290355723
+	batch_size: 256
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9537737466148896
+	gamma: 0.9131604658707646
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: large
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 200000
+	train_frequency: 50
+	update_target_frequency: 250
+	use_per: False
+	wandb_log: True
+2023-11-21 10:42:03 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.00017810003290355723 --batch_size=256 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9537737466148896 --gamma=0.9131604658707646 --learning_start=3000 --max_episode_steps=1000 --model_type=large --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=200000 --train_frequency=50 --update_target_frequency=250 --use_per=False --wandb_log=True
+2023-11-21 10:42:08 INFO Running runs: ['8rfifkjf']
+2023-11-21 10:43:25 INFO Cleaning up finished run: k6z5ljre
+2023-11-21 10:43:26 INFO Agent received command: run
+2023-11-21 10:43:26 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0005070861762810898
+	batch_size: 128
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9883069341481742
+	gamma: 0.9202526387420716
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: small
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 200000
+	train_frequency: 20
+	update_target_frequency: 250
+	use_per: False
+	wandb_log: True
+2023-11-21 10:43:26 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0005070861762810898 --batch_size=128 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9883069341481742 --gamma=0.9202526387420716 --learning_start=3000 --max_episode_steps=1000 --model_type=small --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=200000 --train_frequency=20 --update_target_frequency=250 --use_per=False --wandb_log=True
+2023-11-21 10:43:31 INFO Running runs: ['q3lz436b']
+2023-11-21 11:06:03 INFO Cleaning up finished run: 8rfifkjf
+2023-11-21 11:06:04 INFO Agent received command: run
+2023-11-21 11:06:04 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 9.454025923720836e-05
+	batch_size: 256
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9488905564235584
+	gamma: 0.9415758276892026
+	learning_start: 1000
+	max_episode_steps: 1000
+	model_type: large
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 200000
+	train_frequency: 50
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 11:06:04 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=9.454025923720836e-05 --batch_size=256 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9488905564235584 --gamma=0.9415758276892026 --learning_start=1000 --max_episode_steps=1000 --model_type=large --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=200000 --train_frequency=50 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 11:06:09 INFO Running runs: ['ey975kxs']
+2023-11-21 11:16:53 INFO Cleaning up finished run: q3lz436b
+2023-11-21 11:16:54 INFO Agent received command: run
+2023-11-21 11:16:54 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0006555144539470346
+	batch_size: 128
+	buffer_size: 5000
+	env: CartPole-v1
+	epsilon: 0.9330637244016232
+	gamma: 0.9711154146145228
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: medium
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 200000
+	train_frequency: 10
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 11:16:54 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0006555144539470346 --batch_size=128 --buffer_size=5000 --env=CartPole-v1 --epsilon=0.9330637244016232 --gamma=0.9711154146145228 --learning_start=3000 --max_episode_steps=1000 --model_type=medium --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=200000 --train_frequency=10 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 11:16:59 INFO Running runs: ['binj49nk']
+2023-11-21 11:30:48 INFO Cleaning up finished run: ey975kxs
+2023-11-21 11:30:49 INFO Agent received command: run
+2023-11-21 11:30:49 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0004235349422282919
+	batch_size: 128
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9116790660683122
+	gamma: 0.9607426466480647
+	learning_start: 2000
+	max_episode_steps: 1000
+	model_type: large
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 200000
+	train_frequency: 10
+	update_target_frequency: 250
+	use_per: False
+	wandb_log: True
+2023-11-21 11:30:49 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0004235349422282919 --batch_size=128 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9116790660683122 --gamma=0.9607426466480647 --learning_start=2000 --max_episode_steps=1000 --model_type=large --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=200000 --train_frequency=10 --update_target_frequency=250 --use_per=False --wandb_log=True
+2023-11-21 11:30:54 INFO Running runs: ['jfblf3rv']
+2023-11-21 11:34:53 INFO Cleaning up finished run: zsu2895n
+2023-11-21 11:34:54 INFO Agent received command: run
+2023-11-21 11:34:54 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0005996882138134248
+	batch_size: 512
+	buffer_size: 5000
+	env: CartPole-v1
+	epsilon: 0.9274542851301124
+	gamma: 0.9501139023156828
+	learning_start: 2000
+	max_episode_steps: 1000
+	model_type: small
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 300000
+	train_frequency: 50
+	update_target_frequency: 250
+	use_per: False
+	wandb_log: True
+2023-11-21 11:34:54 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0005996882138134248 --batch_size=512 --buffer_size=5000 --env=CartPole-v1 --epsilon=0.9274542851301124 --gamma=0.9501139023156828 --learning_start=2000 --max_episode_steps=1000 --model_type=small --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=300000 --train_frequency=50 --update_target_frequency=250 --use_per=False --wandb_log=True
+2023-11-21 11:34:59 INFO Running runs: ['r2cv8z7c']
+2023-11-21 12:10:05 INFO Cleaning up finished run: binj49nk
+2023-11-21 12:10:05 INFO Agent received command: run
+2023-11-21 12:10:05 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0005757561572580003
+	batch_size: 256
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9447973956613026
+	gamma: 0.9792378201184426
+	learning_start: 1000
+	max_episode_steps: 1000
+	model_type: medium
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 200000
+	train_frequency: 50
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 12:10:05 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0005757561572580003 --batch_size=256 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9447973956613026 --gamma=0.9792378201184426 --learning_start=1000 --max_episode_steps=1000 --model_type=medium --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=200000 --train_frequency=50 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 12:10:10 INFO Running runs: ['p2kwtq37']
+2023-11-21 12:21:38 INFO Cleaning up finished run: v3hjn49i
+2023-11-21 12:21:39 INFO Agent received command: run
+2023-11-21 12:21:39 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.000973885603369133
+	batch_size: 128
+	buffer_size: 5000
+	env: CartPole-v1
+	epsilon: 0.95766693644725
+	gamma: 0.9892826334562675
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: small
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 200000
+	train_frequency: 50
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 12:21:39 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.000973885603369133 --batch_size=128 --buffer_size=5000 --env=CartPole-v1 --epsilon=0.95766693644725 --gamma=0.9892826334562675 --learning_start=3000 --max_episode_steps=1000 --model_type=small --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=200000 --train_frequency=50 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 12:21:44 INFO Running runs: ['8o0qd38h']
+2023-11-21 12:33:12 INFO Cleaning up finished run: r2cv8z7c
+2023-11-21 12:33:12 INFO Agent received command: run
+2023-11-21 12:33:12 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0001407251328557339
+	batch_size: 512
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.962306323724559
+	gamma: 0.957894807937215
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: small
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 200000
+	train_frequency: 10
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 12:33:12 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0001407251328557339 --batch_size=512 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.962306323724559 --gamma=0.957894807937215 --learning_start=3000 --max_episode_steps=1000 --model_type=small --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=200000 --train_frequency=10 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 12:33:17 INFO Running runs: ['iwvlf7j6']
+2023-11-21 12:34:34 INFO Cleaning up finished run: 8o0qd38h
+2023-11-21 12:34:34 INFO Agent received command: run
+2023-11-21 12:34:34 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.00027274742813211087
+	batch_size: 256
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9606151272556164
+	gamma: 0.9811471446395624
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: large
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 100000
+	train_frequency: 50
+	update_target_frequency: 250
+	use_per: False
+	wandb_log: True
+2023-11-21 12:34:34 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.00027274742813211087 --batch_size=256 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9606151272556164 --gamma=0.9811471446395624 --learning_start=3000 --max_episode_steps=1000 --model_type=large --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=100000 --train_frequency=50 --update_target_frequency=250 --use_per=False --wandb_log=True
+2023-11-21 12:34:39 INFO Running runs: ['cmb4o26y']
+2023-11-21 12:35:07 INFO Cleaning up finished run: p2kwtq37
+2023-11-21 12:35:07 INFO Agent received command: run
+2023-11-21 12:35:07 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 3.690217855476645e-05
+	batch_size: 512
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9173662663667326
+	gamma: 0.9022412323342552
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: medium
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 100000
+	train_frequency: 20
+	update_target_frequency: 500
+	use_per: False
+	wandb_log: True
+2023-11-21 12:35:07 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=3.690217855476645e-05 --batch_size=512 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9173662663667326 --gamma=0.9022412323342552 --learning_start=3000 --max_episode_steps=1000 --model_type=medium --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=100000 --train_frequency=20 --update_target_frequency=500 --use_per=False --wandb_log=True
+2023-11-21 12:35:12 INFO Running runs: ['muylblme']
+2023-11-21 12:37:39 INFO Cleaning up finished run: jfblf3rv
+2023-11-21 12:37:40 INFO Agent received command: run
+2023-11-21 12:37:40 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0005413884260591131
+	batch_size: 128
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9550676764854408
+	gamma: 0.93286020728147
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: small
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 300000
+	train_frequency: 20
+	update_target_frequency: 500
+	use_per: False
+	wandb_log: True
+2023-11-21 12:37:40 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0005413884260591131 --batch_size=128 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9550676764854408 --gamma=0.93286020728147 --learning_start=3000 --max_episode_steps=1000 --model_type=small --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=300000 --train_frequency=20 --update_target_frequency=500 --use_per=False --wandb_log=True
+2023-11-21 12:37:45 INFO Running runs: ['vw7cchb1']
+2023-11-21 12:46:42 INFO Cleaning up finished run: cmb4o26y
+2023-11-21 12:46:43 INFO Agent received command: run
+2023-11-21 12:46:43 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.00010555876628684844
+	batch_size: 256
+	buffer_size: 5000
+	env: CartPole-v1
+	epsilon: 0.9387892283780372
+	gamma: 0.9797932413418472
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: large
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 300000
+	train_frequency: 10
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 12:46:43 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.00010555876628684844 --batch_size=256 --buffer_size=5000 --env=CartPole-v1 --epsilon=0.9387892283780372 --gamma=0.9797932413418472 --learning_start=3000 --max_episode_steps=1000 --model_type=large --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=300000 --train_frequency=10 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 12:46:48 INFO Running runs: ['tpx461nw']
+2023-11-21 13:23:49 INFO Cleaning up finished run: vw7cchb1
+2023-11-21 13:23:50 INFO Agent received command: run
+2023-11-21 13:23:50 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0006258084883899026
+	batch_size: 128
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.943340278072388
+	gamma: 0.95578935898707
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: large
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 200000
+	train_frequency: 20
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 13:23:50 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0006258084883899026 --batch_size=128 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.943340278072388 --gamma=0.95578935898707 --learning_start=3000 --max_episode_steps=1000 --model_type=large --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=200000 --train_frequency=20 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 13:23:55 INFO Running runs: ['8i5ki5k5']
+2023-11-21 13:27:40 INFO Cleaning up finished run: muylblme
+2023-11-21 13:27:41 INFO Agent received command: run
+2023-11-21 13:27:41 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0006502960269292669
+	batch_size: 256
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9080289550947596
+	gamma: 0.9880507449531628
+	learning_start: 1000
+	max_episode_steps: 1000
+	model_type: small
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 300000
+	train_frequency: 10
+	update_target_frequency: 250
+	use_per: False
+	wandb_log: True
+2023-11-21 13:27:41 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0006502960269292669 --batch_size=256 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9080289550947596 --gamma=0.9880507449531628 --learning_start=1000 --max_episode_steps=1000 --model_type=small --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=300000 --train_frequency=10 --update_target_frequency=250 --use_per=False --wandb_log=True
+2023-11-21 13:27:46 INFO Running runs: ['cbjgv1pg']
+2023-11-21 13:57:10 INFO Cleaning up finished run: 8i5ki5k5
+2023-11-21 13:57:11 INFO Agent received command: run
+2023-11-21 13:57:11 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 5.8104371507572384e-05
+	batch_size: 256
+	buffer_size: 5000
+	env: CartPole-v1
+	epsilon: 0.9055649581834044
+	gamma: 0.9243763466700512
+	learning_start: 1000
+	max_episode_steps: 1000
+	model_type: large
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 100000
+	train_frequency: 10
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 13:57:11 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=5.8104371507572384e-05 --batch_size=256 --buffer_size=5000 --env=CartPole-v1 --epsilon=0.9055649581834044 --gamma=0.9243763466700512 --learning_start=1000 --max_episode_steps=1000 --model_type=large --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=100000 --train_frequency=10 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 13:57:16 INFO Running runs: ['jv48bsmo']
+2023-11-21 14:52:08 INFO Cleaning up finished run: jv48bsmo
+2023-11-21 15:09:21 INFO Cleaning up finished run: tpx461nw
+2023-11-21 15:09:22 INFO Agent received command: run
+2023-11-21 15:09:22 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0004004015902947803
+	batch_size: 512
+	buffer_size: 5000
+	env: CartPole-v1
+	epsilon: 0.9094254003403074
+	gamma: 0.9488333506560728
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: medium
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 200000
+	train_frequency: 20
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 15:09:22 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0004004015902947803 --batch_size=512 --buffer_size=5000 --env=CartPole-v1 --epsilon=0.9094254003403074 --gamma=0.9488333506560728 --learning_start=3000 --max_episode_steps=1000 --model_type=medium --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=200000 --train_frequency=20 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 15:09:27 INFO Running runs: ['s4n04lv4']
+2023-11-21 15:46:34 INFO Cleaning up finished run: iwvlf7j6
+2023-11-21 15:46:35 INFO Agent received command: run
+2023-11-21 15:46:35 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0007888724698216026
+	batch_size: 256
+	buffer_size: 5000
+	env: CartPole-v1
+	epsilon: 0.9429965364433488
+	gamma: 0.9578000944004822
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: small
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 300000
+	train_frequency: 20
+	update_target_frequency: 500
+	use_per: False
+	wandb_log: True
+2023-11-21 15:46:35 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0007888724698216026 --batch_size=256 --buffer_size=5000 --env=CartPole-v1 --epsilon=0.9429965364433488 --gamma=0.9578000944004822 --learning_start=3000 --max_episode_steps=1000 --model_type=small --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=300000 --train_frequency=20 --update_target_frequency=500 --use_per=False --wandb_log=True
+2023-11-21 15:46:40 INFO Running runs: ['dkcup05w']
+2023-11-21 16:02:06 INFO Cleaning up finished run: cbjgv1pg
+2023-11-21 16:02:07 INFO Agent received command: run
+2023-11-21 16:02:07 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0003731522657823886
+	batch_size: 256
+	buffer_size: 5000
+	env: CartPole-v1
+	epsilon: 0.9023150653810958
+	gamma: 0.9384244140973994
+	learning_start: 2000
+	max_episode_steps: 1000
+	model_type: large
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 200000
+	train_frequency: 50
+	update_target_frequency: 500
+	use_per: False
+	wandb_log: True
+2023-11-21 16:02:07 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0003731522657823886 --batch_size=256 --buffer_size=5000 --env=CartPole-v1 --epsilon=0.9023150653810958 --gamma=0.9384244140973994 --learning_start=2000 --max_episode_steps=1000 --model_type=large --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=200000 --train_frequency=50 --update_target_frequency=500 --use_per=False --wandb_log=True
+2023-11-21 16:02:12 INFO Running runs: ['mstu6j7p']
+2023-11-21 16:22:11 INFO Cleaning up finished run: mstu6j7p
+2023-11-21 16:22:13 INFO Agent received command: run
+2023-11-21 16:22:13 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 7.242200891790429e-05
+	batch_size: 128
+	buffer_size: 5000
+	env: CartPole-v1
+	epsilon: 0.9289128807154908
+	gamma: 0.9406027364880114
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: small
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 300000
+	train_frequency: 20
+	update_target_frequency: 500
+	use_per: False
+	wandb_log: True
+2023-11-21 16:22:13 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=7.242200891790429e-05 --batch_size=128 --buffer_size=5000 --env=CartPole-v1 --epsilon=0.9289128807154908 --gamma=0.9406027364880114 --learning_start=3000 --max_episode_steps=1000 --model_type=small --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=300000 --train_frequency=20 --update_target_frequency=500 --use_per=False --wandb_log=True
+2023-11-21 16:22:18 INFO Running runs: ['wptfqo4r']
+2023-11-21 16:33:55 INFO Cleaning up finished run: s4n04lv4
+2023-11-21 16:33:57 INFO Agent received command: run
+2023-11-21 16:33:57 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0004049662075029365
+	batch_size: 256
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9034388630929632
+	gamma: 0.9223820512811358
+	learning_start: 1000
+	max_episode_steps: 1000
+	model_type: medium
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 300000
+	train_frequency: 10
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 16:33:57 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0004049662075029365 --batch_size=256 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9034388630929632 --gamma=0.9223820512811358 --learning_start=1000 --max_episode_steps=1000 --model_type=medium --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=300000 --train_frequency=10 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 16:34:02 INFO Running runs: ['8tyi8lpl']
+2023-11-21 16:51:49 INFO Cleaning up finished run: dkcup05w
+2023-11-21 16:51:50 INFO Agent received command: run
+2023-11-21 16:51:50 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.00034519143615056305
+	batch_size: 128
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9835232190139226
+	gamma: 0.9016498897669996
+	learning_start: 2000
+	max_episode_steps: 1000
+	model_type: small
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 200000
+	train_frequency: 50
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 16:51:50 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.00034519143615056305 --batch_size=128 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9835232190139226 --gamma=0.9016498897669996 --learning_start=2000 --max_episode_steps=1000 --model_type=small --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=200000 --train_frequency=50 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 16:51:55 INFO Running runs: ['1nryesta']
+2023-11-21 16:57:18 INFO Cleaning up finished run: wptfqo4r
+2023-11-21 17:04:16 INFO Cleaning up finished run: 1nryesta
+2023-11-21 17:04:17 INFO Agent received command: run
+2023-11-21 17:04:17 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0004505045603352752
+	batch_size: 256
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.942701644857714
+	gamma: 0.900032730901295
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: large
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 100000
+	train_frequency: 20
+	update_target_frequency: 250
+	use_per: False
+	wandb_log: True
+2023-11-21 17:04:17 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0004505045603352752 --batch_size=256 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.942701644857714 --gamma=0.900032730901295 --learning_start=3000 --max_episode_steps=1000 --model_type=large --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=100000 --train_frequency=20 --update_target_frequency=250 --use_per=False --wandb_log=True
+2023-11-21 17:04:22 INFO Running runs: ['ybkrbd0o']
+2023-11-21 17:30:08 INFO Cleaning up finished run: ybkrbd0o
+2023-11-21 17:30:09 INFO Agent received command: run
+2023-11-21 17:30:09 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0005174982156710702
+	batch_size: 512
+	buffer_size: 10000
+	env: CartPole-v1
+	epsilon: 0.9087573018864068
+	gamma: 0.9255050770698728
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: large
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 300000
+	train_frequency: 20
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 17:30:09 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0005174982156710702 --batch_size=512 --buffer_size=10000 --env=CartPole-v1 --epsilon=0.9087573018864068 --gamma=0.9255050770698728 --learning_start=3000 --max_episode_steps=1000 --model_type=large --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=300000 --train_frequency=20 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 17:30:14 INFO Running runs: ['2ehi7t30']
+2023-11-21 18:46:49 INFO Cleaning up finished run: 8tyi8lpl
+2023-11-21 18:46:50 INFO Agent received command: run
+2023-11-21 18:46:50 INFO Agent starting run with config:
+	algorithm: DQN
+	alpha: 0.0005550081268751269
+	batch_size: 512
+	buffer_size: 5000
+	env: CartPole-v1
+	epsilon: 0.9088730470747484
+	gamma: 0.9288608434950456
+	learning_start: 3000
+	max_episode_steps: 1000
+	model_type: medium
+	num_envs: 8
+	save_test: 1000
+	tau: 1
+	total_time_steps: 200000
+	train_frequency: 20
+	update_target_frequency: 100
+	use_per: False
+	wandb_log: True
+2023-11-21 18:46:50 INFO About to run command: /usr/bin/env python main.py --algorithm=DQN --alpha=0.0005550081268751269 --batch_size=512 --buffer_size=5000 --env=CartPole-v1 --epsilon=0.9088730470747484 --gamma=0.9288608434950456 --learning_start=3000 --max_episode_steps=1000 --model_type=medium --num_envs=8 --save_test=1000 --tau=1 --total_time_steps=200000 --train_frequency=20 --update_target_frequency=100 --use_per=False --wandb_log=True
+2023-11-21 18:46:55 INFO Running runs: ['hpdtzpoa']
+2023-11-21 19:30:54 INFO Cleaning up finished run: 2ehi7t30
+2023-11-21 20:00:22 INFO Cleaning up finished run: hpdtzpoa

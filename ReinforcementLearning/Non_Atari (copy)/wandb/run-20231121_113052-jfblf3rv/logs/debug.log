@@ -1,0 +1,29 @@
+2023-11-21 11:30:52,009 INFO    MainThread:1767852 [wandb_setup.py:_flush():76] Current SDK version is 0.15.12
+2023-11-21 11:30:52,010 INFO    MainThread:1767852 [wandb_setup.py:_flush():76] Configure stats pid to 1767852
+2023-11-21 11:30:52,010 INFO    MainThread:1767852 [wandb_setup.py:_flush():76] Loading settings from /home/shuvrajeet/.config/wandb/settings
+2023-11-21 11:30:52,010 INFO    MainThread:1767852 [wandb_setup.py:_flush():76] Loading settings from /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/settings
+2023-11-21 11:30:52,010 INFO    MainThread:1767852 [wandb_setup.py:_flush():76] Loading settings from environment variables: {'entity': 'shuvrajeet', 'project': 'DeepRL_JAXStormer', 'sweep_id': 'm5b1cib6', 'root_dir': '/home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)', 'run_id': 'jfblf3rv', 'sweep_param_path': '/home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/sweep-m5b1cib6/config-jfblf3rv.yaml'}
+2023-11-21 11:30:52,010 INFO    MainThread:1767852 [wandb_setup.py:_flush():76] Applying setup settings: {'_disable_service': False}
+2023-11-21 11:30:52,010 INFO    MainThread:1767852 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'ReinforcementLearning/Non_Atari (copy)/main.py', 'program_abspath': '/home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/main.py', 'program': '/home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/main.py'}
+2023-11-21 11:30:52,010 INFO    MainThread:1767852 [wandb_init.py:_log_setup():528] Logging user logs to /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_113052-jfblf3rv/logs/debug.log
+2023-11-21 11:30:52,010 INFO    MainThread:1767852 [wandb_init.py:_log_setup():529] Logging internal logs to /home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/wandb/run-20231121_113052-jfblf3rv/logs/debug-internal.log
+2023-11-21 11:30:52,010 INFO    MainThread:1767852 [wandb_init.py:init():568] calling init triggers
+2023-11-21 11:30:52,010 INFO    MainThread:1767852 [wandb_init.py:init():575] wandb.init called with sweep_config: {'algorithm': 'DQN', 'alpha': 0.0004235349422282919, 'batch_size': 128, 'buffer_size': 10000, 'env': 'CartPole-v1', 'epsilon': 0.9116790660683122, 'gamma': 0.9607426466480647, 'learning_start': 2000, 'max_episode_steps': 1000, 'model_type': 'large', 'num_envs': 8, 'save_test': 1000, 'tau': 1, 'total_time_steps': 200000, 'train_frequency': 10, 'update_target_frequency': 250, 'use_per': False, 'wandb_log': True}
+config: {'program': 'main.py', 'method': 'bayes', 'project': 'DeepRL_JAXStormer', 'metric': {'name': 'results', 'goal': 'maximize'}, 'parameters': {'env': {'value': 'CartPole-v1'}, 'alpha': {'min': 1e-05, 'max': 0.001}, 'gamma': {'min': 0.9, 'max': 0.99}, 'epsilon': {'min': 0.9, 'max': 1.0}, 'tau': {'value': 1}, 'total_time_steps': {'values': [100000, 200000, 300000]}, 'learning_start': {'values': [1000, 2000, 3000]}, 'buffer_size': {'values': [5000, 10000]}, 'train_frequency': {'values': [10, 20, 50]}, 'update_target_frequency': {'values': [100, 250, 500]}, 'batch_size': {'values': [128, 256, 512]}, 'num_envs': {'value': 8}, 'max_episode_steps': {'value': 1000}, 'save_test': {'value': 1000}, 'algorithm': {'value': 'DQN'}, 'use_per': {'value': False}, 'model_type': {'values': ['small', 'medium', 'large']}, 'wandb_log': {'value': True}}}
+2023-11-21 11:30:52,010 INFO    MainThread:1767852 [wandb_init.py:init():618] starting backend
+2023-11-21 11:30:52,010 INFO    MainThread:1767852 [wandb_init.py:init():622] setting up manager
+2023-11-21 11:30:52,014 INFO    MainThread:1767852 [backend.py:_multiprocessing_setup():105] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2023-11-21 11:30:52,014 INFO    MainThread:1767852 [wandb_init.py:init():628] backend started and connected
+2023-11-21 11:30:52,019 INFO    MainThread:1767852 [wandb_run.py:_config_callback():1324] config_cb None None {'algorithm': 'DQN', 'alpha': 0.0004235349422282919, 'batch_size': 128, 'buffer_size': 10000, 'env': 'CartPole-v1', 'epsilon': 0.9116790660683122, 'gamma': 0.9607426466480647, 'learning_start': 2000, 'max_episode_steps': 1000, 'model_type': 'large', 'num_envs': 8, 'save_test': 1000, 'tau': 1, 'total_time_steps': 200000, 'train_frequency': 10, 'update_target_frequency': 250, 'use_per': False, 'wandb_log': True}
+2023-11-21 11:30:52,019 INFO    MainThread:1767852 [wandb_init.py:init():720] updated telemetry
+2023-11-21 11:30:52,024 INFO    MainThread:1767852 [wandb_init.py:init():753] communicating run to backend with 90.0 second timeout
+2023-11-21 11:30:52,696 INFO    MainThread:1767852 [wandb_run.py:_on_init():2220] communicating current version
+2023-11-21 11:30:52,763 INFO    MainThread:1767852 [wandb_run.py:_on_init():2229] got version response upgrade_message: "wandb version 0.16.0 is available!  To upgrade, please run:\n $ pip install wandb --upgrade"
+
+2023-11-21 11:30:52,763 INFO    MainThread:1767852 [wandb_init.py:init():804] starting run threads in backend
+2023-11-21 11:30:54,031 INFO    MainThread:1767852 [wandb_run.py:_console_start():2199] atexit reg
+2023-11-21 11:30:54,031 INFO    MainThread:1767852 [wandb_run.py:_redirect():2054] redirect: wrap_raw
+2023-11-21 11:30:54,031 INFO    MainThread:1767852 [wandb_run.py:_redirect():2119] Wrapping output streams.
+2023-11-21 11:30:54,031 INFO    MainThread:1767852 [wandb_run.py:_redirect():2144] Redirects installed.
+2023-11-21 11:30:54,032 INFO    MainThread:1767852 [wandb_init.py:init():845] run started, returning control to user process
+2023-11-21 12:37:34,938 WARNING MsgRouterThr:1767852 [router.py:message_loop():77] message_loop has been closed
