@@ -1,0 +1,147 @@
+[3m                                 Q Summary                                  
+┏━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃[1m path    [22m┃[1m module [22m┃[1m inputs       [22m┃[1m outputs      [22m┃[1m params                  [22m┃
+┡━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│         │ Q      │ float32[6]   │ float32[3]   │                         │
+├─────────┼────────┼──────────────┼──────────────┼─────────────────────────┤
+│ Dense_0 │ Dense  │ float32[6]   │ float32[120] │ bias: float32[120]      │
+│         │        │              │              │ kernel: float32[6,120]  │
+│         │        │              │              │                         │
+│         │        │              │              │ [1m840 (3.4 KB)[22m            │
+├─────────┼────────┼──────────────┼──────────────┼─────────────────────────┤
+│ Dense_1 │ Dense  │ float32[120] │ float32[84]  │ bias: float32[84]       │
+│         │        │              │              │ kernel: float32[120,84] │
+│         │        │              │              │                         │
+│         │        │              │              │ [1m10,164 (40.7 KB)[22m        │
+├─────────┼────────┼──────────────┼──────────────┼─────────────────────────┤
+│ Dense_2 │ Dense  │ float32[84]  │ float32[1]   │ bias: float32[1]        │
+│         │        │              │              │ kernel: float32[84,1]   │
+│         │        │              │              │                         │
+│         │        │              │              │ [1m85 (340 B)[22m              │
+├─────────┼────────┼──────────────┼──────────────┼─────────────────────────┤
+│ Dense_3 │ Dense  │ float32[84]  │ float32[3]   │ bias: float32[3]        │
+│         │        │              │              │ kernel: float32[84,3]   │
+│         │        │              │              │                         │
+│         │        │              │              │ [1m255 (1.0 KB)[22m            │
+├─────────┼────────┼──────────────┼──────────────┼─────────────────────────┤
+│[1m         [22m│[1m        [22m│[1m              [22m│[1m        Total [22m│[1m 11,344 (45.4 KB)        [22m│
+└─────────┴────────┴──────────────┴──────────────┴─────────────────────────┘
+[1m                                                                            
+[1m                     Total Parameters: 11,344 (45.4 KB)                     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  2%|██▏                                                                                    | 12450/500001 [03:36<2:21:20, 57.49it/s]
+Traceback (most recent call last):
+  File "/home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari/dueling_dqn_jax.py", line 232, in <module>
+    agent.train()
+  File "/home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari/dueling_dqn_jax.py", line 197, in train
+    states, actions, rewards, next_states, dones = self.replay_buffer.get_batch(
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari/dueling_dqn_jax.py", line 69, in get_batch
+    rewards = jnp.array(rewards).reshape((NUM_ENVS*len(indices), -1))
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/shuvrajeet/miniconda3/envs/JAX_GPU/lib/python3.11/site-packages/jax/_src/numpy/lax_numpy.py", line 2153, in array
+    out = stack([asarray(elt, dtype=dtype) for elt in object])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/shuvrajeet/miniconda3/envs/JAX_GPU/lib/python3.11/site-packages/jax/_src/numpy/lax_numpy.py", line 1835, in stack
+    new_arrays.append(expand_dims(a, axis))
+                      ^^^^^^^^^^^^^^^^^^^^
+  File "/home/shuvrajeet/miniconda3/envs/JAX_GPU/lib/python3.11/site-packages/jax/_src/numpy/lax_numpy.py", line 912, in expand_dims
+    return lax.expand_dims(a, axis)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/shuvrajeet/miniconda3/envs/JAX_GPU/lib/python3.11/site-packages/jax/_src/lax/lax.py", line 1340, in expand_dims
+    return broadcast_in_dim(array, result_shape, broadcast_dims)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/shuvrajeet/miniconda3/envs/JAX_GPU/lib/python3.11/site-packages/jax/_src/lax/lax.py", line 807, in broadcast_in_dim
+    return broadcast_in_dim_p.bind(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/shuvrajeet/miniconda3/envs/JAX_GPU/lib/python3.11/site-packages/jax/_src/core.py", line 402, in bind
+    return self.bind_with_trace(find_top_trace(args), args, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/shuvrajeet/miniconda3/envs/JAX_GPU/lib/python3.11/site-packages/jax/_src/core.py", line 405, in bind_with_trace
+    out = trace.process_primitive(self, map(trace.full_raise, args), params)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/shuvrajeet/miniconda3/envs/JAX_GPU/lib/python3.11/site-packages/jax/_src/core.py", line 893, in process_primitive
+    return primitive.impl(*tracers, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/shuvrajeet/miniconda3/envs/JAX_GPU/lib/python3.11/site-packages/jax/_src/dispatch.py", line 87, in apply_primitive
+    outs = fun(*args)
+           ^^^^^^^^^^
+KeyboardInterrupt

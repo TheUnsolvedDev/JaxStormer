@@ -38,7 +38,7 @@ def parse_arguments():
                         default=10, help='Training frequency (TRAIN_FREQUENCY)')
     parser.add_argument('--update_target_frequency', type=int, default=500,
                         help='Target network update frequency (UPDATE_TARGET_FREQUENCY)')
-    parser.add_argument('--batch_size', type=int, default=256,
+    parser.add_argument('--batch_size', type=int, default=1024,
                         help='Batch size (BATCH_SIZE)')
     parser.add_argument('--num_envs', type=int, default=8,
                         help='Number of parallel environments (NUM_ENVS)')
