@@ -2,7 +2,7 @@ import import_packages
 from import_packages import *
 
 key = jax.random.PRNGKey(0)
-
+os.environ['XLA_PYTHON_CLIENT_PREALLOCATE'] = 'false'
 
 class Dataset:
     def __init__(self):

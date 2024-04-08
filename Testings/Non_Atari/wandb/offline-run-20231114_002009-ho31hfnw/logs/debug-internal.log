@@ -1,0 +1,140 @@
+2023-11-14 00:20:09,546 INFO    StreamThr :1910930 [internal.py:wandb_internal():86] W&B internal server running at pid: 1910930, started at: 2023-11-14 00:20:09.545694
+2023-11-14 00:20:09,547 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: status
+2023-11-14 00:20:09,548 INFO    WriterThread:1910930 [datastore.py:open_for_write():85] open: /home/shuvrajeet/Documents/GitHub/JaxStormer/RL/wandb/offline-run-20231114_002009-ho31hfnw/run-ho31hfnw.wandb
+2023-11-14 00:20:09,597 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: run_start
+2023-11-14 00:20:09,602 DEBUG   HandlerThread:1910930 [system_info.py:__init__():32] System info init
+2023-11-14 00:20:09,602 DEBUG   HandlerThread:1910930 [system_info.py:__init__():47] System info init done
+2023-11-14 00:20:09,602 INFO    HandlerThread:1910930 [system_monitor.py:start():194] Starting system monitor
+2023-11-14 00:20:09,602 INFO    SystemMonitor:1910930 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2023-11-14 00:20:09,602 INFO    HandlerThread:1910930 [system_monitor.py:probe():214] Collecting system info
+2023-11-14 00:20:09,603 INFO    SystemMonitor:1910930 [interfaces.py:start():190] Started cpu monitoring
+2023-11-14 00:20:09,603 INFO    SystemMonitor:1910930 [interfaces.py:start():190] Started disk monitoring
+2023-11-14 00:20:09,604 INFO    SystemMonitor:1910930 [interfaces.py:start():190] Started gpu monitoring
+2023-11-14 00:20:09,604 INFO    SystemMonitor:1910930 [interfaces.py:start():190] Started memory monitoring
+2023-11-14 00:20:09,605 INFO    SystemMonitor:1910930 [interfaces.py:start():190] Started network monitoring
+2023-11-14 00:20:09,613 DEBUG   HandlerThread:1910930 [system_info.py:probe():196] Probing system
+2023-11-14 00:20:09,614 DEBUG   HandlerThread:1910930 [system_info.py:_probe_git():181] Probing git
+2023-11-14 00:20:09,618 DEBUG   HandlerThread:1910930 [system_info.py:_probe_git():189] Probing git done
+2023-11-14 00:20:09,618 DEBUG   HandlerThread:1910930 [system_info.py:probe():244] Probing system done
+2023-11-14 00:20:09,618 DEBUG   HandlerThread:1910930 [system_monitor.py:probe():223] {'os': 'Linux-6.2.0-36-generic-x86_64-with-glibc2.35', 'python': '3.11.5', 'heartbeatAt': '2023-11-13T18:50:09.613097', 'startedAt': '2023-11-13T18:50:09.540453', 'docker': None, 'cuda': None, 'args': (), 'state': 'running', 'program': '/home/shuvrajeet/Documents/GitHub/JaxStormer/RL/dqn_jax.py', 'codePathLocal': 'dqn_jax.py', 'codePath': 'RL/dqn_jax.py', 'git': {'remote': 'https://github.com/TheUnsolvedDev/JaxStormer.git', 'commit': '8fa56d21a996d13270fd887220853910d463aacd'}, 'email': 'shuvrajeet17@gmail.com', 'root': '/home/shuvrajeet/Documents/GitHub/JaxStormer', 'host': 'desktop', 'username': 'shuvrajeet', 'executable': '/home/shuvrajeet/miniconda3/envs/JAX_GPU/bin/python3', 'cpu_count': 6, 'cpu_count_logical': 6, 'cpu_freq': {'current': 3043.5193333333336, 'min': 2200.0, 'max': 3600.0}, 'cpu_freq_per_core': [{'current': 3931.92, 'min': 2200.0, 'max': 3600.0}, {'current': 1992.515, 'min': 2200.0, 'max': 3600.0}, {'current': 1990.831, 'min': 2200.0, 'max': 3600.0}, {'current': 3980.075, 'min': 2200.0, 'max': 3600.0}, {'current': 2404.486, 'min': 2200.0, 'max': 3600.0}, {'current': 3961.289, 'min': 2200.0, 'max': 3600.0}], 'disk': {'/': {'total': 438.5479202270508, 'used': 155.8055076599121}}, 'gpu': 'NVIDIA GeForce RTX 2060 SUPER', 'gpu_count': 1, 'gpu_devices': [{'name': 'NVIDIA GeForce RTX 2060 SUPER', 'memory_total': 8589934592}], 'memory': {'total': 31.25739288330078}}
+2023-11-14 00:20:09,618 INFO    HandlerThread:1910930 [system_monitor.py:probe():224] Finished collecting system info
+2023-11-14 00:20:09,618 INFO    HandlerThread:1910930 [system_monitor.py:probe():227] Publishing system info
+2023-11-14 00:20:09,618 DEBUG   HandlerThread:1910930 [system_info.py:_save_pip():52] Saving list of pip packages installed into the current environment
+2023-11-14 00:20:09,618 DEBUG   HandlerThread:1910930 [system_info.py:_save_pip():68] Saving pip packages done
+2023-11-14 00:20:09,618 DEBUG   HandlerThread:1910930 [system_info.py:_save_conda():75] Saving list of conda packages installed into the current environment
+2023-11-14 00:20:10,560 DEBUG   HandlerThread:1910930 [system_info.py:_save_conda():87] Saving conda packages done
+2023-11-14 00:20:10,561 INFO    HandlerThread:1910930 [system_monitor.py:probe():229] Finished publishing system info
+2023-11-14 00:20:14,548 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: status_report
+2023-11-14 00:20:14,548 DEBUG   SenderThread:1910930 [sender.py:send_request():407] send_request: status_report
+2023-11-14 00:20:19,549 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: status_report
+2023-11-14 00:20:19,549 DEBUG   SenderThread:1910930 [sender.py:send_request():407] send_request: status_report
+2023-11-14 00:20:24,550 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: status_report
+2023-11-14 00:20:24,550 DEBUG   SenderThread:1910930 [sender.py:send_request():407] send_request: status_report
+2023-11-14 00:20:28,834 DEBUG   SenderThread:1910930 [sender.py:send():380] send: exit
+2023-11-14 00:20:28,834 INFO    SenderThread:1910930 [sender.py:send_exit():585] handling exit code: 1
+2023-11-14 00:20:28,835 INFO    SenderThread:1910930 [sender.py:send_exit():587] handling runtime: 19
+2023-11-14 00:20:28,835 INFO    SenderThread:1910930 [sender.py:_save_file():1378] saving file wandb-summary.json with policy end
+2023-11-14 00:20:28,835 INFO    SenderThread:1910930 [sender.py:send_exit():593] send defer
+2023-11-14 00:20:28,835 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: defer
+2023-11-14 00:20:28,835 INFO    HandlerThread:1910930 [handler.py:handle_request_defer():172] handle defer: 0
+2023-11-14 00:20:28,835 DEBUG   SenderThread:1910930 [sender.py:send_request():407] send_request: defer
+2023-11-14 00:20:28,835 INFO    SenderThread:1910930 [sender.py:send_request_defer():609] handle sender defer: 0
+2023-11-14 00:20:28,835 INFO    SenderThread:1910930 [sender.py:transition_state():613] send defer: 1
+2023-11-14 00:20:28,835 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: defer
+2023-11-14 00:20:28,835 INFO    HandlerThread:1910930 [handler.py:handle_request_defer():172] handle defer: 1
+2023-11-14 00:20:28,836 DEBUG   SenderThread:1910930 [sender.py:send_request():407] send_request: defer
+2023-11-14 00:20:28,836 INFO    SenderThread:1910930 [sender.py:send_request_defer():609] handle sender defer: 1
+2023-11-14 00:20:28,836 INFO    SenderThread:1910930 [sender.py:transition_state():613] send defer: 2
+2023-11-14 00:20:28,836 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: defer
+2023-11-14 00:20:28,836 INFO    HandlerThread:1910930 [handler.py:handle_request_defer():172] handle defer: 2
+2023-11-14 00:20:28,836 INFO    HandlerThread:1910930 [system_monitor.py:finish():203] Stopping system monitor
+2023-11-14 00:20:28,836 DEBUG   SystemMonitor:1910930 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2023-11-14 00:20:28,836 DEBUG   SystemMonitor:1910930 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2023-11-14 00:20:28,836 INFO    HandlerThread:1910930 [interfaces.py:finish():202] Joined cpu monitor
+2023-11-14 00:20:28,836 DEBUG   SystemMonitor:1910930 [system_monitor.py:_start():183] Publishing last batch of metrics
+2023-11-14 00:20:28,837 INFO    HandlerThread:1910930 [interfaces.py:finish():202] Joined disk monitor
+2023-11-14 00:20:28,866 INFO    HandlerThread:1910930 [interfaces.py:finish():202] Joined gpu monitor
+2023-11-14 00:20:28,867 INFO    HandlerThread:1910930 [interfaces.py:finish():202] Joined memory monitor
+2023-11-14 00:20:28,867 INFO    HandlerThread:1910930 [interfaces.py:finish():202] Joined network monitor
+2023-11-14 00:20:28,867 DEBUG   SenderThread:1910930 [sender.py:send_request():407] send_request: defer
+2023-11-14 00:20:28,867 INFO    SenderThread:1910930 [sender.py:send_request_defer():609] handle sender defer: 2
+2023-11-14 00:20:28,867 INFO    SenderThread:1910930 [sender.py:transition_state():613] send defer: 3
+2023-11-14 00:20:28,867 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: defer
+2023-11-14 00:20:28,867 INFO    HandlerThread:1910930 [handler.py:handle_request_defer():172] handle defer: 3
+2023-11-14 00:20:28,867 DEBUG   SenderThread:1910930 [sender.py:send_request():407] send_request: defer
+2023-11-14 00:20:28,867 INFO    SenderThread:1910930 [sender.py:send_request_defer():609] handle sender defer: 3
+2023-11-14 00:20:28,867 INFO    SenderThread:1910930 [sender.py:transition_state():613] send defer: 4
+2023-11-14 00:20:28,867 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: defer
+2023-11-14 00:20:28,867 INFO    HandlerThread:1910930 [handler.py:handle_request_defer():172] handle defer: 4
+2023-11-14 00:20:28,868 DEBUG   SenderThread:1910930 [sender.py:send_request():407] send_request: defer
+2023-11-14 00:20:28,868 INFO    SenderThread:1910930 [sender.py:send_request_defer():609] handle sender defer: 4
+2023-11-14 00:20:28,868 INFO    SenderThread:1910930 [sender.py:transition_state():613] send defer: 5
+2023-11-14 00:20:28,868 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: defer
+2023-11-14 00:20:28,868 INFO    HandlerThread:1910930 [handler.py:handle_request_defer():172] handle defer: 5
+2023-11-14 00:20:28,868 DEBUG   SenderThread:1910930 [sender.py:send_request():407] send_request: defer
+2023-11-14 00:20:28,868 INFO    SenderThread:1910930 [sender.py:send_request_defer():609] handle sender defer: 5
+2023-11-14 00:20:28,868 INFO    SenderThread:1910930 [sender.py:transition_state():613] send defer: 6
+2023-11-14 00:20:28,868 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: defer
+2023-11-14 00:20:28,868 INFO    HandlerThread:1910930 [handler.py:handle_request_defer():172] handle defer: 6
+2023-11-14 00:20:28,868 DEBUG   SenderThread:1910930 [sender.py:send_request():407] send_request: defer
+2023-11-14 00:20:28,868 INFO    SenderThread:1910930 [sender.py:send_request_defer():609] handle sender defer: 6
+2023-11-14 00:20:28,868 INFO    SenderThread:1910930 [sender.py:transition_state():613] send defer: 7
+2023-11-14 00:20:28,868 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: status_report
+2023-11-14 00:20:28,868 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: defer
+2023-11-14 00:20:28,868 INFO    HandlerThread:1910930 [handler.py:handle_request_defer():172] handle defer: 7
+2023-11-14 00:20:28,869 DEBUG   SenderThread:1910930 [sender.py:send_request():407] send_request: status_report
+2023-11-14 00:20:28,869 DEBUG   SenderThread:1910930 [sender.py:send_request():407] send_request: defer
+2023-11-14 00:20:28,869 INFO    SenderThread:1910930 [sender.py:send_request_defer():609] handle sender defer: 7
+2023-11-14 00:20:28,869 INFO    SenderThread:1910930 [sender.py:transition_state():613] send defer: 8
+2023-11-14 00:20:28,869 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: defer
+2023-11-14 00:20:28,869 INFO    HandlerThread:1910930 [handler.py:handle_request_defer():172] handle defer: 8
+2023-11-14 00:20:28,869 DEBUG   SenderThread:1910930 [sender.py:send_request():407] send_request: defer
+2023-11-14 00:20:28,869 INFO    SenderThread:1910930 [sender.py:send_request_defer():609] handle sender defer: 8
+2023-11-14 00:20:28,869 INFO    SenderThread:1910930 [sender.py:transition_state():613] send defer: 9
+2023-11-14 00:20:28,869 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: defer
+2023-11-14 00:20:28,869 INFO    HandlerThread:1910930 [handler.py:handle_request_defer():172] handle defer: 9
+2023-11-14 00:20:28,869 DEBUG   SenderThread:1910930 [sender.py:send_request():407] send_request: defer
+2023-11-14 00:20:28,869 INFO    SenderThread:1910930 [sender.py:send_request_defer():609] handle sender defer: 9
+2023-11-14 00:20:28,869 INFO    SenderThread:1910930 [sender.py:transition_state():613] send defer: 10
+2023-11-14 00:20:28,869 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: defer
+2023-11-14 00:20:28,869 INFO    HandlerThread:1910930 [handler.py:handle_request_defer():172] handle defer: 10
+2023-11-14 00:20:28,869 DEBUG   SenderThread:1910930 [sender.py:send_request():407] send_request: defer
+2023-11-14 00:20:28,870 INFO    SenderThread:1910930 [sender.py:send_request_defer():609] handle sender defer: 10
+2023-11-14 00:20:28,870 INFO    SenderThread:1910930 [sender.py:transition_state():613] send defer: 11
+2023-11-14 00:20:28,870 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: defer
+2023-11-14 00:20:28,870 INFO    HandlerThread:1910930 [handler.py:handle_request_defer():172] handle defer: 11
+2023-11-14 00:20:28,870 DEBUG   SenderThread:1910930 [sender.py:send_request():407] send_request: defer
+2023-11-14 00:20:28,870 INFO    SenderThread:1910930 [sender.py:send_request_defer():609] handle sender defer: 11
+2023-11-14 00:20:28,870 INFO    SenderThread:1910930 [sender.py:transition_state():613] send defer: 12
+2023-11-14 00:20:28,870 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: defer
+2023-11-14 00:20:28,870 INFO    HandlerThread:1910930 [handler.py:handle_request_defer():172] handle defer: 12
+2023-11-14 00:20:28,870 DEBUG   SenderThread:1910930 [sender.py:send_request():407] send_request: defer
+2023-11-14 00:20:28,870 INFO    SenderThread:1910930 [sender.py:send_request_defer():609] handle sender defer: 12
+2023-11-14 00:20:28,870 INFO    SenderThread:1910930 [sender.py:transition_state():613] send defer: 13
+2023-11-14 00:20:28,870 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: defer
+2023-11-14 00:20:28,870 INFO    HandlerThread:1910930 [handler.py:handle_request_defer():172] handle defer: 13
+2023-11-14 00:20:28,870 DEBUG   SenderThread:1910930 [sender.py:send_request():407] send_request: defer
+2023-11-14 00:20:28,870 INFO    SenderThread:1910930 [sender.py:send_request_defer():609] handle sender defer: 13
+2023-11-14 00:20:28,870 INFO    SenderThread:1910930 [sender.py:transition_state():613] send defer: 14
+2023-11-14 00:20:28,871 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: defer
+2023-11-14 00:20:28,871 INFO    HandlerThread:1910930 [handler.py:handle_request_defer():172] handle defer: 14
+2023-11-14 00:20:28,871 DEBUG   SenderThread:1910930 [sender.py:send():380] send: final
+2023-11-14 00:20:28,871 DEBUG   SenderThread:1910930 [sender.py:send_request():407] send_request: defer
+2023-11-14 00:20:28,871 INFO    SenderThread:1910930 [sender.py:send_request_defer():609] handle sender defer: 14
+2023-11-14 00:20:28,871 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: poll_exit
+2023-11-14 00:20:28,871 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: poll_exit
+2023-11-14 00:20:28,872 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: server_info
+2023-11-14 00:20:28,872 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: get_summary
+2023-11-14 00:20:28,872 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: sampled_history
+2023-11-14 00:20:28,872 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: internal_messages
+2023-11-14 00:20:28,872 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: job_info
+2023-11-14 00:20:28,872 DEBUG   SenderThread:1910930 [sender.py:send_request():407] send_request: poll_exit
+2023-11-14 00:20:28,872 DEBUG   SenderThread:1910930 [sender.py:send_request():407] send_request: poll_exit
+2023-11-14 00:20:28,872 DEBUG   SenderThread:1910930 [sender.py:send_request():407] send_request: server_info
+2023-11-14 00:20:28,873 DEBUG   SenderThread:1910930 [sender.py:send_request():407] send_request: job_info
+2023-11-14 00:20:28,873 INFO    MainThread:1910930 [wandb_run.py:_footer_history_summary_info():3599] rendering history
+2023-11-14 00:20:28,873 INFO    MainThread:1910930 [wandb_run.py:_footer_history_summary_info():3631] rendering summary
+2023-11-14 00:20:28,873 DEBUG   HandlerThread:1910930 [handler.py:handle_request():146] handle_request: shutdown
+2023-11-14 00:20:28,873 INFO    HandlerThread:1910930 [handler.py:finish():866] shutting down handler
+2023-11-14 00:20:29,872 INFO    WriterThread:1910930 [datastore.py:close():294] close: /home/shuvrajeet/Documents/GitHub/JaxStormer/RL/wandb/offline-run-20231114_002009-ho31hfnw/run-ho31hfnw.wandb
+2023-11-14 00:20:29,874 INFO    SenderThread:1910930 [sender.py:finish():1534] shutting down sender

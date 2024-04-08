@@ -1,9 +1,0 @@
-
-{'program': 'main.py', 'method': 'bayes', 'project': 'DeepRL_JAXStormer', 'metric': {'name': 'results', 'goal': 'maximize'}, 'parameters': {'env': {'value': 'CartPole-v1'}, 'alpha': {'min': 1e-05, 'max': 0.001}, 'gamma': {'min': 0.9, 'max': 0.99}, 'epsilon': {'min': 0.9, 'max': 1.0}, 'tau': {'value': 1}, 'total_time_steps': {'values': [100000, 200000, 300000]}, 'learning_start': {'values': [1000, 2000, 3000]}, 'buffer_size': {'values': [5000, 10000]}, 'train_frequency': {'values': [10, 20, 50]}, 'update_target_frequency': {'values': [100, 250, 500]}, 'batch_size': {'values': [128, 256, 512]}, 'num_envs': {'value': 8}, 'max_episode_steps': {'value': 1000}, 'save_test': {'value': 1000}, 'algorithm': {'value': 'DQN'}, 'use_per': {'value': False}, 'model_type': {'values': ['small', 'medium', 'large']}, 'wandb_log': {'value': True}}}
-Traceback (most recent call last):
-  File "/home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/main.py", line 133, in <module>
-    main()
-  File "/home/shuvrajeet/Documents/GitHub/JaxStormer/ReinforcementLearning/Non_Atari (copy)/main.py", line 103, in main
-    ENV = config.env
-          ^^^^^^^^^^
-AttributeError: 'dict' object has no attribute 'env'
