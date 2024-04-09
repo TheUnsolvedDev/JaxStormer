@@ -15,7 +15,7 @@ ALPHA = 0.0001
 GAMMA = 0.99
 BATCH_SIZE = 64
 CAPACITY = 20000
-UPDATE_EVERY = 10
+UPDATE_EVERY = 20
 
 
 def smooth_rewards(rewards, window_size=10):
@@ -52,7 +52,6 @@ def linear_schedule(start_e: float, end_e: float, duration: int, t: int):
 
 class ValueNetwork(flax.linen.Module):
     action_dim: int
-    action_type: str
 
     @flax.linen.compact
     def __call__(self, x: jnp.ndarray):
@@ -60,17 +59,7 @@ class ValueNetwork(flax.linen.Module):
         x = flax.linen.selu(x)
         x = flax.linen.Dense(16)(x)
         x = flax.linen.selu(x)
-        value_stream = flax.linen.Dense(1)(x)
-        advantage_stream = flax.linen.Dense(self.action_dim)(x)
-        if self.action_type == 'max':
-            q_values = value_stream + \
-                (advantage_stream - jnp.max(advantage_stream, axis=-1, keepdims=True))
-        elif self.action_type == 'mean':
-            q_values = value_stream + \
-                (advantage_stream - jnp.mean(advantage_stream, axis=-1, keepdims=True))
-        else:
-            print('Choose option wisely',self.action_type)
-            exit(0)
+        q_values = flax.linen.Dense(self.action_dim)(x)
         return q_values
 
 
@@ -105,15 +94,15 @@ class TrainState(TrainState):
     target_params: flax.core.FrozenDict
 
 
-class DuelingDQN:
-    def __init__(self, env, num_actions, observation_shape, seed=0, type='mean') -> None:
+class DoubleDQN:
+    def __init__(self, env, num_actions, observation_shape, seed=0) -> None:
         self.seed = seed
         self.rng = jax.random.PRNGKey(seed)
         self.num_actions = num_actions
         self.observation_shape = observation_shape
         self.env = env
 
-        self.value = ValueNetwork(action_dim=num_actions, action_type=type)
+        self.value = ValueNetwork(action_dim=num_actions)
         self.value_state = TrainState.create(
             apply_fn=self.value.apply,
             params=self.value.init(self.rng, jnp.ones(observation_shape)),
@@ -139,9 +128,13 @@ class DuelingDQN:
     def update(self, value_state, states, actions, rewards, next_states,  dones):
         value_next_target = self.value.apply(
             value_state.target_params, next_states)
-        value_next_target = jnp.max(value_next_target, axis=-1)
+        value_next_pred = self.value.apply(value_state.params, next_states)
+        value_next_actions = jnp.argmax(value_next_pred, axis=-1)
+        value_next_target = jnp.sum(
+            value_next_pred*jax.nn.one_hot(value_next_actions, num_classes=self.num_actions), axis=-1)
         next_q_value = (rewards + (1 - dones) * GAMMA * value_next_target)
 
+        @jax.jit
         def mse_loss(params):
             value_pred = self.value.apply(params, states)
             value_pred = jnp.sum(
@@ -149,7 +142,7 @@ class DuelingDQN:
             return ((jax.lax.stop_gradient(next_q_value) - value_pred) ** 2).mean()
 
         loss_value, grads = jax.value_and_grad(
-            mse_loss)(value_state.params)
+            mse_loss)(self.value_state.params)
         value_state = value_state.apply_gradients(grads=grads)
         return loss_value, value_state
 
@@ -210,32 +203,16 @@ class Simulation:
 
 if __name__ == '__main__':
 
-    cartpole_dqn_max = Simulation('CartPole-v1', algorithm=DuelingDQN)
+    cartpole_dqn_max = Simulation('CartPole-v1', algorithm=DoubleDQN)
     cartpole_dqn_max.train()
     rewards_cartpole_dqn_max = cartpole_dqn_max.rewards
     mean_rcb = np.mean(rewards_cartpole_dqn_max, axis=0)
     std_rcb = np.std(rewards_cartpole_dqn_max, axis=0)
-    plot_data(mean_rcb, std_rcb, name='Cartpole DQN Dueling Mean')
+    plot_data(mean_rcb, std_rcb, name='Cartpole Double DQN')
 
-    acrobot_dqn_max = Simulation('Acrobot-v1', algorithm=DuelingDQN)
+    acrobot_dqn_max = Simulation('Acrobot-v1', algorithm=DoubleDQN)
     acrobot_dqn_max.train()
     rewards_acrobot_dqn_max = acrobot_dqn_max.rewards
     mean_rab = np.mean(rewards_acrobot_dqn_max, axis=0)
     std_rab = np.std(rewards_acrobot_dqn_max, axis=0)
-    plot_data(mean_rab, std_rab, name='Acrobot DQN Dueling Mean')
-
-    cartpole_dqn_max = Simulation(
-        'CartPole-v1', algorithm=DuelingDQN, type='max')
-    cartpole_dqn_max.train()
-    rewards_cartpole_dqn_max = cartpole_dqn_max.rewards
-    mean_rcb = np.mean(rewards_cartpole_dqn_max, axis=0)
-    std_rcb = np.std(rewards_cartpole_dqn_max, axis=0)
-    plot_data(mean_rcb, std_rcb, name='Cartpole DQN Dueling Max')
-
-    acrobot_dqn_max = Simulation(
-        'Acrobot-v1', algorithm=DuelingDQN, type='max')
-    acrobot_dqn_max.train()
-    rewards_acrobot_dqn_max = acrobot_dqn_max.rewards
-    mean_rab = np.mean(rewards_acrobot_dqn_max, axis=0)
-    std_rab = np.std(rewards_acrobot_dqn_max, axis=0)
-    plot_data(mean_rab, std_rab, name='Acrobot DQN Dueling Max')
+    plot_data(mean_rab, std_rab, name='Acrobot Double DQN')

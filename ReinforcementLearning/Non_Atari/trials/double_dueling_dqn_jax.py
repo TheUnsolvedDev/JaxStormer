@@ -1,4 +1,4 @@
-from import_packages import *
+from trials.import_packages import *
 
 algorithm = __file__.split('/')[-1][:-3]
 key = jax.random.PRNGKey(0)
@@ -82,11 +82,8 @@ class Q(flax.linen.Module):
         x = flax.linen.relu(x)
         x = flax.linen.Dense(84)(x)
         x = flax.linen.relu(x)
-        value_stream = flax.linen.Dense(1)(x)
-        advantage_stream = flax.linen.Dense(self.action_dim)(x)
-        q_values = value_stream + (advantage_stream - jnp.mean(advantage_stream, axis=-1, keepdims=True))
-        
-        return q_values
+        x = flax.linen.Dense(self.action_dim)(x)
+        return x
 
 
 class TrainState(TrainState):
@@ -140,7 +137,7 @@ def test(policy, q_state, step, num_games=10, name=ENV, video_stats=False):
     return np.mean(rewards)
 
 
-class DuelingDQN:
+class DQN:
     def __init__(self) -> None:
         self.env = Env(num_envs=NUM_ENVS)
         self.replay_buffer = ReplayBuffer(BUFFER_SIZE)
@@ -228,5 +225,5 @@ class DuelingDQN:
 
 
 if __name__ == '__main__':
-    agent = DuelingDQN()
+    agent = DQN()
     agent.train()

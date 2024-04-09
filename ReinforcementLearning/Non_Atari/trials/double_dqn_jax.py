@@ -1,4 +1,4 @@
-from import_packages import *
+from trials.import_packages import *
 
 algorithm = __file__.split('/')[-1][:-3]
 key = jax.random.PRNGKey(0)
@@ -137,7 +137,7 @@ def test(policy, q_state, step, num_games=10, name=ENV, video_stats=False):
     return np.mean(rewards)
 
 
-class DQN:
+class DoubleDQN:
     def __init__(self) -> None:
         self.env = Env(num_envs=NUM_ENVS)
         self.replay_buffer = ReplayBuffer(BUFFER_SIZE)
@@ -160,7 +160,10 @@ class DQN:
     def update(self, q_state, states, actions, rewards, next_states,  dones):
         q_next_target = self.q_network.apply(
             q_state.target_params, next_states)
-        q_next_target = jnp.max(q_next_target, axis=-1)
+        q_next_pred = self.q_network.apply(q_state.params, next_states)
+        q_next_actions = jnp.argmax(q_next_pred, axis=-1)
+        q_next_target = q_next_target[jnp.arange(
+            q_next_pred.shape[0]), q_next_actions.squeeze()]
         next_q_value = (rewards + (1 - dones) * GAMMA * q_next_target)
 
         def mse_loss(params):
@@ -225,5 +228,5 @@ class DQN:
 
 
 if __name__ == '__main__':
-    agent = DQN()
+    agent = DoubleDQN()
     agent.train()

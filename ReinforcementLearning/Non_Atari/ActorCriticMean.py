@@ -9,6 +9,7 @@ import functools
 import matplotlib.pyplot as plt
 import tqdm
 import gc
+import argparse
 
 ALPHA = 0.001
 GAMMA = 0.99
@@ -41,7 +42,7 @@ def plot_data(mean, std, name):
     plt.close()
 
 
-class PolicyNetwork(flax.linen.Module):
+class ActorNetwork(flax.linen.Module):
     action_dim: int
 
     @flax.linen.compact
@@ -55,7 +56,8 @@ class PolicyNetwork(flax.linen.Module):
         return x
 
 
-class BaselineNetwork(flax.linen.Module):
+class CriticNetwork(flax.linen.Module):
+    action_dim: int
 
     @flax.linen.compact
     def __call__(self, x):
@@ -63,11 +65,11 @@ class BaselineNetwork(flax.linen.Module):
         x = flax.linen.gelu(x)
         x = flax.linen.Dense(16)(x)
         x = flax.linen.gelu(x)
-        x = flax.linen.Dense(1)(x)
+        x = flax.linen.Dense(self.action_dim)(x)
         return x
 
 
-class MC_Baseline:
+class ActorCritic:
     def __init__(self, env, num_actions, observation_shape, seed=0):
         self.seed = seed
         self.rng = jax.random.PRNGKey(seed)
@@ -75,96 +77,90 @@ class MC_Baseline:
         self.observation_shape = observation_shape
         self.env = env
 
-        self.policy = PolicyNetwork(num_actions)
-        self.policy_state = TrainState.create(
-            apply_fn=self.policy.apply,
-            params=self.policy.init(self.rng, jnp.ones(observation_shape)),
+        self.actor = ActorNetwork(num_actions)
+        self.actor_state = TrainState.create(
+            apply_fn=self.actor.apply,
+            params=self.actor.init(self.rng, jnp.ones(observation_shape)),
             tx=optax.adam(learning_rate=ALPHA),
         )
-        self.policy.apply = jax.jit(self.policy.apply)
+        self.actor.apply = jax.jit(self.actor.apply)
 
-        self.baseline = BaselineNetwork()
-        self.baseline_state = TrainState.create(
-            apply_fn=self.baseline.apply,
-            params=self.baseline.init(self.rng, jnp.ones(observation_shape)),
+        self.critic = CriticNetwork(num_actions)
+        self.critic_state = TrainState.create(
+            apply_fn=self.critic.apply,
+            params=self.critic.init(self.rng, jnp.ones(observation_shape)),
             tx=optax.adam(learning_rate=ALPHA),
         )
-        self.baseline.apply = jax.jit(self.baseline.apply)
-        print(self.policy.tabulate(self.rng, jnp.ones(
-            self.observation_shape)))
+        self.critic.apply = jax.jit(self.critic.apply)
 
     @functools.partial(jax.jit, static_argnums=(0,))
     def policy_prob(self, q_state, state):
-        probs = self.policy.apply(q_state.params, state)
+        probs = self.actor.apply(q_state.params, state)
         return probs
 
     def sample(self, state):
-        probs = self.policy_prob(self.policy_state, state)[0]
+        probs = self.policy_prob(self.actor_state, state)[0]
         return np.random.choice(self.num_actions, p=np.array(probs))
 
     @functools.partial(jax.jit, static_argnums=(0,))
-    def update(self, policy_state, baseline_state, states, actions, discounted_rewards, gamma_t):
+    def update(self, actor_state, critic_state, states, actions, next_states, rewards, gamma_t):
         
         @jax.jit
         def mse_loss(params):
-            v_s = self.baseline.apply(params, states)
-            delta = jnp.subtract(discounted_rewards, jnp.reshape(v_s, (-1,)))
-            loss = jnp.mean(0.5*jnp.square(delta))
-            return loss, delta
-        
+            q_sa = self.critic.apply(params, states)
+            probs = self.actor.apply(actor_state.params, states)
+            v_s = jnp.sum(probs*q_sa, axis=1)
+            q_sa = jnp.sum(actions*q_sa, axis=1)
+            delta = q_sa - v_s
+            return jnp.mean(jnp.square(delta)), delta
+
         @jax.jit
         def log_prob_loss(params):
-            probs = self.policy.apply(params, states)
+            probs = self.actor.apply(params, states)
             log_probs = jnp.log(probs)
             actions_new = jax.nn.one_hot(actions, num_classes=self.num_actions)
             prob_reduce = -jnp.sum(log_probs*actions_new, axis=1)
             loss = jnp.mean(prob_reduce*delta*gamma_t)
             return loss
 
-        (loss_baseline, delta), grads_baseline = jax.value_and_grad(
-            mse_loss, has_aux=True)(baseline_state.params)
+        (loss_critic, delta), grads_critic = jax.value_and_grad(
+            mse_loss, has_aux=True)(critic_state.params)
 
-        loss_policy, grads_policy = jax.value_and_grad(
-            log_prob_loss)(policy_state.params)
+        loss_actor, grads_actor = jax.value_and_grad(
+            log_prob_loss)(actor_state.params)
 
-        baseline_state = baseline_state.apply_gradients(
-            grads=grads_baseline)
-        policy_state = policy_state.apply_gradients(
-            grads=grads_policy)
-        return loss_policy+loss_baseline, policy_state, baseline_state
+        critic_state = critic_state.apply_gradients(
+            grads=grads_critic)
+        actor_state = actor_state.apply_gradients(
+            grads=grads_actor)
+        return loss_actor+loss_critic, actor_state, critic_state
 
     def train_single_step(self):
         state = self.env.reset(seed=self.seed)[0]
         key = self.rng
-
-        episode_rewards = []
-        episode_states = []
-        episode_actions = []
-
+        total_reward = 0
+        total_loss = 0
         for _ in range(500):
-            _, key = jax.random.split(key=key)
+            null, key = jax.random.split(key=key)
             action = self.sample(np.expand_dims(state, axis=0))
-            episode_actions.append(action)
-            episode_states.append(state)
             next_state, reward, done, truncated, info = self.env.step(action)
-            episode_rewards.append(reward)
+            total_reward += reward
             state = next_state
             if done or truncated:
                 break
 
-        discounted_rewards = jnp.array([sum(reward * (GAMMA ** t) for t, reward in enumerate(episode_rewards[start:]))
-                                        for start in range(len(episode_rewards))])
-        gamma_t = jnp.array([sum(GAMMA ** t for t, reward in enumerate(episode_rewards[start:]))
-                             for start in range(len(episode_rewards))])
-        discounted_rewards = (
-            discounted_rewards-discounted_rewards.mean())/(discounted_rewards.std()+1e-8)
-        episode_states = jnp.array(episode_states)
-        episode_actions = jnp.array(episode_actions)
-        loss, self.policy_state, self.baseline_state = self.update(
-            self.policy_state, self.baseline_state, episode_states, episode_actions, discounted_rewards, gamma_t)
+            episode_state = jnp.array([state])
+            episode_next_state = jnp.array([next_state])
+            episode_reward = jnp.array([reward])
+            episode_action = jnp.array([action])
+            gamma = GAMMA**_
+
+            loss, self.actor_state, self.critic_state = self.update(
+                self.actor_state, self.critic_state, episode_state, episode_action, episode_next_state, episode_reward, gamma)
+            total_loss += loss
+            jax.clear_caches()
         gc.collect()
-        jax.clear_caches()
-        return loss, np.sum(episode_rewards)
+        return total_loss, total_reward
 
 
 class Simulation:
@@ -189,16 +185,16 @@ class Simulation:
 
 
 if __name__ == '__main__':
-    cartpole_baseline = Simulation('CartPole-v1', algorithm=MC_Baseline)
-    cartpole_baseline.train()
-    rewards_cartpole_baseline = cartpole_baseline.rewards
-    mean_rcb = np.mean(rewards_cartpole_baseline, axis=0)
-    std_rcb = np.std(rewards_cartpole_baseline, axis=0)
-    plot_data(mean_rcb, std_rcb, name='Cartpole PG Baseline')
+    cartpole_actor_critic = Simulation('CartPole-v1', algorithm=ActorCritic)
+    cartpole_actor_critic.train()
+    rewards_cartpole_actor_critic = cartpole_actor_critic.rewards
+    mean_rcb = np.mean(rewards_cartpole_actor_critic, axis=0)
+    std_rcb = np.std(rewards_cartpole_actor_critic, axis=0)
+    plot_data(mean_rcb, std_rcb, name='Cartpole AC BiModel')
 
-    acrobot_baseline = Simulation('Acrobot-v1', algorithm=MC_Baseline)
-    acrobot_baseline.train()
-    rewards_acrobot_baseline = acrobot_baseline.rewards
-    mean_rab = np.mean(rewards_acrobot_baseline, axis=0)
-    std_rab = np.std(rewards_acrobot_baseline, axis=0)
-    plot_data(mean_rab, std_rab, name='Acrobot PG Baseline')
+    acrobot_actor_critic = Simulation('Acrobot-v1', algorithm=ActorCritic)
+    acrobot_actor_critic.train()
+    rewards_acrobot_actor_critic = acrobot_actor_critic.rewards
+    mean_rab = np.mean(rewards_acrobot_actor_critic, axis=0)
+    std_rab = np.std(rewards_acrobot_actor_critic, axis=0)
+    plot_data(mean_rab, std_rab, name='Acrobot AC BiModel')

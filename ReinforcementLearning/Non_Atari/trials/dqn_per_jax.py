@@ -1,4 +1,4 @@
-from import_packages import *
+from trials.import_packages import *
 
 algorithm = __file__.split('/')[-1][:-3]
 key = jax.random.PRNGKey(0)
@@ -44,33 +44,96 @@ class Env:
         return next_obs, next_state, reward, done, _
 
 
-class ReplayBuffer:
+class SumTree:
+    write = 0
+
     def __init__(self, capacity):
         self.capacity = capacity
-        self.buffer = []
-        self.position = 0
+        self.tree = np.zeros(2*capacity - 1)
+        self.data = np.zeros(capacity, dtype=object)
 
-    def push(self, transition):
-        if len(self.buffer) < self.capacity:
-            self.buffer.append(transition)
+    def _propagate(self, idx, change):
+        parent = (idx - 1) // 2
+        self.tree[parent] += change
+        if parent != 0:
+            self._propagate(parent, change)
+
+    def _retrieve(self, idx, s):
+        left = 2 * idx + 1
+        right = left + 1
+        if left >= len(self.tree):
+            return idx
+        if s <= self.tree[left]:
+            return self._retrieve(left, s)
         else:
-            self.buffer[self.position] = transition
-        self.position = (self.position + 1) % self.capacity
+            return self._retrieve(right, s-self.tree[left])
 
-    def sample(self, batch_size):
-        # batch_size //= NUM_ENVS
-        return jax.random.choice(jax.random.PRNGKey(np.random.randint(low=0, high=100)), len(self.buffer), shape=(batch_size,), replace=False)
+    def total(self):
+        return self.tree[0]
 
-    def get_batch(self, indices):
-        states, actions, rewards, next_states, dones = zip(
-            *[self.buffer[i] for i in indices])
-        states = jnp.array(states).reshape((NUM_ENVS*len(indices), -1))
-        actions = jnp.array(actions).reshape((NUM_ENVS*len(indices), -1))
-        rewards = jnp.array(rewards).reshape((NUM_ENVS*len(indices), -1))
-        next_states = jnp.array(next_states).reshape(
-            (NUM_ENVS*len(indices), -1))
-        dones = jnp.array(dones).reshape((NUM_ENVS*len(indices), -1))
+    def add(self, p, data):
+        idx = self.write + self.capacity - 1
+        self.data[self.write] = data
+        self.update(idx, p)
+        self.write += 1
+        if self.write >= self.capacity:
+            self.write = 0
+
+    def update(self, idx, p):
+        change = p - self.tree[idx]
+        self.tree[idx] = p
+        self._propagate(idx, change)
+
+    def get(self, s):
+        idx = self._retrieve(0, s)
+        dataIdx = idx - self.capacity + 1
+        return (idx, self.tree[idx], self.data[dataIdx])
+
+
+class PERMemory:
+    e = 0.01
+    a = 0.6
+
+    def __init__(self, capacity):
+        self.tree = SumTree(capacity)
+
+    def _get_priority(self, error):
+        return (error+self.e)**self.a
+
+    def add(self, error, sample):
+        p = self._get_priority(error)
+        self.tree.add(p, sample)
+
+    def sample(self, n):
+        batch = []
+
+        segment = self.tree.total()/n
+        for i in range(n):
+            a = segment*i
+            b = segment*(i+1)
+            s = np.random.uniform(a, b)
+            (idx, p, data) = self.tree.get(s)
+            batch.append((idx, data))
+        return batch
+
+    def get_data(self, batch, n):
+        states, actions, rewards, next_states, dones = [], [], [], [], []
+        for i in range(n):
+            states.append(batch[i][1][0])
+            actions.append(batch[i][1][1])
+            rewards.append(batch[i][1][2])
+            next_states.append(batch[i][1][3])
+            dones.append(batch[i][1][4])
+        states = jnp.asarray(states)
+        actions = jnp.asarray(actions)
+        rewards = jnp.asarray(rewards)
+        next_states = jnp.asarray(next_states)
+        dones = jnp.asarray(dones)
         return states, actions, rewards, next_states, dones
+
+    def update(self, idx, error):
+        p = self._get_priority(error)
+        self.tree.update(idx, p)
 
 
 class Q(flax.linen.Module):
@@ -137,10 +200,10 @@ def test(policy, q_state, step, num_games=10, name=ENV, video_stats=False):
     return np.mean(rewards)
 
 
-class DQN:
+class DQN_PER_main:
     def __init__(self) -> None:
         self.env = Env(num_envs=NUM_ENVS)
-        self.replay_buffer = ReplayBuffer(BUFFER_SIZE)
+        self.per_buffer = PERMemory(BUFFER_SIZE)
         self.q_network, self.q_state = init_model(self.env.env)
 
     @functools.partial(jax.jit, static_argnums=(0,))
@@ -157,6 +220,16 @@ class DQN:
         return jax.device_get(self.policy_greedy(q_state, state))
 
     @functools.partial(jax.jit, static_argnums=(0,))
+    def td_error(self, q_state, states, actions, rewards, next_states,  dones):
+        q_next_target = jnp.max(self.q_network.apply(
+            q_state.target_params, next_states), axis=-1)
+        q_pred = self.q_network.apply(q_state.params, states)
+        td_target = rewards + GAMMA*jnp.amax(q_next_target)
+        td_err = td_target - \
+            q_pred[jnp.arange(q_pred.shape[0]), actions.squeeze()]
+        return jnp.abs(td_err)
+
+    @functools.partial(jax.jit, static_argnums=(0,))
     def update(self, q_state, states, actions, rewards, next_states,  dones):
         q_next_target = self.q_network.apply(
             q_state.target_params, next_states)
@@ -171,7 +244,9 @@ class DQN:
         (loss_value, q_pred), grads = jax.value_and_grad(
             mse_loss, has_aux=True)(q_state.params)
         q_state = q_state.apply_gradients(grads=grads)
-        return loss_value, jnp.mean(q_pred), q_state
+        td_error_abs = self.td_error(
+            q_state, states, actions, rewards, next_states,  dones)
+        return loss_value, jnp.mean(q_pred), q_state, td_error_abs
 
     def train(self):
         state, obs = self.env.reset()
@@ -182,7 +257,16 @@ class DQN:
             action = self.policy(self.q_state, state, epsilon)
             next_state, next_obs, reward, done, _ = self.env.step(
                 obs, action)
-            self.replay_buffer.push([state, action, reward, next_state, done])
+            td = self.td_error(self.q_state,
+                               jnp.asarray(state),
+                               jnp.asarray(action),
+                               jnp.asarray(reward),
+                               jnp.asarray(next_state),
+                               jnp.asarray(done)
+                               )
+            for i in range(NUM_ENVS):
+                self.per_buffer.add(
+                    td[i], (state[i], action[i], reward[i], next_state[i], done[i]))
             state = next_state
             obs = next_obs
 
@@ -190,11 +274,14 @@ class DQN:
                 epsilon = linear_schedule(
                     start_e=EPSILON, end_e=0.05, duration=TOTAL_TIME_STEPS*0.5, t=step)
                 if not step % TRAIN_FREQUENCY:
-                    indices = self.replay_buffer.sample(BATCH_SIZE)
-                    states, actions, rewards, next_states, dones = self.replay_buffer.get_batch(
-                        indices)
-                    loss_values, q_pred, self.q_state = self.update(
+                    batch = self.per_buffer.sample(
+                        BATCH_SIZE)
+                    states, actions, rewards, next_states, dones = self.per_buffer.get_data(
+                        batch, BATCH_SIZE)
+                    loss_values, q_pred, self.q_state, new_td = self.update(
                         self.q_state, states, actions, rewards, next_states,  dones)
+                    for i in range(BATCH_SIZE):
+                        self.per_buffer.update(batch[i][0], new_td[i])
 
                 if not step % UPDATE_TARGET_FREQUENCY:
                     self.q_state = self.q_state.replace(target_params=optax.incremental_update(
@@ -204,7 +291,7 @@ class DQN:
                         test_results = test(
                             self.policy, self.q_state, step, video_stats=True)
                         print("td_loss:", jax.device_get(loss_values),
-                              "Q_value:", q_pred, 'Position:', test_results, 'Epsilon:', epsilon)
+                              "Q_value:", q_pred, 'Position:', test_results, 'Epsilon:', epsilon, 'TD Error', td.mean())
                         with open(f'RL_updates/{algorithm}/{ENV}/logs_{start}.txt', 'a', newline='') as csv_file:
                             csv_writer = csv.writer(csv_file)
                             csv_writer.writerow(
@@ -225,5 +312,5 @@ class DQN:
 
 
 if __name__ == '__main__':
-    agent = DQN()
+    agent = DQN_PER_main()
     agent.train()
