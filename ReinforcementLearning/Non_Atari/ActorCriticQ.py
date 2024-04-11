@@ -103,15 +103,16 @@ class ActorCritic:
         return np.random.choice(self.num_actions, p=np.array(probs))
 
     @functools.partial(jax.jit, static_argnums=(0,))
-    def update(self, actor_state, critic_state, states, actions, next_states, rewards, gamma_t):
-        
+    def update(self, actor_state, critic_state, states, actions, next_states, next_actions, rewards, gamma_t):
+
         @jax.jit
         def mse_loss(params):
-            q_sa = self.critic.apply(params, states)
-            probs = self.actor.apply(actor_state.params, states)
-            v_s = jnp.sum(probs*q_sa, axis=1)
-            q_sa = jnp.sum(actions*q_sa, axis=1)
-            delta = q_sa - v_s
+            q_s_prime_a_prime = jnp.sum(self.critic.apply(
+                params, next_states)*jax.nn.one_hot(next_actions, num_classes=self.num_actions), axis=1)
+            q_s_prime_a_prime = jax.lax.stop_gradient(q_s_prime_a_prime)
+            q_s_a = jnp.sum(self.critic.apply(
+                params, states)*jax.nn.one_hot(actions, num_classes=self.num_actions), axis=1)
+            delta = rewards + GAMMA * q_s_prime_a_prime - q_s_a
             return jnp.mean(jnp.square(delta)), delta
 
         @jax.jit
@@ -119,8 +120,8 @@ class ActorCritic:
             probs = self.actor.apply(params, states)
             log_probs = jnp.log(probs)
             actions_new = jax.nn.one_hot(actions, num_classes=self.num_actions)
-            prob_reduce = -jnp.sum(log_probs*actions_new, axis=1)
-            loss = jnp.mean(prob_reduce*delta*gamma_t)
+            prob_reduce = -jnp.sum(log_probs*gamma_t*actions_new, axis=1)
+            loss = jnp.mean(prob_reduce*delta)
             return loss
 
         (loss_critic, delta), grads_critic = jax.value_and_grad(
@@ -144,19 +145,22 @@ class ActorCritic:
             null, key = jax.random.split(key=key)
             action = self.sample(np.expand_dims(state, axis=0))
             next_state, reward, done, truncated, info = self.env.step(action)
+            next_action = self.sample(np.expand_dims(next_state, axis=0))
             total_reward += reward
             state = next_state
+            action = next_action
             if done or truncated:
                 break
 
             episode_state = jnp.array([state])
-            episode_next_state = jnp.array([next_state])
-            episode_reward = jnp.array([reward])
             episode_action = jnp.array([action])
-            gamma = GAMMA**_
+            episode_reward = jnp.array([reward])
+            episode_next_state = jnp.array([next_state])
+            episode_next_action = jnp.array([next_action])
+            gamma_t = GAMMA ** _
 
             loss, self.actor_state, self.critic_state = self.update(
-                self.actor_state, self.critic_state, episode_state, episode_action, episode_next_state, episode_reward, gamma)
+                self.actor_state, self.critic_state, episode_state, episode_action, episode_next_state, episode_next_action, episode_reward, gamma_t)
             total_loss += loss
             jax.clear_caches()
         gc.collect()

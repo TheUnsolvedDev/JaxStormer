@@ -86,19 +86,19 @@ class ActorCritic:
 
     @functools.partial(jax.jit, static_argnums=(0,))
     def update(self, actor_critic_state, states, actions, next_states, rewards, gamma_t):
-        
+
         @jax.jit
         def mse_loss_and_log_prob_loss(params):
-            y_t = rewards + gamma_t * \
+            y_t = rewards + GAMMA * \
                 self.actor_critic.apply(params, next_states)[1]
             delta = y_t - self.actor_critic.apply(params, states)[1]
-            loss_critic = jnp.mean(jnp.square(delta))
+            loss_critic = 0.5*jnp.mean(jnp.square(delta))
 
             probs = self.actor_critic.apply(params, states)[0]
             log_probs = jnp.log(probs)
             actions_new = jax.nn.one_hot(actions, num_classes=self.num_actions)
             prob_reduce = -jnp.sum(log_probs*actions_new, axis=1)
-            loss_actor = jnp.mean(prob_reduce*delta*gamma_t)
+            loss_actor = jnp.mean(prob_reduce*gamma_t*delta)
 
             return loss_actor + loss_critic
 
@@ -127,10 +127,10 @@ class ActorCritic:
             episode_next_state = jnp.array([next_state])
             episode_reward = jnp.array([reward])
             episode_action = jnp.array([action])
-            gamma = GAMMA**_
+            gamma_t = GAMMA ** _
 
             loss, self.actor_critic_state = self.update(
-                self.actor_critic_state, episode_state, episode_action, episode_next_state, episode_reward, gamma)
+                self.actor_critic_state, episode_state, episode_action, episode_next_state, episode_reward,gamma_t)
             total_loss += loss
             jax.clear_caches()
         gc.collect()
