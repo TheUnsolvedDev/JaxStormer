@@ -104,14 +104,14 @@ class MC_Baseline:
 
     @functools.partial(jax.jit, static_argnums=(0,))
     def update(self, policy_state, baseline_state, states, actions, discounted_rewards, gamma_t):
-        
+
         @jax.jit
         def mse_loss(params):
             v_s = self.baseline.apply(params, states)
             delta = jnp.subtract(discounted_rewards, jnp.reshape(v_s, (-1,)))
             loss = jnp.mean(0.5*jnp.square(delta))
             return loss, delta
-        
+
         @jax.jit
         def log_prob_loss(params):
             probs = self.policy.apply(params, states)
@@ -133,7 +133,7 @@ class MC_Baseline:
             grads=grads_policy)
         return loss_policy+loss_baseline, policy_state, baseline_state
 
-    def train_single_step(self):
+    def train_single_step(self,reward_shape = 0):
         state = self.env.reset(seed=self.seed)[0]
         key = self.rng
 
@@ -147,6 +147,7 @@ class MC_Baseline:
             episode_actions.append(action)
             episode_states.append(state)
             next_state, reward, done, truncated, info = self.env.step(action)
+            reward = reward_shape if done or truncated else reward
             episode_rewards.append(reward)
             state = next_state
             if done or truncated:
@@ -168,35 +169,38 @@ class MC_Baseline:
 
 
 class Simulation:
-    def __init__(self, env_name, algorithm) -> None:
+    def __init__(self, env_name, algorithm, reward_shape=0) -> None:
         self.env_name = env_name
         self.algorithm = algorithm
+        self.reward_shape = reward_shape
         self.env = gym.make(self.env_name)
         self.num_actions = self.env.action_space.n
         self.observation_shape = self.env.observation_space.shape
 
-    def train(self, episodes=1000):
+    def train(self, num_avg=3, episodes=1000):
         self.losses, self.rewards = np.zeros(
-            (5, episodes)), np.zeros((5, episodes))
+            (num_avg, episodes)), np.zeros((num_avg, episodes))
 
-        for seed in range(5):
+        for seed in range(num_avg):
             self.algo = self.algorithm(
                 self.env, self.num_actions, self.observation_shape, seed=seed)
-            for ep in tqdm.tqdm(range(1, episodes+1)):
-                loss, reward = self.algo.train_single_step()
+            pbar = tqdm.tqdm(range(1, episodes+1))
+            for ep in pbar:
+                loss, reward = self.algo.train_single_step(self.reward_shape)
+                pbar.set_description(f'Loss: {loss} Rewards: {reward}')
                 self.losses[seed][ep-1] = loss
                 self.rewards[seed][ep-1] = reward
 
 
 if __name__ == '__main__':
-    cartpole_baseline = Simulation('CartPole-v1', algorithm=MC_Baseline)
+    cartpole_baseline = Simulation('CartPole-v1', algorithm=MC_Baseline, reward_shape=-3)
     cartpole_baseline.train()
     rewards_cartpole_baseline = cartpole_baseline.rewards
     mean_rcb = np.mean(rewards_cartpole_baseline, axis=0)
     std_rcb = np.std(rewards_cartpole_baseline, axis=0)
     plot_data(mean_rcb, std_rcb, name='Cartpole PG Baseline')
 
-    acrobot_baseline = Simulation('Acrobot-v1', algorithm=MC_Baseline)
+    acrobot_baseline = Simulation('Acrobot-v1', algorithm=MC_Baseline, reward_shape=3)
     acrobot_baseline.train()
     rewards_acrobot_baseline = acrobot_baseline.rewards
     mean_rab = np.mean(rewards_acrobot_baseline, axis=0)

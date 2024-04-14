@@ -11,7 +11,7 @@ import tqdm
 import gc
 import argparse
 
-ALPHA = 0.001
+ALPHA = 1e-4
 GAMMA = 0.99
 
 
@@ -42,30 +42,30 @@ def plot_data(mean, std, name):
     plt.close()
 
 
-
 class ActorNetwork(flax.linen.Module):
     action_dim: int
 
     @flax.linen.compact
     def __call__(self, x):
         x = flax.linen.Dense(16)(x)
-        x = flax.linen.gelu(x)
+        x = flax.linen.relu(x)
         x = flax.linen.Dense(16)(x)
-        x = flax.linen.gelu(x)
+        x = flax.linen.relu(x)
         x = flax.linen.Dense(self.action_dim)(x)
         x = flax.linen.softmax(x)
         return x
 
 
 class CriticNetwork(flax.linen.Module):
+    action_dim: int
 
     @flax.linen.compact
     def __call__(self, x):
         x = flax.linen.Dense(16)(x)
-        x = flax.linen.gelu(x)
+        x = flax.linen.relu(x)
         x = flax.linen.Dense(16)(x)
-        x = flax.linen.gelu(x)
-        x = flax.linen.Dense(1)(x)
+        x = flax.linen.relu(x)
+        x = flax.linen.Dense(self.action_dim)(x)
         return x
 
 
@@ -81,11 +81,11 @@ class ActorCritic:
         self.actor_state = TrainState.create(
             apply_fn=self.actor.apply,
             params=self.actor.init(self.rng, jnp.ones(observation_shape)),
-            tx=optax.adam(learning_rate=ALPHA/3),
+            tx=optax.adam(learning_rate=ALPHA),
         )
         self.actor.apply = jax.jit(self.actor.apply)
 
-        self.critic = CriticNetwork()
+        self.critic = CriticNetwork(num_actions)
         self.critic_state = TrainState.create(
             apply_fn=self.critic.apply,
             params=self.critic.init(self.rng, jnp.ones(observation_shape)),
@@ -107,26 +107,23 @@ class ActorCritic:
 
         @jax.jit
         def mse_loss(params):
-            target = rewards + GAMMA * \
-                self.critic.apply(params, next_states)*(1.0-dones)
-            pred = self.critic.apply(params, states)
-            target = jax.lax.stop_gradient(target)
-            delta = target - pred
+            q_sa_prime = self.critic.apply(params, next_states)
+            q_sa_prime = jax.lax.stop_gradient(q_sa_prime)
+            q_sa = self.critic.apply(params, states)
+            probs = self.actor.apply(actor_state.params, next_states)
+            actions_new = jax.nn.one_hot(actions, num_classes=self.num_actions)
+            delta = rewards + GAMMA * \
+                (1.0-dones)*jnp.sum(probs*q_sa_prime) * jnp.sum(q_sa*actions_new)
             return 0.5*jnp.mean(jnp.square(delta)), delta
 
         @jax.jit
         def log_prob_loss(params):
             probs = self.actor.apply(params, states)
-            probs = jnp.clip(probs, a_min=1e-7, a_max=10)
             log_probs = jnp.log(probs)
             actions_new = jax.nn.one_hot(actions, num_classes=self.num_actions)
             prob_reduce = -jnp.sum(log_probs*actions_new, axis=1)
-            td = jax.lax.stop_gradient(delta)
-            td -= td.mean()
-            td /= td.std() + 1e-6
             loss = jnp.mean(prob_reduce*gamma_t*delta)
-            entropy = jnp.mean(probs*log_probs)
-            return loss + 0.01*entropy
+            return loss
 
         (loss_critic, delta), grads_critic = jax.value_and_grad(
             mse_loss, has_aux=True)(critic_state.params)
@@ -140,16 +137,19 @@ class ActorCritic:
             grads=grads_actor)
         return loss_actor+loss_critic, actor_state, critic_state
 
-    def train_single_step(self, reward_shape=0):
+    def train_single_step(self):
         state = self.env.reset(seed=self.seed)[0]
+        key = self.rng
         total_reward = 0
         total_loss = 0
         for _ in range(500):
+            null, key = jax.random.split(key=key)
             action = self.sample(np.expand_dims(state, axis=0))
             next_state, reward, done, truncated, info = self.env.step(action)
-            # just a basic reward shaping to keep the process going on
-            reward = reward_shape if done or truncated else reward
             total_reward += reward
+            state = next_state
+            if done or truncated:
+                break
 
             episode_state = jnp.array([state])
             episode_next_state = jnp.array([next_state])
@@ -161,20 +161,15 @@ class ActorCritic:
             loss, self.actor_state, self.critic_state = self.update(
                 self.actor_state, self.critic_state, episode_state, episode_action, episode_next_state, episode_reward, episode_done, gamma_t)
             total_loss += loss
-
-            state = next_state
-            if done or truncated:
-                break
         jax.clear_caches()
         gc.collect()
         return total_loss, total_reward
 
 
 class Simulation:
-    def __init__(self, env_name, algorithm, reward_shape=0) -> None:
+    def __init__(self, env_name, algorithm) -> None:
         self.env_name = env_name
         self.algorithm = algorithm
-        self.reward_shape = reward_shape
         self.env = gym.make(self.env_name)
         self.num_actions = self.env.action_space.n
         self.observation_shape = self.env.observation_space.shape
@@ -186,27 +181,23 @@ class Simulation:
         for seed in range(num_avg):
             self.algo = self.algorithm(
                 self.env, self.num_actions, self.observation_shape, seed=seed)
-            pbar = tqdm.tqdm(range(1, episodes+1))
-            for ep in pbar:
-                loss, reward = self.algo.train_single_step(self.reward_shape)
-                pbar.set_description(f'Loss: {loss} Rewards: {reward}')
+            for ep in tqdm.tqdm(range(1, episodes+1)):
+                loss, reward = self.algo.train_single_step()
                 self.losses[seed][ep-1] = loss
                 self.rewards[seed][ep-1] = reward
 
 
 if __name__ == '__main__':
-    cartpole_actor_critic = Simulation(
-        'CartPole-v1', algorithm=ActorCritic, reward_shape=-3)
+    cartpole_actor_critic = Simulation('CartPole-v1', algorithm=ActorCritic)
     cartpole_actor_critic.train()
     rewards_cartpole_actor_critic = cartpole_actor_critic.rewards
     mean_rcb = np.mean(rewards_cartpole_actor_critic, axis=0)
     std_rcb = np.std(rewards_cartpole_actor_critic, axis=0)
-    plot_data(mean_rcb, std_rcb, name='Cartpole AC BiModel')
+    plot_data(mean_rcb, std_rcb, name='Cartpole AC Advantageous')
 
-    acrobot_actor_critic = Simulation(
-        'Acrobot-v1', algorithm=ActorCritic, reward_shape=3)
+    acrobot_actor_critic = Simulation('Acrobot-v1', algorithm=ActorCritic)
     acrobot_actor_critic.train()
     rewards_acrobot_actor_critic = acrobot_actor_critic.rewards
     mean_rab = np.mean(rewards_acrobot_actor_critic, axis=0)
     std_rab = np.std(rewards_acrobot_actor_critic, axis=0)
-    plot_data(mean_rab, std_rab, name='Acrobot AC BiModel')
+    plot_data(mean_rab, std_rab, name='Acrobot AC Advantageous')

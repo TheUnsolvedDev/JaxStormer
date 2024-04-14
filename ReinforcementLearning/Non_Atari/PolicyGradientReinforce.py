@@ -98,7 +98,7 @@ class MC_Reinforce:
         policy_state = policy_state.apply_gradients(grads=grads)
         return loss, policy_state
 
-    def train_single_step(self):
+    def train_single_step(self,reward_shape = 0):
         state = self.env.reset(seed=self.seed)[0]
         key = self.rng
 
@@ -112,6 +112,7 @@ class MC_Reinforce:
             episode_actions.append(action)
             episode_states.append(state)
             next_state, reward, done, truncated, info = self.env.step(action)
+            reward = reward_shape if done or truncated else reward
             episode_rewards.append(reward)
             state = next_state
             if done or truncated:
@@ -133,35 +134,38 @@ class MC_Reinforce:
 
 
 class Simulation:
-    def __init__(self, env_name, algorithm) -> None:
+    def __init__(self, env_name, algorithm, reward_shape=0) -> None:
         self.env_name = env_name
         self.algorithm = algorithm
+        self.reward_shape = reward_shape
         self.env = gym.make(self.env_name)
         self.num_actions = self.env.action_space.n
         self.observation_shape = self.env.observation_space.shape
 
-    def train(self, episodes=1000):
+    def train(self, num_avg=3, episodes=1000):
         self.losses, self.rewards = np.zeros(
-            (5, episodes)), np.zeros((5, episodes))
+            (num_avg, episodes)), np.zeros((num_avg, episodes))
 
-        for seed in range(5):
+        for seed in range(num_avg):
             self.algo = self.algorithm(
                 self.env, self.num_actions, self.observation_shape, seed=seed)
-            for ep in tqdm.tqdm(range(1, episodes+1)):
-                loss, reward = self.algo.train_single_step()
+            pbar = tqdm.tqdm(range(1, episodes+1))
+            for ep in pbar:
+                loss, reward = self.algo.train_single_step(self.reward_shape)
+                pbar.set_description(f'Loss: {loss} Rewards: {reward}')
                 self.losses[seed][ep-1] = loss
                 self.rewards[seed][ep-1] = reward
 
 
 if __name__ == '__main__':
-    cartpole_reinforce = Simulation('CartPole-v1', algorithm=MC_Reinforce)
+    cartpole_reinforce = Simulation('CartPole-v1', algorithm=MC_Reinforce, reward_shape=-3)
     cartpole_reinforce.train()
     rewards_cartpole_reinforce = cartpole_reinforce.rewards
     mean_rcr = np.mean(rewards_cartpole_reinforce, axis=0)
     std_rcr = np.std(rewards_cartpole_reinforce, axis=0)
     plot_data(mean_rcr, std_rcr, name='Cartpole PG Reinforce')
 
-    acrobot_reinforce = Simulation('Acrobot-v1', algorithm=MC_Reinforce)
+    acrobot_reinforce = Simulation('Acrobot-v1', algorithm=MC_Reinforce, reward_shape=3)
     acrobot_reinforce.train()
     rewards_acrobot_reinforce = acrobot_reinforce.rewards
     mean_rar = np.mean(rewards_acrobot_reinforce, axis=0)

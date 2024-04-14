@@ -146,7 +146,7 @@ class DoubleDQN:
         value_state = value_state.apply_gradients(grads=grads)
         return loss_value, value_state
 
-    def train_single_step(self):
+    def train_single_step(self,reward_shape = 0):
         state = self.env.reset(seed=self.seed)[0]
         key = self.rng
         epsilon = linear_schedule(
@@ -155,6 +155,7 @@ class DoubleDQN:
         for _ in range(500):
             action = self.sample(np.expand_dims(state, axis=0), epsilon)
             next_state, reward, done, truncated, info = self.env.step(action)
+            reward = reward_shape if done or truncated else reward
             self.replay_buffer.push(
                 [state, action, reward, next_state, done or truncated])
             state = next_state
@@ -181,36 +182,39 @@ class DoubleDQN:
 
 
 class Simulation:
-    def __init__(self, env_name, algorithm) -> None:
+    def __init__(self, env_name, algorithm, reward_shape=0) -> None:
         self.env_name = env_name
         self.algorithm = algorithm
+        self.reward_shape = reward_shape
         self.env = gym.make(self.env_name)
         self.num_actions = self.env.action_space.n
         self.observation_shape = self.env.observation_space.shape
 
-    def train(self, num_avg=5, episodes=1000):
+    def train(self, num_avg=3, episodes=1000):
         self.losses, self.rewards = np.zeros(
             (num_avg, episodes)), np.zeros((num_avg, episodes))
 
         for seed in range(num_avg):
             self.algo = self.algorithm(
                 self.env, self.num_actions, self.observation_shape, seed=seed)
-            for ep in tqdm.tqdm(range(1, episodes+1)):
-                loss, reward = self.algo.train_single_step()
+            pbar = tqdm.tqdm(range(1, episodes+1))
+            for ep in pbar:
+                loss, reward = self.algo.train_single_step(self.reward_shape)
+                pbar.set_description(f'Loss: {loss} Rewards: {reward}')
                 self.losses[seed][ep-1] = loss
                 self.rewards[seed][ep-1] = reward
 
 
 if __name__ == '__main__':
 
-    cartpole_dqn_max = Simulation('CartPole-v1', algorithm=DoubleDQN)
+    cartpole_dqn_max = Simulation('CartPole-v1', algorithm=DoubleDQN, reward_shape=-3)
     cartpole_dqn_max.train()
     rewards_cartpole_dqn_max = cartpole_dqn_max.rewards
     mean_rcb = np.mean(rewards_cartpole_dqn_max, axis=0)
     std_rcb = np.std(rewards_cartpole_dqn_max, axis=0)
     plot_data(mean_rcb, std_rcb, name='Cartpole Double DQN')
 
-    acrobot_dqn_max = Simulation('Acrobot-v1', algorithm=DoubleDQN)
+    acrobot_dqn_max = Simulation('Acrobot-v1', algorithm=DoubleDQN, reward_shape=3)
     acrobot_dqn_max.train()
     rewards_acrobot_dqn_max = acrobot_dqn_max.rewards
     mean_rab = np.mean(rewards_acrobot_dqn_max, axis=0)
