@@ -103,7 +103,7 @@ class ActorCritic:
         return np.random.choice(self.num_actions, p=np.array(probs))
 
     @functools.partial(jax.jit, static_argnums=(0,))
-    def update(self, actor_state, critic_state, states, actions, next_states, next_actions, rewards, gamma_t):
+    def update(self, actor_state, critic_state, states, actions, next_states, next_actions, rewards, dones, gamma_t):
 
         @jax.jit
         def mse_loss(params):
@@ -113,7 +113,7 @@ class ActorCritic:
             q_s_a = jnp.sum(self.critic.apply(
                 params, states)*jax.nn.one_hot(actions, num_classes=self.num_actions), axis=1)
             delta = rewards + GAMMA * \
-                jax.lax.stop_gradient(q_s_prime_a_prime) - q_s_a
+                jax.lax.stop_gradient(q_s_prime_a_prime)*(1.0-dones) - q_s_a
             return jnp.mean(jnp.square(delta)), delta
 
         @jax.jit
@@ -149,6 +149,7 @@ class ActorCritic:
         for _ in range(500):
             action = self.sample(np.expand_dims(state, axis=0))
             next_state, reward, done, truncated, info = self.env.step(action)
+            next_action = self.sample(np.expand_dims(state, axis=0))
             # just a basic reward shaping to keep the process going on
             reward = reward_shape if done or truncated else reward
             total_reward += reward
@@ -157,11 +158,12 @@ class ActorCritic:
             episode_next_state = jnp.array([next_state])
             episode_reward = jnp.array([reward])
             episode_action = jnp.array([action])
+            episode_next_action = jnp.array([next_action])
             episode_done = jnp.array([done or truncated])
             gamma_t = GAMMA ** _
 
             loss, self.actor_state, self.critic_state = self.update(
-                self.actor_state, self.critic_state, episode_state, episode_action, episode_next_state, episode_reward, episode_done, gamma_t)
+                self.actor_state, self.critic_state, episode_state, episode_action, episode_next_state, episode_next_action, episode_reward, episode_done, gamma_t)
             total_loss += loss
 
             state = next_state
