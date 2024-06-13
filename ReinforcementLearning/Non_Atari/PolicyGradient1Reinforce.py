@@ -15,6 +15,16 @@ GAMMA = 0.99
 
 
 def smooth_rewards(rewards, window_size=10):
+    """
+    Smooths out rewards using a moving average window defined by window_size.
+    
+    Parameters:
+    rewards (array): The array of rewards to be smoothed.
+    window_size (int): The size of the moving average window (default is 10).
+    
+    Returns:
+    array: Smoothed rewards array after applying the moving average.
+    """
     smoothed_rewards = np.zeros_like(rewards)
     for i in range(len(rewards)):
         window_start = max(0, i - window_size // 2)
@@ -24,6 +34,17 @@ def smooth_rewards(rewards, window_size=10):
 
 
 def plot_data(mean, std, name):
+    """
+    Plots the data with mean, standard deviation, and name.
+
+    Parameters:
+    mean (array): Array containing the mean values.
+    std (array): Array containing the standard deviation values.
+    name (str): Name of the plot.
+
+    Returns:
+    None
+    """
     x = range(len(mean))
 
     plt.plot(x, mean, color='blue', label='Mean')
@@ -46,6 +67,15 @@ class PolicyNetwork(flax.linen.Module):
 
     @flax.linen.compact
     def __call__(self, x):
+        """
+        A function that represents the forward pass of the neural network.
+
+        Parameters:
+            x (ndarray): The input tensor to the network.
+
+        Returns:
+            ndarray: The output tensor of the network.
+        """
         x = flax.linen.Dense(16)(x)
         x = flax.linen.gelu(x)
         x = flax.linen.Dense(16)(x)
@@ -57,6 +87,10 @@ class PolicyNetwork(flax.linen.Module):
 
 class MC_Reinforce:
     def __init__(self, env, num_actions, observation_shape, seed=0):
+        """
+        Initializes the MC_Reinforce class with the provided environment, number of actions, observation shape, and optional seed.
+        Sets up the random number generator, policy network, and its state.
+        """
         self.seed = seed
         self.rng = jax.random.PRNGKey(seed)
         self.num_actions = num_actions
@@ -75,10 +109,29 @@ class MC_Reinforce:
 
     @functools.partial(jax.jit, static_argnums=(0,))
     def policy_prob(self, q_state, state):
+        """
+        Compute the probability of a given state under a policy.
+
+        Args:
+            q_state (object): The current state of the Q-function.
+            state (object): The state for which to compute the probability.
+
+        Returns:
+            object: The probability of the given state under the policy.
+        """
         probs = self.policy.apply(q_state.params, state)
         return probs
 
     def sample(self, state):
+        """
+        Samples an action from the policy probability distribution given a state.
+
+        Parameters:
+            state (object): The current state.
+
+        Returns:
+            int: The sampled action.
+        """
         probs = self.policy_prob(self.policy_state, state)[0]
         action = np.random.choice(self.num_actions, p=np.array(probs))
         return action
