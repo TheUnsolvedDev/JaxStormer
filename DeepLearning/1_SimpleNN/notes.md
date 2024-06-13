@@ -68,29 +68,19 @@ The accuracy of the model is calculated by comparing the predicted class labels 
 2. **Forward Pass**
 
    - For each hidden layer $i$:
-     $$
-      H_i = \sigma(X W_i + b_i)
-     $$
+     $$H_i = \sigma(X W_i + b_i)$$
    - Output layer:
-     $$
-     O = \text{softmax}(H_{n-1} W_{n} + b_{n})
-     $$
+     $$O = \text{softmax}(H_{n-1} W_{n} + b_{n})$$
 
 3. **Loss Function (Cross-Entropy)**
 
-   $$
-      L = -\frac{1}{N} \sum_{i=1}^{N} \sum_{j=1}^{C} y_{ij} \log(\hat{y}_{ij})
-   $$
+   $$L = -\frac{1}{N} \sum_{i=1}^{N} \sum_{j=1}^{C} y_{ij} \log(\hat{y}_{ij})$$
 
    where $N$ is the number of samples, $C$ is the number of classes, $y$ is the true label, and $\hat{y}$ is the predicted probability.
 
 4. **Gradient Descent Update**
-   $$
-   W \leftarrow W - \alpha \nabla_W L
-   $$
-   $$
-   b \leftarrow b - \alpha \nabla_b L
-   $$
+   $$W \leftarrow W - \alpha \nabla_W L$$
+   $$b \leftarrow b - \alpha \nabla_b L$$
    where $\alpha$ is the learning rate.
 
 ## Running the Code
