@@ -23,45 +23,6 @@ pip install jax jaxlib tqdm numpy
 
 The `Dataset` class is responsible for loading and preprocessing the dataset. It scales the dataset features to a range of [0, 1] and converts labels to one-hot encoded vectors. This step is crucial for neural network training.
 
-## AlexNet Architecture
-
-The AlexNet architecture is composed of the following layers:
-
-1. **Input Layer**: Takes the input image (typically 224x224 pixels for the original AlexNet).
-2. **Convolutional Layer (C1)**: Applies 96 filters of size 11x11 with stride 4 and ReLU activation.
-3. **Max Pooling Layer (P1)**: Applies a 3x3 filter with stride 2.
-4. **Convolutional Layer (C2)**: Applies 256 filters of size 5x5 with stride 1 and ReLU activation.
-5. **Max Pooling Layer (P2)**: Applies a 3x3 filter with stride 2.
-6. **Convolutional Layer (C3)**: Applies 384 filters of size 3x3 with stride 1 and ReLU activation.
-7. **Convolutional Layer (C4)**: Applies 384 filters of size 3x3 with stride 1 and ReLU activation.
-8. **Convolutional Layer (C5)**: Applies 256 filters of size 3x3 with stride 1 and ReLU activation.
-9. **Max Pooling Layer (P3)**: Applies a 3x3 filter with stride 2.
-10. **Fully Connected Layer (F6)**: Fully connected layer with 4096 units and ReLU activation.
-11. **Fully Connected Layer (F7)**: Fully connected layer with 4096 units and ReLU activation.
-12. **Output Layer**: Fully connected layer with 1000 units (for 1000 classes) and softmax activation.
-
-### Parameter Initialization
-
-Parameters (weights and biases) are initialized using a random normal distribution. This is critical to start the training process with diverse initial values.
-
-### AlexNet Function
-
-The AlexNet function computes the output by performing convolution operations followed by activation functions and pooling layers. The final fully connected layers use a softmax function to produce probabilities for each class.
-
-## Training and Evaluation
-
-### Loss Function
-
-The cross-entropy loss function is used to measure the performance of the neural network. It calculates the difference between the predicted probabilities and the actual labels.
-
-### Optimization with Adam
-
-The Adam optimizer, an adaptive learning rate optimization algorithm, is used to update network parameters. It computes individual adaptive learning rates for different parameters from estimates of first and second moments of the gradients.
-
-### Accuracy Calculation
-
-The accuracy of the model is calculated by comparing the predicted class labels with the actual labels and determining the proportion of correct predictions.
-
 ## Mathematical Notations
 ```
                                                            AlexNet Summary                                                           
@@ -145,6 +106,57 @@ The accuracy of the model is calculated by comparing the predicted class labels 
                                                                                                                                      
                                                Total Parameters: 21,604,426 (86.4 MB)        
 ```
+
+## AlexNet Architecture
+
+AlexNet is a convolutional neural network designed by Alex Krizhevsky, Ilya Sutskever, and Geoffrey Hinton. It was the first deep convolutional network to achieve great success in the ImageNet competition, bringing about a new era of deep learning. The key features and architectural details of AlexNet are as follows:
+
+### Key Features of AlexNet:
+
+1. **ReLU Activation**: 
+   - Uses the Rectified Linear Unit (ReLU) activation function, which accelerates the convergence of stochastic gradient descent compared to the traditionally used sigmoid and tanh functions.
+
+2. **Dropout Regularization**:
+   - Employs dropout in the fully connected layers to prevent overfitting. Dropout randomly sets a fraction of the input units to zero at each update during training, which helps in preventing co-adaptation of neurons.
+
+3. **Data Augmentation**:
+   - Uses data augmentation techniques like image translations, horizontal reflections, and patch extractions to increase the size and variability of the training dataset, which helps in reducing overfitting.
+
+4. **Multiple GPUs**:
+   - The network is designed to run on two GPUs, splitting the network into two pipelines. This allows the model to leverage more computational power and larger batch sizes.
+
+### AlexNet Architecture Details:
+
+1. **Input Layer**: The network takes input images of size 227x227 pixels.
+2. **Convolutional Layer 1 (C1)**: 96 filters of size 11x11, stride 4, followed by ReLU activation and max pooling.
+3. **Convolutional Layer 2 (C2)**: 256 filters of size 5x5, stride 1, followed by ReLU activation and max pooling.
+4. **Convolutional Layer 3 (C3)**: 384 filters of size 3x3, stride 1, followed by ReLU activation.
+5. **Convolutional Layer 4 (C4)**: 384 filters of size 3x3, stride 1, followed by ReLU activation.
+6. **Convolutional Layer 5 (C5)**: 256 filters of size 3x3, stride 1, followed by ReLU activation and max pooling.
+7. **Fully Connected Layer 1 (F6)**: 4096 units with ReLU activation and dropout.
+8. **Fully Connected Layer 2 (F7)**: 4096 units with ReLU activation and dropout.
+9. **Output Layer**: 1000 units with softmax activation for classification into 1000 categories.
+
+### Contributions to Convolutional Networks:
+
+- **Performance Improvements**: AlexNet demonstrated that deep convolutional networks can achieve impressive performance on large-scale image recognition tasks, significantly outperforming previous methods.
+- **Techniques and Practices**: Introduced several key techniques such as ReLU activation, dropout regularization, and data augmentation, which have become standard practices in the design of convolutional networks.
+
+## Training and Evaluation
+
+### Loss Function
+
+The cross-entropy loss function is used to measure the performance of the neural network. It calculates the difference between the predicted probabilities and the actual labels.
+
+### Optimization with Adam
+
+The Adam optimizer, an adaptive learning rate optimization algorithm, is used to update network parameters. It computes individual adaptive learning rates for different parameters from estimates of first and second moments of the gradients.
+
+### Accuracy Calculation
+
+The accuracy of the model is calculated by comparing the predicted class labels with the actual labels and determining the proportion of correct predictions.
+
+## Mathematical Notations
 
 1. **AlexNet Architecture**
 

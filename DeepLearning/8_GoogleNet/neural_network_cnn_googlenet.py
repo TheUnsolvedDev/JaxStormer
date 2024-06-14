@@ -135,7 +135,7 @@ class ConvolutionalNeuralNetwork:
         self.batch_size = batch_size
         self.n_epochs = n_epochs
         self.model_name = model_name
-        self.log_dir = os.path.join('DL_updates', self.model_name)
+        self.log_dir = os.path.join('/tmp/DL_updates', self.model_name)
         self.init_model()
 
     def init_model(self, dummy_image=np.ones((10, 28, 28, 1))):
