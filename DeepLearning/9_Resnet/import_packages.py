@@ -12,7 +12,7 @@ from functools import partial
 from urllib import request
 import gzip
 import pickle
-from typing import Any
+from typing import *
 import matplotlib.pyplot as plt
 
 filename = [
