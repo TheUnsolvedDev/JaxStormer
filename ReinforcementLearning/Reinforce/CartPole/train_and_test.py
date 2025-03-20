@@ -31,12 +31,15 @@ def test(env_name, agent):
 def simulate():
     env_name = ENV_NAME
     env = Environment(env_name, num_envs=NUM_ENVS)
-    agent = PolicyGradientAgent(input_shape=INPUT_SHAPE, output_shape=OUTPUT_SHAPE)
-    buffer = TrajectoryBuffer(input_size=INPUT_SHAPE, num_envs=NUM_ENVS, trajectory_size=TRAJECTORY_SIZE)
+    agent = PolicyGradientAgent(
+        input_shape=INPUT_SHAPE, output_shape=OUTPUT_SHAPE)
+    buffer = TrajectoryBuffer(
+        input_size=INPUT_SHAPE, num_envs=NUM_ENVS, trajectory_size=TRAJECTORY_SIZE)
     key = jax.random.PRNGKey(0)
 
     states = env.reset()
-    losses = []
+    baseline_losses = []
+    policy_losses = []
     for i in tqdm.tqdm(range(1, int(1e+6) + 1)):
         actions = agent.act(key, agent.policy_state.params, states)
         next_states, rewards, dones, truncateds, _ = env.step(
@@ -46,16 +49,20 @@ def simulate():
         states = next_states
         if i % 200 == 0:
             experiences = buffer.get_buffer(buffer.init_state)
-            agent.policy_state, loss = agent.update(
-                agent.policy_state, experiences)
-            losses.append(loss)
+            agent.policy_state, agent.baseline_state, policy_loss, baseline_loss = agent.update(
+                agent.policy_state, agent.baseline_state, experiences)
+            policy_losses.append(policy_loss)
+            baseline_losses.append(baseline_loss)
             # print(f'Iteration {i}, Loss: {loss}')
             if i % int(1e+5) == 0:
                 test(env_name, agent)
-                plt.plot(losses)
+                plt.plot(policy_losses, label='policy')
+                plt.plot(baseline_losses, label='baseline')
                 plt.xlabel('loss')
                 plt.ylabel('iterations * 200')
+                plt.legend()
                 plt.savefig('Losses.png')
+                plt.close()
 
 
 if __name__ == '__main__':

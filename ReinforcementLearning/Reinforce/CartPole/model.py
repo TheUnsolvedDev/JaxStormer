@@ -24,6 +24,18 @@ class Policy(flax.linen.Module):
         return x
 
 
+class Baseline(flax.linen.Module):
+    @flax.linen.compact
+    def __call__(self, x):
+        x = flax.linen.Dense(64)(x)
+        x = flax.linen.leaky_relu(x)
+        x = flax.linen.Dense(64)(x)
+        x = flax.linen.leaky_relu(x)
+        x = flax.linen.Dense(1)(x)
+        # x = flax.linen.softmax(x)
+        return x
+
+
 class TrajectoryBuffer:
     def __init__(self, input_size, num_envs, trajectory_size):
         self.input_size = input_size
@@ -95,6 +107,7 @@ class PolicyGradientAgent:
     def __init__(self, input_shape=5, output_shape=2):
         self.input_shape = input_shape
         self.num_actions = output_shape
+
         self.policy = Policy(self.num_actions)
         self.policy_state = flax.training.train_state.TrainState.create(
             apply_fn=self.policy.apply,
@@ -104,6 +117,15 @@ class PolicyGradientAgent:
         )
         self.policy.apply = jax.jit(self.policy.apply)
 
+        self.baseline = Baseline()
+        self.baseline_state = flax.training.train_state.TrainState.create(
+            apply_fn=self.baseline.apply,
+            params=self.baseline.init(jax.random.PRNGKey(
+                0), jnp.ones(self.input_shape)),
+            tx=optax.adam(learning_rate=LEARNING_RATE)
+        )
+        self.baseline.apply = jax.jit(self.baseline.apply)
+
     @functools.partial(jax.jit, static_argnums=(0,))
     def act(self, rng, policy_params, state):
         probs = self.policy.apply(policy_params, state)
@@ -111,21 +133,33 @@ class PolicyGradientAgent:
         return action_probs
 
     @functools.partial(jax.jit, static_argnums=(0,))
-    def update(self, policy_state, experiences):
+    def update(self, policy_state, baseline_state, experiences):
         states, actions, discounted_rewards = experiences
 
         def log_prob_loss(params):
             probs = self.policy.apply(params, states)
-            log_probs = jnp.log(probs)
+            values = self.baseline.apply(baseline_state.params, states)
+            delta = discounted_rewards - values
+            log_probs = jnp.log(probs + 1e-8)
             actions_new = jax.nn.one_hot(
                 actions, num_classes=self.num_actions)
             prob_reduce = -jnp.sum(log_probs*actions_new, axis=1)
-            loss = jnp.mean(prob_reduce*discounted_rewards)
+            loss = jnp.mean(prob_reduce*delta)
             return loss
 
-        loss, grads = jax.value_and_grad(log_prob_loss)(policy_state.params)
-        policy_state = policy_state.apply_gradients(grads=grads)
-        return policy_state, loss
+        def baseline_value_loss(params):
+            values = self.baseline.apply(params, states)
+            loss = jnp.mean(jnp.square(discounted_rewards - values))
+            return loss
+
+        policy_loss, policy_grads = jax.value_and_grad(
+            log_prob_loss)(policy_state.params)
+        baseline_loss, baseline_grads = jax.value_and_grad(
+            baseline_value_loss)(baseline_state.params)
+        policy_state = policy_state.apply_gradients(grads=policy_grads)
+        baseline_state = baseline_state.apply_gradients(grads=baseline_grads)
+
+        return policy_state, baseline_state, policy_loss, baseline_loss
 
 
 if __name__ == '__main__':
